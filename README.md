@@ -1,21 +1,37 @@
-# Max&Min 2.0 POS Sem 18–25
+# Max&Min 2.1 · Visual Slicers Refinement
 
-Versión optimizada para GitHub Pages.
+Versión visual optimizada para GitHub Pages y PWA. Conserva la lógica, cálculos, datos, resultados, tablas, fotografías, marcadores, impresión y exportación de Max&Min 2.0.
 
-## Mejoras
-- Filtro dinámico e intuitivo por semana individual: 18, 19, 20, 21, 22, 23, 24, 25.
-- Promedio calculado acorde a las semanas seleccionadas.
-- Data POS únicamente: no considera merma ni variación.
-- Datos separados por semana para facilitar correcciones y actualización de tendencias.
-- Cada archivo de data queda por debajo de 15 MB.
+## Actualización visual
 
-## Validación de carga
+- Executive Dashboard Design System inspirado en Starbucks Internal Tools.
+- Navegación lateral ejecutiva en escritorio y navegación adaptable en móvil.
+- Segmentadores tipo Power BI con búsqueda, desplazamiento, selección y limpieza.
+- Tienda / CeCo: selección única con búsqueda por nombre o CeCo.
+- Semana: selección múltiple con Seleccionar todo y Limpiar selección.
+- # Pedidos y Formato: selección única.
+- Persistencia local de filtros.
+- Estados hover, foco visible y navegación por teclado.
+- Tablas, cards, formularios y jerarquía visual unificados.
+- Impresión y exportación PDF conservadas.
+
+## Datos y lógica conservados
+
 - Tiendas: 944
 - Artículos: 723
 - Categorías: 26
 - Registros POS: 1,457,790
-- Registros por semana: {18: 180730, 19: 181688, 20: 181351, 21: 174566, 22: 197529, 23: 183327, 24: 181970, 25: 176629}
+- Semanas: 18–25
+- Fórmula: uso mínimo = promedio semanal seleccionado / 7.
+- Máximo según entregas: 2=×5, 3=×4, 4=×3, 5=×2.
+- La fuente continúa siendo exclusivamente POS; no incluye merma ni variación.
 
-## Fórmula
-Uso mínimo = Uso promedio semanal seleccionado / 7.  
-Máximo según entregas: 2=×5, 3=×4, 4=×3, 5=×2.
+## Publicación en GitHub Pages
+
+1. Subir el contenido de esta carpeta a la raíz del repositorio.
+2. Abrir **Settings → Pages**.
+3. Seleccionar **Deploy from a branch**.
+4. Elegir la rama principal y la carpeta raíz.
+5. Esperar la publicación.
+
+Todas las rutas son relativas y compatibles con GitHub Pages.

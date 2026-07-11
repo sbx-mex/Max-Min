@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <header class="topbar no-print">
+  <header class="topbar no-print" aria-label="Navegación principal">
     <div class="brand">
       <div class="app-logo"><img src="icons/icon-192.png" alt="Max&Min 2.0" /></div>
       <div>
@@ -25,33 +25,33 @@
         <p>Herramienta operativa · POS Sem 18–25</p>
       </div>
     </div>
-    <nav class="tabs">
-      <button class="tab-btn active" data-tab="maxmin">📊 Max&Min</button>
-      <button class="tab-btn" data-tab="consulta">🔎 Consulta</button>
-      <button class="tab-btn" data-tab="acomodo">🗂️ Acomodo</button>
+    <nav class="tabs" aria-label="Módulos">
+      <button class="tab-btn active" data-tab="maxmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg><span>Max&amp;Min</span></button>
+      <button class="tab-btn" data-tab="consulta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Consulta</span></button>
+      <button class="tab-btn" data-tab="acomodo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 4v16M8 10h13"/></svg><span>Acomodo</span></button>
     </nav>
     <div class="actions">
-      <button id="btnExport">📄 Exportar PDF</button>
-      <button id="btnReset">🧹 Limpiar pestaña</button>
+      <button id="btnExport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span>Exportar PDF</span></button>
+      <button id="btnReset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>Limpiar pestaña</span></button>
     </div>
   </header>
 
-  <main class="app">
+  <main class="app" id="mainContent">
     <section id="tab-maxmin" class="tab-panel active">
       <section class="panel controls no-print">
-        <div class="field field-store"><label>Tienda / CeCo</label><select id="maxStore"></select></div>
-        <div class="field"><label>Semana</label><select id="maxWeeks" multiple></select></div>
-        <div class="field"><label># pedidos</label><select id="maxOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-        <div class="field"><label>Formato</label><select id="maxMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
+        <div class="field field-store"><label for="maxStore">Tienda / CeCo</label><select id="maxStore"></select></div>
+        <div class="field"><label for="maxWeeks">Semana</label><select id="maxWeeks" multiple></select></div>
+        <div class="field"><label for="maxOrders"># pedidos</label><select id="maxOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div class="field"><label for="maxMode">Formato</label><select id="maxMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
       </section>
 
       <section id="letterMax" class="letter printable">
         <div class="sheet-head">
-          <div class="badge">★</div>
+          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
           <div><h2>MÁXIMOS Y MÍNIMOS</h2><p id="maxSubtitle">Tienda · Semanas</p></div>
           <div class="print-meta"><b>STARBUCKS</b><span id="maxDate"></span></div>
         </div>
-        <div class="data-note">ℹ️ Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</div>
+        <div class="data-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</span></div>
         <div class="photo-tools no-print"><button class="ghost" id="clearPhotoMax">Borrar foto</button></div>
         <div class="photo-wrap" id="photoWrapMax">
           <input id="photoInputMax" class="no-print" type="file" accept="image/*" capture="environment" />
@@ -74,20 +74,20 @@
 
     <section id="tab-consulta" class="tab-panel">
       <section class="panel controls consulta-controls no-print">
-        <div class="field field-store"><label>Tienda / CeCo</label><select id="conStore"></select></div>
-        <div class="field"><label>Semana</label><select id="conWeeks" multiple></select></div>
-        <div class="field"><label>Categoría</label><select id="conCategory"><option value="">Todas</option></select></div>
-        <div class="field"><label># pedidos</label><select id="conOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-        <div class="field"><label>Formato</label><select id="conMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
+        <div class="field field-store"><label for="conStore">Tienda / CeCo</label><select id="conStore"></select></div>
+        <div class="field"><label for="conWeeks">Semana</label><select id="conWeeks" multiple></select></div>
+        <div class="field"><label for="conCategory">Categoría</label><select id="conCategory"><option value="">Todas</option></select></div>
+        <div class="field"><label for="conOrders"># pedidos</label><select id="conOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div class="field"><label for="conMode">Formato</label><select id="conMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
       </section>
 
       <section id="letterConsulta" class="letter printable consulta-card">
         <div class="sheet-head">
-          <div class="badge">★</div>
+          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
           <div><h2>CONSULTA</h2><p id="conSubtitle">Tienda · Semanas</p></div>
           <div class="print-meta"><b>STARBUCKS</b><span id="conDate"></span></div>
         </div>
-        <div class="data-note">ℹ️ Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</div>
+        <div class="data-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</span></div>
         <div class="selector no-print consulta-selector">
           <input id="searchItemConsulta" list="consultaItemsList" placeholder="Buscar artículo específico o deja vacío para agregar toda la categoría..." />
           <datalist id="consultaItemsList"></datalist>
@@ -104,13 +104,13 @@
 
     <section id="tab-acomodo" class="tab-panel">
       <section class="panel controls no-print acomodo-controls">
-        <div class="field field-store"><label>Tienda / CeCo</label><select id="acoStore"></select></div>
-        <div class="field"><label>Título</label><input id="acoTitle" value="Acomodo visual" /></div>
+        <div class="field field-store"><label for="acoStore">Tienda / CeCo</label><select id="acoStore"></select></div>
+        <div class="field"><label for="acoTitle">Título</label><input id="acoTitle" value="Acomodo visual" /></div>
       </section>
 
       <section id="letterAcomodo" class="letter printable">
         <div class="sheet-head">
-          <div class="badge">★</div>
+          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
           <div><h2>ACOMODO</h2><p id="acoSubtitle">Guía visual editable</p></div>
           <div class="print-meta"><b>STARBUCKS</b><span id="acoDate"></span></div>
         </div>

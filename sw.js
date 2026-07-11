@@ -1,4 +1,4 @@
-const CACHE_NAME = 'maxmin-pwa-v30';
+const CACHE_NAME = 'maxmin-pwa-v31-visual-slicers';
 
 const APP_SHELL = [
   "./",
