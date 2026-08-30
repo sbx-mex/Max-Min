@@ -81,6 +81,7 @@ markers = [
     'format: "letter"', 'orientation: "landscape"', "pdf.addPage", "PAGE_SIZE = 12",
     "Math.floor(index / 3)", "index % 3", "drawPdfHeader", "drawPdfLabel",
     "pdf.internal.getNumberOfPages()", "fetch(store.file", "compactWeeks",
+    'const headerH = 8', 'item.woe || "—"', "#DIA", "#SAP", "PEDIDOS",
 ]
 for marker in markers:
     if marker not in app:
@@ -94,7 +95,11 @@ report = {
     "positiveRows": counts["positiveRows"],
     "sapMatched": counts["sapMatched"],
     "formatMatched": counts["formatMatched"],
-    "pdf": {"format": "letter", "orientation": "landscape", "labelsPerPage": 12, "grid": "4x3", "multiPage": True},
+    "pdf": {
+        "format": "letter", "orientation": "landscape", "labelsPerPage": 12,
+        "grid": "4x3", "multiPage": True, "compactHeaderMm": 8,
+        "cardFields": ["Descripción SAP", "Nombre Inventario", "#DIA", "#SAP", "MIN", "MAX", "Formato", "Unidad de medida", "# Pedidos"],
+    },
     "limits": {"maxFilesPerFolder": LIMIT_FILES, "maxImmediateBytesPerFolder": LIMIT_BYTES},
 }
 (ROOT / "audit" / "project_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

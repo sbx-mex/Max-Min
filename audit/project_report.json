@@ -11,7 +11,19 @@
     "orientation": "landscape",
     "labelsPerPage": 12,
     "grid": "4x3",
-    "multiPage": true
+    "multiPage": true,
+    "compactHeaderMm": 8,
+    "cardFields": [
+      "Descripción SAP",
+      "Nombre Inventario",
+      "#DIA",
+      "#SAP",
+      "MIN",
+      "MAX",
+      "Formato",
+      "Unidad de medida",
+      "# Pedidos"
+    ]
   },
   "limits": {
     "maxFilesPerFolder": 100,

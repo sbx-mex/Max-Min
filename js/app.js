@@ -346,7 +346,9 @@ function renderPreview() {
 
 function labelCardHtml(item) {
   const calc = calculate(item);
-  return `<article class="label-card"><div class="label-name"><b title="${esc(item.sap)}">${esc(item.sap)}</b><small>${esc(item.name)}${item.code ? ` · DIA ${esc(item.code)}` : ""}</small></div><div class="label-values"><span class="label-value"><small>MIN</small><b>${formatMinMax(calc.min, calc.mode)}</b></span><span class="label-value"><small>MAX</small><b>${formatMinMax(calc.max, calc.mode)}</b></span></div><div class="label-meta"><span class="format-chip">${calc.mode === "pickpack" ? "PICK PACK" : "UNIDAD"}</span><span>${esc(calc.presentation)}</span><span>${state.orders} pedidos</span></div></article>`;
+  const dia = item.code || "—";
+  const sapNumber = item.woe || "—";
+  return `<article class="label-card"><div class="label-name"><b title="${esc(item.sap)}">${esc(item.sap)}</b><small><span title="Nombre Inventario">${esc(item.name)}</span><span>#DIA ${esc(dia)}</span><span>#SAP ${esc(sapNumber)}</span></small></div><div class="label-values"><span class="label-value"><small>MIN</small><b>${formatMinMax(calc.min, calc.mode)}</b></span><span class="label-value"><small>MAX</small><b>${formatMinMax(calc.max, calc.mode)}</b></span></div><div class="label-meta"><span class="format-chip">${calc.mode === "pickpack" ? "PICK PACK" : "UNIDAD"}</span><span>${esc(calc.presentation)}</span><span>${state.orders} PEDIDOS</span></div></article>`;
 }
 
 function renderConsulta() {
@@ -502,11 +504,11 @@ function buildPdf(items) {
   pdf.setProperties({ title: "Etiquetas MIN MAX", subject: `${state.store.label} · Semanas ${compactWeeks([...state.weeks])}`, creator: "Max & Min Remaster" });
   const width = pdf.internal.pageSize.getWidth();
   const height = pdf.internal.pageSize.getHeight();
-  const margin = 7;
-  const headerY = 6;
-  const headerH = 13;
-  const gridY = headerY + headerH + 4;
-  const bottom = 6;
+  const margin = 6;
+  const headerY = 4;
+  const headerH = 8;
+  const gridY = headerY + headerH + 2.4;
+  const bottom = 4.5;
   const gapX = 2.6;
   const gapY = 2.4;
   const cardW = (width - margin * 2 - gapX * 2) / 3;
@@ -533,40 +535,54 @@ function drawPdfHeader(pdf, x, y, width, height) {
     ["SEMANAS", compactWeeks([...state.weeks])],
     ["ACTUALIZACIÓN", formatDate(manifest.generated)],
   ];
-  pdf.setDrawColor(0, 98, 65); pdf.setLineWidth(.35); pdf.roundedRect(x, y, width, height, 1.8, 1.8, "S");
-  const sectionW = width / 3;
+  const widths = [width * .42, width * .25, width * .33];
+  pdf.setDrawColor(0, 98, 65); pdf.setLineWidth(.3); pdf.roundedRect(x, y, width, height, 1.5, 1.5, "S");
+  let sx = x;
   values.forEach(([label, value], index) => {
-    const sx = x + index * sectionW;
+    const sectionW = widths[index];
     if (index) pdf.line(sx, y, sx, y + height);
-    pdf.setTextColor(0, 98, 65); pdf.setFont("helvetica", "bold"); pdf.setFontSize(6.6); pdf.text(label, sx + 3, y + 4.6);
-    pdf.setTextColor(24, 35, 31); pdf.setFont("helvetica", "bold"); fitPdfFont(pdf, value, sectionW - 6, 8.8, 6.2); pdf.text(fitPdfText(pdf, value, sectionW - 6), sx + 3, y + 10.2);
+    pdf.setTextColor(0, 98, 65); pdf.setFont("helvetica", "bold"); pdf.setFontSize(5.6);
+    const labelText = `${label}:`;
+    pdf.text(labelText, sx + 2.5, y + 5.15);
+    const valueX = sx + 2.5 + pdf.getTextWidth(labelText) + 1.4;
+    const available = sectionW - (valueX - sx) - 2.5;
+    pdf.setTextColor(24, 35, 31); pdf.setFont("helvetica", "bold");
+    fitPdfFont(pdf, value, available, 7.4, 5.8);
+    pdf.text(fitPdfText(pdf, value, available), valueX, y + 5.15);
+    sx += sectionW;
   });
 }
 
 function drawPdfLabel(pdf, item, x, y, width, height) {
   const calc = calculate(item);
-  const topH = Math.max(13, height * .32);
-  const footerH = 6.2;
+  const topH = Math.max(20.5, height * .42);
+  const footerH = 7.2;
   const bodyY = y + topH;
   const bodyH = height - topH - footerH;
   pdf.setDrawColor(22, 31, 28); pdf.setLineWidth(.45); pdf.setFillColor(255, 255, 255); pdf.roundedRect(x, y, width, height, 2, 2, "FD");
   pdf.setDrawColor(22, 31, 28); pdf.line(x, bodyY, x + width, bodyY); pdf.line(x + width / 2, bodyY, x + width / 2, bodyY + bodyH); pdf.line(x, y + height - footerH, x + width, y + height - footerH);
+  pdf.setDrawColor(188, 199, 194); pdf.setLineWidth(.25); pdf.line(x + width / 3, y + height - footerH, x + width / 3, y + height); pdf.line(x + width * 2 / 3, y + height - footerH, x + width * 2 / 3, y + height);
   pdf.setTextColor(20, 29, 26); pdf.setFont("helvetica", "bold");
-  drawFittedLines(pdf, item.sap, x + 3, y + 4, width - 6, topH - 7, 8.6, 5.3, 2);
-  pdf.setTextColor(95, 112, 105); pdf.setFont("helvetica", "normal"); pdf.setFontSize(5.1);
-  pdf.text(fitPdfText(pdf, `${item.name}${item.code ? ` · DIA ${item.code}` : ""}`, width - 6), x + 3, y + topH - 2.2);
+  drawFittedLines(pdf, item.sap, x + 3, y + 2.2, width - 6, topH - 8.2, 10.4, 6.2, 2);
+  const identity = `${item.name} | #DIA ${item.code || "—"} | #SAP ${item.woe || "—"}`;
+  pdf.setDrawColor(218, 225, 222); pdf.setLineWidth(.2); pdf.line(x + 3, y + topH - 6.4, x + width - 3, y + topH - 6.4);
+  pdf.setTextColor(72, 88, 81); pdf.setFont("helvetica", "normal"); fitPdfFont(pdf, identity, width - 6, 6.1, 4.8);
+  pdf.text(fitPdfText(pdf, identity, width - 6), x + width / 2, y + topH - 2.15, { align: "center" });
 
   const centers = [x + width / 4, x + width * .75];
   [["MIN", calc.min], ["MAX", calc.max]].forEach(([label, value], index) => {
-    pdf.setTextColor(22, 31, 28); pdf.setFont("helvetica", "bold"); pdf.setFontSize(7.2); pdf.text(label, centers[index], bodyY + 5.2, { align: "center" });
-    pdf.setFontSize(Math.min(16, bodyH * 1.05)); pdf.text(formatMinMax(value, calc.mode), centers[index], bodyY + bodyH - 3.2, { align: "center" });
+    pdf.setTextColor(22, 31, 28); pdf.setFont("helvetica", "bold"); pdf.setFontSize(8.2); pdf.text(label, centers[index], bodyY + 6.2, { align: "center" });
+    pdf.setFontSize(Math.min(18.5, bodyH * 1.05)); pdf.text(formatMinMax(value, calc.mode), centers[index], bodyY + bodyH - 3.8, { align: "center" });
   });
-  pdf.setFontSize(5.1); pdf.setTextColor(0, 98, 65); pdf.setFont("helvetica", "bold");
+  pdf.setTextColor(0, 98, 65); pdf.setFont("helvetica", "bold");
   const mode = calc.mode === "pickpack" ? "PICK PACK" : "UNIDAD";
-  pdf.text(mode, x + 3, y + height - 2.2);
+  fitPdfFont(pdf, mode, width / 3 - 4, 6.2, 5);
+  pdf.text(mode, x + width / 6, y + height - 2.45, { align: "center" });
   pdf.setTextColor(85, 101, 94); pdf.setFont("helvetica", "normal");
-  pdf.text(fitPdfText(pdf, calc.presentation, width * .48), x + width / 2, y + height - 2.2, { align: "center" });
-  pdf.text(`${state.orders} pedidos`, x + width - 3, y + height - 2.2, { align: "right" });
+  fitPdfFont(pdf, calc.presentation, width / 3 - 4, 6, 4.8);
+  pdf.text(fitPdfText(pdf, calc.presentation, width / 3 - 4), x + width / 2, y + height - 2.45, { align: "center" });
+  const ordersText = `${state.orders} PEDIDOS`;
+  pdf.setFont("helvetica", "bold"); fitPdfFont(pdf, ordersText, width / 3 - 4, 6.2, 5); pdf.text(ordersText, x + width * 5 / 6, y + height - 2.45, { align: "center" });
 }
 
 function fitPdfFont(pdf, value, maxWidth, preferred, minimum) {

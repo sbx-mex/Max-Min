@@ -11,7 +11,7 @@ Aplicación estática/PWA para validar uso ideal, formato de surtido y etiquetas
 - Uso ideal: promedio aritmético entre todas las semanas seleccionadas. El mínimo es `promedio / 7`.
 - Máximo: 2 pedidos `×5`, 3 `×4`, 4 `×3`, 5 `×2`.
 - Formato: Unidad o Pick Pack, con factor heredado del proyecto anterior y ajustes locales por ingrediente.
-- PDF: Carta horizontal, 4 filas × 3 columnas, 12 etiquetas por hoja y páginas adicionales automáticas.
+- PDF: Carta horizontal, 4 filas × 3 columnas, 12 etiquetas por hoja y páginas adicionales automáticas. Cada tarjeta prioriza Descripción SAP, seguida por `Nombre Inventario | #DIA | #SAP`; el pie separa Formato, Unidad de medida y # Pedidos.
 
 ## Tres pestañas
 
@@ -51,7 +51,7 @@ node --check js/app.js
 node --check sw.js
 python tools/cleanup_obsolete.py
 python tools/audit_project.py
-python tools/audit_pdf_export.py
+python tools/prepare_pdf_release.py
 ```
 
 Si el ZIP original está disponible, agrega una reconciliación exacta de Pedregal:
@@ -64,7 +64,7 @@ El workflow `Validar Max Min Remaster` ejecuta estas verificaciones en cada push
 
 ## Exportación segura
 
-El flujo de exportación sigue el patrón de validación local de [Lay-Out_2.0](https://github.com/sbx-mex/Lay-Out_2.0): generador PDF empacado en el repositorio, orientación verificada, conteo esperado de páginas, nombre de archivo limpio, progreso visible y cierre confirmado.
+El flujo de exportación sigue el patrón de validación local de [Lay-Out_2.0](https://github.com/sbx-mex/Lay-Out_2.0): generador PDF empacado en el repositorio, orientación verificada, conteo esperado de páginas, nombre de archivo limpio, progreso visible y cierre confirmado. `prepare_pdf_release.py` genera la muestra, verifica texto por hoja, renderiza a imagen, mide márgenes de corte y emite `audit/pdf_release_report.json`.
 
 ## Publicar en GitHub Pages
 

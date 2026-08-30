@@ -1,0 +1,91 @@
+{
+  "status": "ok",
+  "file": "/workspace/scratch/d1494abea7fb/Max-Min_Remaster/docs/Etiquetas_MIN_MAX_Muestra_38107_Sem18-25.pdf",
+  "pages": 2,
+  "labels": 15,
+  "labelsPerPage": [
+    12,
+    3
+  ],
+  "pageFormat": "Carta horizontal",
+  "grid": "4x3",
+  "header": "una fila compacta por página",
+  "requiredFields": [
+    "Descripción SAP",
+    "Nombre Inventario",
+    "#DIA",
+    "#SAP",
+    "MIN",
+    "MAX",
+    "Formato",
+    "Unidad de medida",
+    "# Pedidos"
+  ],
+  "pageReports": [
+    {
+      "page": 1,
+      "sizePoints": [
+        792.0,
+        612.0
+      ],
+      "labels": 12,
+      "headerOccurrences": 1,
+      "textCharacters": 1682
+    },
+    {
+      "page": 2,
+      "sizePoints": [
+        792.0,
+        612.0
+      ],
+      "labels": 3,
+      "headerOccurrences": 1,
+      "textCharacters": 416
+    }
+  ],
+  "sha256": "42b1af8eba67715d5f7614eae07c220ee8ae827aa463fa3154fe84558e54a52a",
+  "bytes": 8332,
+  "renderDpi": 180,
+  "visualSafety": [
+    {
+      "page": 1,
+      "pixels": [
+        1980,
+        1530
+      ],
+      "contentBox": [
+        40,
+        27,
+        1940,
+        1500
+      ],
+      "safeMarginsPixels": [
+        40,
+        27,
+        40,
+        30
+      ],
+      "inkCoverage": 0.0902
+    },
+    {
+      "page": 2,
+      "pixels": [
+        1980,
+        1530
+      ],
+      "contentBox": [
+        40,
+        27,
+        1940,
+        440
+      ],
+      "safeMarginsPixels": [
+        40,
+        27,
+        40,
+        1090
+      ],
+      "inkCoverage": 0.0258
+    }
+  ]
+}
