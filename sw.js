@@ -1,6 +1,7 @@
-const CACHE = "maxmin-remaster-v7-20260830";
+const CACHE = "maxmin-remaster-v8-normalizados-20260830";
 const APP_SHELL = [
   "./", "./index.html", "./css/styles.css", "./js/app.js", "./data/manifest.js",
+  "./data/normalized/manifest.js",
   "./vendor/jspdf.umd.min.js", "./manifest.webmanifest", "./icons/icon-192.png",
   "./icons/icon-512.png", "./icons/favicon-32.png", "./icons/apple-touch-icon.png",
   "./assets/ui/Damos_Seguimiento.webp", "./assets/ui/Un_placer_haber_Ayudado.webp",

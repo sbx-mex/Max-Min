@@ -6,9 +6,11 @@ Aplicación estática/PWA para validar uso ideal, formato de surtido y etiquetas
 
 - Directorio: 952 tiendas vigentes desde `sources/Directorio.xlsx` (942 abiertas y 10 con cierre temporal). Las abiertas aparecen primero.
 - Datos: histórico continuo desde semana 1, carga bajo demanda y actualización semanal incremental.
+- Normalizados: motor separado para 60 insumos descontados por receta, incluidos vasos, tapas y servicio. La vigencia se calcula por ingrediente, no con una semana fija.
 - SAP: `Ingrediente → Catálogo Micros → Código DIA → Descripción SAP` desde `sources/Lista_Precios_Base.xlsx`.
 - Indicadores: la fuente mantiene la columna vacía; no se inventa información.
 - Uso ideal: promedio aritmético entre todas las semanas seleccionadas. El mínimo es `promedio / 7`.
+- Uso normalizado: el promedio considera sólo las semanas en las que el ingrediente sí reportó descuento por receta. Si terminó, la interfaz muestra su última semana y desde cuál dejó de reportarse.
 - Máximo: 2 pedidos `×5`, 3 `×4`, 4 `×3`, 5 `×2`.
 - Formato: Unidad o Pick Pack, con factor heredado del proyecto anterior y ajustes locales por ingrediente.
 - PDF: Carta horizontal, 4 filas × 3 columnas, 12 etiquetas por hoja y páginas adicionales automáticas. Cada tarjeta prioriza Descripción SAP, seguida por `Nombre Inventario | #DIA | #SAP`; el pie separa Formato, Unidad de medida y # Pedidos.
@@ -55,12 +57,21 @@ El constructor acepta tanto los CSV UTF-16 estándar como el formato de comillas
 
 El workflow valida la fuente antes de escribir, sincroniza el directorio, actualiza `data/manifest.js`, los JSON afectados y los reportes, y después retira el CSV. Los CeCo fuera del directorio se documentan y se excluyen sin detener las tiendas vigentes. Consulta [docs/GUIA_ACTUALIZACION_SEMANAL.md](docs/GUIA_ACTUALIZACION_SEMANAL.md).
 
+## Actualizar insumos Normalizados
+
+1. Sustituye `sources/Normalizados.zip` por el corte acumulado nuevo.
+2. El workflow **Reconstruir motor Normalizados** se ejecuta automáticamente; también puede iniciarse manualmente.
+3. Revisa `audit/normalized_build_report.json` y confirma que los cruces SAP/Formato igualen el total de ingredientes.
+
+Python procesa el CSV UTF-16 en flujo, cruza Directorio, SAP y presentación, divide el resultado en carpetas de máximo 80 tiendas y calcula `firstWeek`, `lastWeek`, `reportWeeks` y `stoppedWeek` por ingrediente. Consulta [docs/GUIA_MOTOR_NORMALIZADOS.md](docs/GUIA_MOTOR_NORMALIZADOS.md).
+
 ## Validar antes de publicar
 
 ```bash
 node --check js/app.js
 node --check sw.js
 python tools/cleanup_obsolete.py
+python tools/build_normalized.py
 python tools/audit_project.py
 python tools/prepare_pdf_release.py
 ```

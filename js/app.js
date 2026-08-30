@@ -3,13 +3,17 @@
 const FACTOR_PEDIDOS = { 2: 5, 3: 4, 4: 3, 5: 2 };
 const STORAGE_KEY = "maxmin-remaster-v4";
 const PAGE_SIZE = 12;
+const NORMALIZED_INGREDIENT_BASE = 1000000;
+const NORMALIZED_CATEGORY_BASE = 10000;
 const $ = (id) => document.getElementById(id);
 const manifest = window.MAXMIN_MANIFEST;
+const normalizedManifest = window.MAXMIN_NORMALIZED || { weeks: [], categories: [], ingredients: [], stores: [] };
 
 const state = {
   tab: "etiquetas",
   store: null,
   storeData: null,
+  normalizedStoreData: null,
   weeks: new Set(),
   categories: new Set(),
   ingredients: new Set(),
@@ -271,7 +275,11 @@ async function selectStore(store, notify) {
   if (state.store?.code === store.code && state.storeData) { storeFilter.setValue(store); return; }
   showLoading("Cargando tienda", `${store.code} · ${store.name}`);
   try {
-    state.storeData = await fetchStoreData(store.file);
+    const normalizedStore = normalizedManifest.stores.find((item) => item.code === store.code);
+    [state.storeData, state.normalizedStoreData] = await Promise.all([
+      fetchStoreData(store.file, manifest.generated),
+      normalizedStore ? fetchStoreData(normalizedStore.file, normalizedManifest.generated) : Promise.resolve({}),
+    ]);
     state.store = store;
     state.categories.clear();
     state.ingredients.clear();
@@ -290,28 +298,40 @@ async function selectStore(store, notify) {
 function aggregateData() {
   if (!state.storeData) return;
   const selectedWeeks = [...state.weeks].sort((a, b) => a - b);
-  const divisor = selectedWeeks.length || 1;
   const map = new Map();
-  for (const week of selectedWeeks) {
-    const flat = state.storeData[String(week)] || [];
-    for (let index = 0; index < flat.length; index += 3) {
-      const categoryId = flat[index];
-      const ingredientId = flat[index + 1];
-      const cents = flat[index + 2];
-      let item = map.get(ingredientId);
-      if (!item) {
-        item = { id: ingredientId, categoryId, cents: 0, weeksWithUsage: 0 };
-        map.set(ingredientId, item);
+  function collect(sourceData, ingredientBase, categoryBase, source) {
+    for (const week of selectedWeeks) {
+      const flat = sourceData?.[String(week)] || [];
+      for (let index = 0; index < flat.length; index += 3) {
+        const sourceCategoryId = flat[index];
+        const sourceIngredientId = flat[index + 1];
+        const cents = flat[index + 2];
+        const id = ingredientBase + sourceIngredientId;
+        let item = map.get(id);
+        if (!item) {
+          item = {
+            id,
+            categoryId: categoryBase + sourceCategoryId,
+            sourceIngredientId,
+            sourceCategoryId,
+            source,
+            cents: 0,
+            weeksWithUsage: 0,
+          };
+          map.set(id, item);
+        }
+        item.cents += cents;
+        item.weeksWithUsage += cents > 0 ? 1 : 0;
       }
-      item.cents += cents;
-      item.weeksWithUsage += cents > 0 ? 1 : 0;
     }
   }
+  collect(state.storeData, 0, 0, "principal");
+  collect(state.normalizedStoreData, NORMALIZED_INGREDIENT_BASE, NORMALIZED_CATEGORY_BASE, "normalizado");
   state.aggregated = [...map.values()].map((item) => ({
     ...item,
-    ...manifest.ingredients[item.id],
-    category: manifest.categories[item.categoryId],
-    usage: item.cents / 100 / divisor,
+    ...(item.source === "normalizado" ? normalizedManifest.ingredients[item.sourceIngredientId] : manifest.ingredients[item.sourceIngredientId]),
+    category: item.source === "normalizado" ? normalizedManifest.categories[item.sourceCategoryId] : manifest.categories[item.sourceCategoryId],
+    usage: item.cents / 100 / averageDivisor(item, selectedWeeks),
   })).sort((a, b) => a.name.localeCompare(b.name, "es", { numeric: true }));
   const categoryOptions = [...new Map(state.aggregated.map((item) => [item.categoryId, item.category])).entries()]
     .sort((a, b) => a[1].localeCompare(b[1], "es"))
@@ -319,6 +339,18 @@ function aggregateData() {
   categoriesFilter.setOptions(categoryOptions);
   updateIngredientOptions();
   applyFilters();
+}
+
+function averageDivisor(item, selectedWeeks) {
+  if (item.source !== "normalizado") return selectedWeeks.length || 1;
+  const reportWeeks = new Set(normalizedManifest.ingredients[item.sourceIngredientId]?.reportWeeks || []);
+  return Math.max(1, selectedWeeks.filter((week) => reportWeeks.has(week)).length);
+}
+
+function recipeNotice(item) {
+  if (item.source !== "normalizado") return "";
+  if (item.stoppedWeek) return `Descuento por receta hasta Sem ${item.lastWeek} · dejó de reportarse en Sem ${item.stoppedWeek}`;
+  return `Descuento por receta vigente · reporta en Sem ${item.lastWeek}`;
 }
 
 function updateIngredientOptions() {
@@ -368,13 +400,12 @@ function updateContext() {
   $("previewDate").textContent = formatDate(manifest.generated);
   const filters = [`Sem ${weeks}`, state.categories.size ? `${state.categories.size} categoría(s)` : "Todas las categorías", state.ingredients.size ? `${state.ingredients.size} ingrediente(s)` : "Todos los ingredientes"];
   $("activeFilterSummary").textContent = filters.join(" · ");
-  $("historyNote").classList.toggle("hidden", ![...state.weeks].some((week) => week <= 25));
 }
 
 function renderCatalog() {
   $("filteredCount").textContent = String(state.filtered.length);
   const items = state.filtered.slice(0, 300);
-  $("catalogList").innerHTML = items.map((item) => `<label class="catalog-item ${state.selected.has(item.id) ? "selected" : ""}"><input type="checkbox" value="${item.id}" ${state.selected.has(item.id) ? "checked" : ""} /><span class="catalog-copy"><b>${esc(item.name)}</b><small>${esc(item.sap)}${item.code ? ` · DIA ${esc(item.code)}` : ""}</small></span><span class="usage-badge">${formatNumber(item.usage, 1)}</span></label>`).join("") || '<div class="empty-state">No hay ingredientes con estos filtros.</div>';
+  $("catalogList").innerHTML = items.map((item) => `<label class="catalog-item ${state.selected.has(item.id) ? "selected" : ""}"><input type="checkbox" value="${item.id}" ${state.selected.has(item.id) ? "checked" : ""} /><span class="catalog-copy"><b>${esc(item.name)}</b><small>${esc(item.sap)}${item.code ? ` · DIA ${esc(item.code)}` : ""}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</span><span class="usage-badge">${formatNumber(item.usage, 1)}</span></label>`).join("") || '<div class="empty-state">No hay ingredientes con estos filtros.</div>';
   if (state.filtered.length > 300) $("catalogList").insertAdjacentHTML("beforeend", `<div class="empty-state">Mostrando 300 de ${state.filtered.length}. Usa la búsqueda para acotar.</div>`);
 }
 
@@ -406,7 +437,7 @@ function renderConsulta() {
     const calc = calculate(item);
     const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
     const override = state.overrides[item.id] || "auto";
-    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small></td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td><td><select class="table-format" data-id="${item.id}"><option value="auto" ${override === "auto" ? "selected" : ""}>Base</option><option value="unidad" ${override === "unidad" ? "selected" : ""}>Unidad</option><option value="pickpack" ${override === "pickpack" ? "selected" : ""}>Pick Pack</option></select></td><td><span class="status-dot ${review ? "review" : ""}">${review ? "Revisar" : "Validado"}</span></td></tr>`;
+    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td><td><select class="table-format" data-id="${item.id}"><option value="auto" ${override === "auto" ? "selected" : ""}>Base</option><option value="unidad" ${override === "unidad" ? "selected" : ""}>Unidad</option><option value="pickpack" ${override === "pickpack" ? "selected" : ""}>Pick Pack</option></select></td><td><span class="status-dot ${review ? "review" : ""}">${review ? "Revisar" : "Validado"}</span></td></tr>`;
   }).join("") || '<tr><td colspan="9" class="empty-state">Sin resultados.</td></tr>';
 }
 
@@ -700,14 +731,14 @@ function updateHealth() {
   $("healthBadge").querySelector("span").textContent = `Datos hasta Sem ${manifest.weeks.at(-1)} · ${matched}/${total} SAP · ${counts.storesWithData} tiendas`;
 }
 
-async function fetchStoreData(path) {
+async function fetchStoreData(path, version = manifest.generated) {
   let lastError;
   for (let attempt = 1; attempt <= 2; attempt += 1) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
     try {
       const separator = path.includes("?") ? "&" : "?";
-      const response = await fetch(`${path}${separator}v=${encodeURIComponent(manifest.generated)}`, { cache: "no-store", signal: controller.signal });
+      const response = await fetch(`${path}${separator}v=${encodeURIComponent(version)}`, { cache: "no-store", signal: controller.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return await response.json();
     } catch (error) {

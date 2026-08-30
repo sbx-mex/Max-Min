@@ -21,8 +21,10 @@ def fail(message: str) -> None:
 required = [
     "index.html", "css/styles.css", "js/app.js", "sw.js", "manifest.webmanifest",
     "vendor/jspdf.umd.min.js", "data/manifest.js", "tools/build_data.py", "tools/update_week.py",
+    "data/normalized/manifest.js", "tools/build_normalized.py", "tools/audit_business_rules.cjs", "sources/Normalizados.zip",
     "sources/Directorio.xlsx", "sources/Lista_Precios_Base.xlsx",
     "updates/incoming/README.md", ".github/workflows/update-week.yml",
+    ".github/workflows/rebuild-normalized.yml",
     "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
     "assets/reference/BOH_5S_Referencia.webp", "docs/guias/Guia_5S_BOH.pdf",
     "docs/guias/Alineacion_acomodo_items.pdf", "tools/audit_week_source.py",
@@ -96,6 +98,63 @@ for store in manifest["stores"]:
 if total_records != counts["positiveRows"]:
     fail(f"reconciliación fallida: {total_records} vs {counts['positiveRows']}")
 
+normalized_source = (ROOT / "data" / "normalized" / "manifest.js").read_text(encoding="utf-8")
+normalized_prefix = "window.MAXMIN_NORMALIZED="
+if not normalized_source.startswith(normalized_prefix) or not normalized_source.rstrip().endswith(";"):
+    fail("manifest.js de Normalizados no tiene envoltura válida")
+normalized = json.loads(normalized_source[len(normalized_prefix):].strip()[:-1])
+normalized_counts = normalized["counts"]
+normalized_weeks = [int(value) for value in normalized["weeks"]]
+if not normalized_weeks or normalized_weeks != sorted(set(normalized_weeks)):
+    fail("las semanas de Normalizados no son válidas")
+if normalized_counts["ingredients"] != len(normalized["ingredients"]) or normalized_counts["categories"] != len(normalized["categories"]):
+    fail("conteo inconsistente en Normalizados")
+if normalized_counts["storesWithData"] != len(normalized["stores"]):
+    fail("conteo de tiendas inconsistente en Normalizados")
+if normalized_counts["indicatorNonBlank"] != 0:
+    fail("Indicadores debe permanecer vacío en Normalizados")
+if normalized_counts["sapMatched"] != normalized_counts["ingredients"] or normalized_counts["formatMatched"] != normalized_counts["ingredients"]:
+    fail("todos los insumos Normalizados deben tener cruce SAP y presentación")
+last_source_week = normalized_weeks[-1]
+for item in normalized["ingredients"]:
+    report_weeks = [int(value) for value in item.get("reportWeeks", [])]
+    if not report_weeks or report_weeks != sorted(set(report_weeks)):
+        fail(f"semanas reportadas inválidas para {item.get('name')}")
+    if item.get("source") != "normalizado" or item.get("firstWeek") != report_weeks[0] or item.get("lastWeek") != report_weeks[-1]:
+        fail(f"vigencia inconsistente para {item.get('name')}")
+    expected_stop = report_weeks[-1] + 1 if report_weeks[-1] < last_source_week else None
+    if item.get("stoppedWeek") != expected_stop:
+        fail(f"aviso de término inconsistente para {item.get('name')}")
+normalized_records = 0
+pedregal_normalized = False
+for store in normalized["stores"]:
+    code = str(store["code"])
+    if code not in directory:
+        fail(f"Normalizados contiene tienda fuera del directorio: {code}")
+    path = ROOT / store["file"]
+    if not path.is_file():
+        fail(f"falta data Normalizados de {code}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if code == "38107":
+        if sorted(int(value) for value in payload) != normalized_weeks:
+            fail("la carga Normalizados de 38107 · Pedregal es inconsistente")
+        pedregal_normalized = True
+    for week, flat in payload.items():
+        if int(week) not in normalized_weeks or len(flat) % 3:
+            fail(f"registro Normalizados inválido en {path}")
+        normalized_records += len(flat) // 3
+if normalized_records != normalized_counts["positiveRows"]:
+    fail(f"reconciliación Normalizados fallida: {normalized_records} vs {normalized_counts['positiveRows']}")
+if not pedregal_normalized:
+    fail("falta el cruce Normalizados para 38107 · Pedregal")
+service_items = [item for item in normalized["ingredients"] if re.search(r"vaso|tapa", str(item.get("name", "")), re.IGNORECASE)]
+if not service_items or not any(item["lastWeek"] == last_source_week for item in service_items) or not any(item["lastWeek"] < last_source_week for item in service_items):
+    fail("Normalizados debe incluir vasos/tapas tanto vigentes como históricos")
+
+salsa = [item for item in manifest["ingredients"] if item.get("name") == "Salsa de calabaza"]
+if len(salsa) != 1 or salsa[0].get("unit") != "Bote 1.86 L" or salsa[0].get("pickpack") != "Caja 4 botes de 1.86 L" or salsa[0].get("factor") != 4:
+    fail("la presentación de Salsa de calabaza debe interpretarse por bote de 1.86 L")
+
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 app = (ROOT / "js" / "app.js").read_text(encoding="utf-8")
 styles = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
@@ -110,7 +169,8 @@ markers = [
     'const headerH = 8', 'item.woe || "—"', "#DIA", "#SAP", "PEDIDOS",
     "latestWeeks", "data-week-preset", "activeFilterSummary",
     "openExportConfirmation", "confirmExportDialog", "confirmExportSummary",
-    "createSingleStoreFilter", "store.status", "historyNote", "photoCameraInput",
+    "createSingleStoreFilter", "store.status", "photoCameraInput",
+    "normalizedManifest", "NORMALIZED_INGREDIENT_BASE", "averageDivisor", "recipeNotice",
 ]
 for marker in markers:
     if marker not in app:
@@ -127,6 +187,9 @@ for marker in index_markers:
 for obsolete_copy in ["Control operativo confiable", "Valida, ajusta y corta etiquetas listas.", "Promedio dinámico:"]:
     if obsolete_copy in index:
         fail(f"persiste texto que debe estar oculto: {obsolete_copy}")
+for obsolete_copy in ["Sem 25 o anteriores", "histórico de uso de vasos y tapas", "historyNote"]:
+    if obsolete_copy in index or obsolete_copy in app:
+        fail(f"persiste aviso histórico fijo: {obsolete_copy}")
 
 report = {
     "status": "ok",
@@ -136,6 +199,17 @@ report = {
     "positiveRows": counts["positiveRows"],
     "sapMatched": counts["sapMatched"],
     "formatMatched": counts["formatMatched"],
+    "normalized": {
+        "weeks": f"{normalized_weeks[0]}-{normalized_weeks[-1]}",
+        "stores": normalized_counts["storesWithData"],
+        "ingredients": normalized_counts["ingredients"],
+        "positiveRows": normalized_counts["positiveRows"],
+        "sapMatched": normalized_counts["sapMatched"],
+        "formatMatched": normalized_counts["formatMatched"],
+        "currentIngredients": normalized_counts["currentIngredients"],
+        "stoppedIngredients": normalized_counts["stoppedIngredients"],
+        "notice": "por última semana reportada de cada ingrediente",
+    },
     "pdf": {
         "format": "letter", "orientation": "landscape", "labelsPerPage": 12,
         "grid": "4x3", "multiPage": True, "compactHeaderMm": 8,

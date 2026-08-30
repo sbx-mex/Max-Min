@@ -5,7 +5,18 @@
   "ingredients": 706,
   "positiveRows": 4884818,
   "sapMatched": 630,
-  "formatMatched": 594,
+  "formatMatched": 595,
+  "normalized": {
+    "weeks": "1-35",
+    "stores": 949,
+    "ingredients": 60,
+    "positiveRows": 1053226,
+    "sapMatched": 60,
+    "formatMatched": 60,
+    "currentIngredients": 18,
+    "stoppedIngredients": 42,
+    "notice": "por última semana reportada de cada ingrediente"
+  },
   "pdf": {
     "format": "letter",
     "orientation": "landscape",

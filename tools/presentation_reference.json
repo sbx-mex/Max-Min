@@ -371,10 +371,10 @@
     "factor": 12,
     "muestras": 7479
   },
-  "ZZZSalsa de calabaza": {
-    "unidad": "PZA:",
-    "pickpack": "PZA:",
-    "factor": 1,
+  "Salsa de calabaza": {
+    "unidad": "Bote 1.86 L",
+    "pickpack": "Caja 4 botes de 1.86 L",
+    "factor": 4,
     "muestras": 125
   },
   "5380 Xmas Espresso": {
@@ -4336,5 +4336,29 @@
     "pickpack": "PZA:",
     "factor": 1,
     "muestras": 575
+  },
+  "Vaso Compostable Caliente 4oz": {
+    "unidad": "Pieza",
+    "pickpack": "Caja 1000 piezas",
+    "factor": 1000,
+    "muestras": 2
+  },
+  "fajilla carton 12/16/20 reser": {
+    "unidad": "Pieza",
+    "pickpack": "Caja 1380 piezas",
+    "factor": 1380,
+    "muestras": 9779
+  },
+  "Tenedor Desechable Envuelto": {
+    "unidad": "Pieza",
+    "pickpack": "Caja 1000 piezas",
+    "factor": 1000,
+    "muestras": 25269
+  },
+  "Cuchillo Desechable Envuelto": {
+    "unidad": "Pieza",
+    "pickpack": "Caja 1000 piezas",
+    "factor": 1000,
+    "muestras": 10057
   }
 }
