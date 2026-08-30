@@ -4,6 +4,7 @@ const FACTOR_PEDIDOS = { 2: 5, 3: 4, 4: 3, 5: 2 };
 const STORAGE_KEY = "maxmin-remaster-v4";
 const PAGE_SIZE = 12;
 const LIST_PAGE_SIZE = 20;
+const ACOMODO_MAX_ITEMS = 6;
 const NORMALIZED_INGREDIENT_BASE = 1000000;
 const NORMALIZED_CATEGORY_BASE = 10000;
 const $ = (id) => document.getElementById(id);
@@ -238,6 +239,9 @@ function bindEvents() {
   $("exportLabelsButton").addEventListener("click", () => openExportConfirmation("labels"));
   $("exportListButton").addEventListener("click", () => openExportConfirmation("list"));
   $("exportSelectedLabelsButton").addEventListener("click", () => openExportConfirmation("labels"));
+  $("addAcomodoItemsButton").addEventListener("click", addAcomodoItems);
+  $("clearAcomodoItemsButton").addEventListener("click", clearAcomodoItems);
+  $("exportAcomodoButton").addEventListener("click", () => openExportConfirmation("acomodo"));
   $("previousPreview").addEventListener("click", () => { state.previewPage = Math.max(0, state.previewPage - 1); renderPreview(); });
   $("nextPreview").addEventListener("click", () => { state.previewPage += 1; renderPreview(); });
   $("catalogList").addEventListener("change", onCatalogChange);
@@ -253,7 +257,7 @@ function bindEvents() {
   $("photoStage").addEventListener("drop", onPhotoStageDrop);
   $("photoStage").addEventListener("click", onPhotoStageClick);
   $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
-  $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); pendingExportKind === "list" ? exportListPdf() : exportPdf(); });
+  $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); runConfirmedExport(); });
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") document.querySelectorAll(".filter-menu").forEach((menu) => menu.classList.add("hidden"));
@@ -274,7 +278,7 @@ function updateGuide(tab) {
   const guides = {
     etiquetas: ["Ruta rápida · Etiquetas", ["Filtra tienda y semanas", "Elige ingredientes", "Revisa las fichas", "Confirma y exporta"]],
     consulta: ["Ruta rápida · Consulta", ["Filtra el alcance", "Revisa la tabla", "Elige una salida", "Confirma el PDF"]],
-    acomodo: ["Ruta rápida · Acomodo", ["Filtra y elige", "Toma o adjunta foto", "Ubica los insumos", "Compara con la guía"]],
+    acomodo: ["Ruta rápida · Acomodo", ["Filtra el rack", "Toma la foto", "Ubica 5 o 6 artículos", "Revisa y exporta"]],
   };
   const [title, steps] = guides[tab] || guides.etiquetas;
   $("guideTitle").textContent = title;
@@ -514,6 +518,25 @@ function selectFiltered() {
   toast(`${items.length} ingrediente(s) visibles seleccionados.`);
 }
 
+
+function addAcomodoItems() {
+  const candidates = state.filtered.filter((item) => Number(item.usage) > 0).slice(0, ACOMODO_MAX_ITEMS);
+  if (!candidates.length) { toast("No hay artículos con uso para agregar. Ajusta los filtros."); return; }
+  state.selected = new Set(candidates.map((item) => item.id));
+  activeMarkerId = candidates[0]?.id || null;
+  persistState();
+  renderAll();
+  toast(`${candidates.length} artículo(s) agregados al rack.`);
+}
+
+function clearAcomodoItems() {
+  state.selected.clear();
+  activeMarkerId = null;
+  if (state.store) state.markerPositions[state.store.code] = {};
+  persistState();
+  renderAll();
+}
+
 function clearSelection() { state.selected.clear(); state.previewPage = 0; renderAll(); }
 
 function resetFilters() {
@@ -588,22 +611,28 @@ function togglePhotoEnhancement() {
 
 function renderMarkers() {
   if (!state.store) return;
-  const items = selectedItemsCurrent();
+  const items = selectedItemsCurrent().slice(0, ACOMODO_MAX_ITEMS);
   if (activeMarkerId && !items.some((item) => item.id === activeMarkerId)) activeMarkerId = null;
   const positions = state.markerPositions[state.store.code] || (state.markerPositions[state.store.code] = {});
-  $("markerCount").textContent = String(items.length);
-  $("markerList").innerHTML = items.map((item, index) => `<button class="marker-row ${activeMarkerId === item.id ? "active" : ""}" type="button" draggable="true" data-marker-id="${item.id}" aria-pressed="${activeMarkerId === item.id}"><span class="marker-number">${index + 1}</span><span><b>${esc(item.name)}</b><small>${esc(item.sap)}</small><em>Arrastra o toca para ubicar</em></span></button>`).join("") || '<div class="empty-state">Elige ingredientes para crear marcadores.</div>';
+  $("markerCount").textContent = `${items.length} / ${ACOMODO_MAX_ITEMS}`;
+  $("acomodoSelectionHint").textContent = items.length
+    ? `${items.length} artículo(s) listos · ${state.orders} pedidos`
+    : "Recomendado: 5 o 6 artículos por rack.";
+  $("markerList").innerHTML = items.map((item, index) => {
+    const calc = calculate(item);
+    return `<button class="marker-row ${activeMarkerId === item.id ? "active" : ""}" type="button" draggable="true" data-marker-id="${item.id}" aria-pressed="${activeMarkerId === item.id}"><span class="marker-number">${index + 1}</span><span class="marker-identity"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small><em>Toca y ubica en la foto</em></span><strong>${formatNumber(item.usage, 1)}</strong><strong>${formatMinMax(calc.min, calc.mode)}</strong><strong>${formatMinMax(calc.max, calc.mode)}</strong></button>`;
+  }).join("") || '<div class="empty-state">Filtra el rack y usa “Agregar hasta 6 filtrados”.</div>';
   const layer = $("markerLayer");
   layer.innerHTML = "";
   items.forEach((item, index) => {
-    const defaultPosition = { x: 6 + (index % 6) * 15, y: 8 + Math.floor(index / 6) * 14 };
+    const defaultPosition = { x: 8 + (index % 6) * 15, y: 10 };
     const position = positions[item.id] || defaultPosition;
     const marker = document.createElement("button");
     marker.type = "button";
     marker.className = `marker ${activeMarkerId === item.id ? "active" : ""}`;
     marker.dataset.markerId = String(item.id);
     marker.textContent = String(index + 1);
-    marker.title = item.name;
+    marker.title = item.sap || item.name;
     marker.style.left = `${position.x}%`;
     marker.style.top = `${position.y}%`;
     bindMarkerDrag(marker, item.id, positions);
@@ -710,36 +739,101 @@ function listItemsCurrent() {
 
 function openExportConfirmation(kind = "labels") {
   const items = kind === "list" ? listItemsCurrent() : selectedItemsCurrent();
-  if (!items.length) { toast(kind === "list" ? "No hay filas con uso mayor a cero." : "Selecciona al menos un ingrediente para crear etiquetas."); return; }
+  if (!items.length) { toast(kind === "list" ? "No hay filas con uso mayor a cero." : "Selecciona al menos un ingrediente."); return; }
+  if (kind === "acomodo" && !$("photoStage").classList.contains("has-photo")) { toast("Toma o adjunta la foto del rack antes de exportar."); return; }
   if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
   pendingExportKind = kind;
-  const pageSize = kind === "list" ? LIST_PAGE_SIZE : PAGE_SIZE;
-  const pages = Math.ceil(items.length / pageSize);
-  const outputLabel = kind === "list" ? "filas en lista operativa" : "etiquetas de rack";
-  $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${items.length} ${outputLabel} · ${pages} hoja(s) Carta.`;
-  $("confirmExportButton").textContent = kind === "list" ? "Exportar lista" : "Exportar etiquetas";
+  const exportItems = kind === "acomodo" ? items.slice(0, ACOMODO_MAX_ITEMS) : items;
+  const pageSize = kind === "list" ? LIST_PAGE_SIZE : kind === "acomodo" ? ACOMODO_MAX_ITEMS : PAGE_SIZE;
+  const pages = Math.ceil(exportItems.length / pageSize);
+  const outputLabel = kind === "list" ? "filas en lista operativa" : kind === "acomodo" ? "artículos en acomodo" : "etiquetas de rack";
+  $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${state.orders} pedidos · ${exportItems.length} ${outputLabel} · ${pages} hoja(s) Carta.`;
+  $("confirmExportButton").textContent = kind === "list" ? "Exportar lista" : kind === "acomodo" ? "Exportar acomodo" : "Exportar etiquetas";
   $("confirmExportDialog").showModal();
 }
 
-async function exportListPdf() {
-  const items = listItemsCurrent();
-  if (!items.length) { toast("No hay filas con uso mayor a cero para exportar."); return; }
-  if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
-  showLoading("Renderizando lista", `${items.length} fila(s) · Carta horizontal`);
+function runConfirmedExport() {
+  if (pendingExportKind === "list") exportListPdf();
+  else if (pendingExportKind === "acomodo") exportAcomodoPdf();
+  else exportPdf();
+}
+
+async function exportAcomodoPdf() {
+  const items = selectedItemsCurrent().slice(0, ACOMODO_MAX_ITEMS);
+  if (!items.length || !$("photoStage").classList.contains("has-photo")) { toast("Acomodo necesita foto y al menos un artículo."); return; }
+  showLoading("Renderizando acomodo", `${items.length} artículo(s) · ${state.orders} pedidos`);
   await new Promise((resolve) => setTimeout(resolve, 80));
   try {
-    const pdf = buildListPdf(items);
-    const expectedPages = Math.ceil(items.length / LIST_PAGE_SIZE);
-    if (pdf.internal.getNumberOfPages() !== expectedPages) throw new Error("Número de páginas inesperado");
-    if (pdf.internal.pageSize.getWidth() <= pdf.internal.pageSize.getHeight()) throw new Error("Orientación inválida");
-    const filename = `${safeName(state.store.label)}_Sem_${safeName(compactWeeks([...state.weeks]))}_Lista_MIN_MAX.pdf`;
+    const pdf = buildAcomodoPdf(items, rackPhotoDataUrl());
+    if (pdf.internal.getNumberOfPages() !== 1) throw new Error("Acomodo debe ocupar una hoja");
+    const filename = `${safeName(state.store.label)}_Sem_${safeName(compactWeeks([...state.weeks]))}_Acomodo.pdf`;
     pdf.save(filename);
-    $("exportSummary").textContent = `${items.length} filas · ${expectedPages} hoja(s) Carta.`;
+    $("exportSummary").textContent = `${items.length} artículos · 1 hoja Carta · ${state.orders} pedidos.`;
     $("exportDialog").showModal();
   } catch (error) {
     console.error(error);
-    toast("La validación detuvo la lista PDF. Revisa los datos e intenta nuevamente.");
+    toast("La validación detuvo el PDF de Acomodo. Revisa la foto e intenta nuevamente.");
   } finally { hideLoading(); }
+}
+
+function rackPhotoDataUrl() {
+  const image = $("rackPhoto");
+  const canvas = document.createElement("canvas");
+  const maxWidth = 1800;
+  const scale = Math.min(1, maxWidth / image.naturalWidth);
+  canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+  const context = canvas.getContext("2d");
+  context.filter = $("photoStage").classList.contains("enhanced") ? "contrast(1.08) saturate(1.04) brightness(1.02)" : "none";
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL("image/jpeg", 0.88);
+}
+
+function buildAcomodoPdf(items, photoData) {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: "mm", format: "letter", orientation: "landscape", compress: true, putOnlyUsedFonts: true });
+  pdf.setProperties({ title: "Acomodo de rack MIN MAX", subject: `${pdfSafeText(state.store.label)} - ${state.orders} pedidos`, creator: "Max & Min Remaster" });
+  const width = pdf.internal.pageSize.getWidth();
+  const height = pdf.internal.pageSize.getHeight();
+  const margin = 6;
+  drawPdfHeader(pdf, margin, 4, width - margin * 2, 8);
+  const photoY = 15;
+  const photoH = 112;
+  const photoW = width - margin * 2;
+  pdf.setFillColor(244, 248, 246); pdf.roundedRect(margin, photoY, photoW, photoH, 2, 2, "F");
+  const properties = pdf.getImageProperties(photoData);
+  const scale = Math.min(photoW / properties.width, photoH / properties.height);
+  const drawW = properties.width * scale;
+  const drawH = properties.height * scale;
+  pdf.addImage(photoData, "JPEG", margin + (photoW - drawW) / 2, photoY + (photoH - drawH) / 2, drawW, drawH, undefined, "FAST");
+  pdf.setTextColor(0, 59, 42); pdf.setFont("helvetica", "bold"); pdf.setFontSize(7);
+  pdf.text("ARTÍCULOS DEL RACK", margin, 133);
+  const listY = 137;
+  const columns = [10, 150, 30, 30, 30];
+  const headers = ["#", "INGREDIENTE / SAP", "USO PROM.", "MÍN.", "MÁX."];
+  let cursor = margin;
+  pdf.setFillColor(0, 59, 42); pdf.rect(margin, listY, columns.reduce((a,b)=>a+b,0), 7, "F");
+  pdf.setTextColor(255,255,255); pdf.setFontSize(5.8);
+  headers.forEach((label,index) => { pdf.text(label, cursor + 1.5, listY + 4.7); cursor += columns[index]; });
+  items.forEach((item,index) => {
+    const calc=calculate(item);
+    const y=listY+7+index*10.5;
+    pdf.setFillColor(index%2?247:255,index%2?250:255,index%2?248:255);
+    pdf.setDrawColor(218,229,224); pdf.rect(margin,y,columns.reduce((a,b)=>a+b,0),10.5,"FD");
+    const values=[String(index+1), `${pdfSafeText(item.sap)} | ${pdfSafeText(item.name)}`, formatNumber(item.usage,1), formatMinMax(calc.min,calc.mode), formatMinMax(calc.max,calc.mode)];
+    let x=margin;
+    values.forEach((value,columnIndex)=>{
+      const columnW=columns[columnIndex];
+      if(columnIndex) pdf.line(x,y,x,y+10.5);
+      pdf.setTextColor(24,35,31); pdf.setFont("helvetica",columnIndex===1?"bold":"normal");
+      fitPdfFont(pdf,value,columnW-3,6.4,4.8);
+      pdf.text(fitPdfText(pdf,value,columnW-3),x+1.5,y+6.6);
+      x+=columnW;
+    });
+  });
+  pdf.setTextColor(100,116,109); pdf.setFont("helvetica","normal"); pdf.setFontSize(5.5);
+  pdf.text("Sistema de Evidencias OPS - Max & Min", width-margin, height-3.2, {align:"right"});
+  return pdf;
 }
 
 function buildListPdf(items) {
@@ -839,8 +933,9 @@ function drawPdfHeader(pdf, x, y, width, height) {
     ["TIENDA", pdfSafeText(state.store.label)],
     ["SEMANAS", compactWeeks([...state.weeks])],
     ["ACTUALIZACIÓN", formatDate(manifest.generated)],
+    ["PEDIDOS", String(state.orders)],
   ];
-  const widths = [width * .42, width * .25, width * .33];
+  const widths = [width * .38, width * .22, width * .25, width * .15];
   pdf.setDrawColor(0, 98, 65); pdf.setLineWidth(.3); pdf.roundedRect(x, y, width, height, 1.5, 1.5, "S");
   let sx = x;
   values.forEach(([label, value], index) => {
