@@ -1,0 +1,55 @@
+name: Reconstruir motor Normalizados
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "sources/Normalizados.zip"
+
+concurrency:
+  group: max-min-normalizados
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install openpyxl
+      - name: Validar fuente Normalizados
+        run: test -f sources/Normalizados.zip
+      - name: Reconstruir datos compactos
+        run: python tools/build_normalized.py
+      - run: node --check js/app.js
+      - run: node --check sw.js
+      - run: node tools/audit_business_rules.cjs
+      - run: python tools/audit_project.py
+      - name: Publicar motor validado
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/normalized audit/normalized_build_report.json audit/normalized_ingredients_review.csv
+          if git diff --cached --quiet; then
+            echo "El motor ya está actualizado"
+            exit 0
+          fi
+          git commit -m "data: reconstruir motor normalizados"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Resumen
+        run: |
+          echo "## Motor Normalizados listo" >> "$GITHUB_STEP_SUMMARY"
+          echo "La última semana se calcula por ingrediente; no existe un corte fijo global." >> "$GITHUB_STEP_SUMMARY"
+          echo "Reporte: \`audit/normalized_build_report.json\`" >> "$GITHUB_STEP_SUMMARY"

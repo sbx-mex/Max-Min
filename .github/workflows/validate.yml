@@ -28,6 +28,7 @@ jobs:
       - run: pip install openpyxl pypdf Pillow
       - run: node --check js/app.js
       - run: node --check sw.js
+      - run: node tools/audit_business_rules.cjs
       - run: python tools/cleanup_obsolete.py --report /tmp/cleanup_report.json
       - run: python tools/audit_project.py
       - run: python tools/prepare_pdf_release.py --output /tmp/Etiquetas_MIN_MAX_Muestra.pdf --report /tmp/pdf_release_report.json
