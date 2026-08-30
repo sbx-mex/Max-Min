@@ -52,21 +52,30 @@ jobs:
             exit 1
           fi
           test -f "$SOURCE_PATH"
+      - name: Retirar motores obsoletos conocidos
+        run: python tools/cleanup_obsolete.py --apply --report audit/cleanup_report.json
+      - name: Auditar fuente sin modificar datos
+        run: >-
+          python tools/audit_week_source.py
+          --input "$SOURCE_PATH"
+          --week "$WEEK"
+          --unknown-store-policy skip
+          --report "audit/week_${WEEK}_source_report.json"
       - name: Incorporar semana
         run: |
           OPTIONS=()
           if [[ "$REPLACE" == "true" ]]; then OPTIONS+=(--replace); fi
-          python tools/update_week.py --input "$SOURCE_PATH" --week "$WEEK" "${OPTIONS[@]}"
+          python tools/update_week.py --input "$SOURCE_PATH" --week "$WEEK" --sync-directory --unknown-store-policy skip "${OPTIONS[@]}"
       - run: node --check js/app.js
       - run: node --check sw.js
-      - run: python tools/cleanup_obsolete.py
+      - run: python tools/cleanup_obsolete.py --report /tmp/cleanup_report.json
       - run: python tools/audit_project.py
       - name: Retirar fuente procesada y publicar datos
         run: |
           git rm --ignore-unmatch -- "$SOURCE_PATH"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data audit
+          git add -A
           if git diff --cached --quiet; then
             echo "No hay cambios para publicar"
             exit 1
