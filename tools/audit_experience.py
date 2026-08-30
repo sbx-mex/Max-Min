@@ -43,8 +43,9 @@ def inspect_pdf(pdf_path: Path, expected_rows: int = 30) -> dict[str, object]:
         require(width > height, f"hoja {page_number} no está en orientación horizontal")
         require(abs(width - LETTER_LANDSCAPE_POINTS[0]) <= 2 and abs(height - LETTER_LANDSCAPE_POINTS[1]) <= 2, f"hoja {page_number} no es Carta")
         text = " ".join((page.extract_text() or "").split()).upper()
-        for token in ("TIENDA:", "38107", "SEMANAS:", "#DIA", "#SAP", "USO PROM. SEM", "# PEDIDOS", "HOJA 1 DE"):
+        for token in ("TIENDA:", "38107", "SEMANAS:", "#DIA", "#SAP", "USO PROM. SEM", "# PEDIDOS"):
             require(token in text, f"hoja {page_number} sin {token}")
+        require(f"HOJA {page_number} DE {expected_pages}" in text, f"paginación incorrecta en hoja {page_number}")
         require(not re.search(r"(?<!\d)0\.0(?!\d)", text), f"hoja {page_number} contiene un valor visible igual a 0.0")
         require(text.count("TIENDA:") == 1, f"cabecera repetida incorrectamente en hoja {page_number}")
         page_reports.append({"page": page_number, "sizePoints": [round(width, 2), round(height, 2)], "textCharacters": len(text)})
