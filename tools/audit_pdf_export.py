@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -52,6 +53,8 @@ def audit_pdf(pdf_path: Path, expected_labels: int = 15) -> dict[str, object]:
         missing = [token for token in REQUIRED_PAGE_TEXT if token not in upper]
         if missing:
             fail(f"página {index} sin contenido obligatorio: {', '.join(missing)}")
+        if re.search(r"(?<!\d)0\.0(?!\d)", upper):
+            fail(f"página {index} contiene una etiqueta con valor visible 0.0")
 
         page_labels = upper.count("#DIA")
         if page_labels < 1 or page_labels > 12:

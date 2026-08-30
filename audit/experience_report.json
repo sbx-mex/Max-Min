@@ -1,0 +1,83 @@
+{
+  "status": "ok",
+  "improvements": [
+    {
+      "id": 1,
+      "name": "Consulta limpia",
+      "status": "ok",
+      "evidence": "9 columnas; #DIA y #SAP separados; sin formato por fila"
+    },
+    {
+      "id": 2,
+      "name": "Sólo valores positivos",
+      "status": "ok",
+      "evidence": "catálogo, selección, Consulta y PDF excluyen uso, MIN o MAX iguales a cero"
+    },
+    {
+      "id": 3,
+      "name": "Exportación dual",
+      "status": "ok",
+      "evidence": "lista y etiquetas en Carta horizontal con paginación segura"
+    },
+    {
+      "id": 4,
+      "name": "Acomodo visual 60/40",
+      "status": "ok",
+      "evidence": "foto 3/5 e insumos 2/5; arrastre, toque y ajuste de marcadores"
+    },
+    {
+      "id": 5,
+      "name": "Inicio estable y guiado",
+      "status": "ok",
+      "evidence": "indicador de salud corregido y guías rápidas específicas por pestaña"
+    }
+  ],
+  "listPdf": {
+    "file": "Lista_MIN_MAX_Validacion_Final.pdf",
+    "sha256": "5fd4ad8f6a140afc57d19b8b5e0588f14d840d4f81d2b7e58027f09626a656df",
+    "bytes": 8582,
+    "pages": 2,
+    "rows": 30,
+    "pageFormat": "Carta horizontal",
+    "pageReports": [
+      {
+        "page": 1,
+        "sizePoints": [
+          792.0,
+          612.0
+        ],
+        "textCharacters": 2475
+      },
+      {
+        "page": 2,
+        "sizePoints": [
+          792.0,
+          612.0
+        ],
+        "textCharacters": 1300
+      }
+    ],
+    "visualSafety": [
+      {
+        "page": 1,
+        "safeMarginsPixels": [
+          36,
+          24,
+          36,
+          20
+        ],
+        "inkCoverage": 0.12
+      },
+      {
+        "page": 2,
+        "safeMarginsPixels": [
+          36,
+          24,
+          36,
+          20
+        ],
+        "inkCoverage": 0.0806
+      }
+    ]
+  }
+}

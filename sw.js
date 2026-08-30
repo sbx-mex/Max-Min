@@ -1,4 +1,4 @@
-const CACHE = "maxmin-remaster-v8-normalizados-20260830";
+const CACHE = "maxmin-remaster-v9-experiencia-20260830";
 const APP_SHELL = [
   "./", "./index.html", "./css/styles.css", "./js/app.js", "./data/manifest.js",
   "./data/normalized/manifest.js",

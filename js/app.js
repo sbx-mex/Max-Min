@@ -3,6 +3,7 @@
 const FACTOR_PEDIDOS = { 2: 5, 3: 4, 4: 3, 5: 2 };
 const STORAGE_KEY = "maxmin-remaster-v4";
 const PAGE_SIZE = 12;
+const LIST_PAGE_SIZE = 20;
 const NORMALIZED_INGREDIENT_BASE = 1000000;
 const NORMALIZED_CATEGORY_BASE = 10000;
 const $ = (id) => document.getElementById(id);
@@ -34,6 +35,8 @@ let ingredientsFilter;
 let storeFilter;
 let toastTimer;
 let rackPhotoUrl;
+let pendingExportKind = "labels";
+let activeMarkerId = null;
 
 function init() {
   if (!manifest || !Array.isArray(manifest.stores) || !manifest.stores.length) {
@@ -232,7 +235,8 @@ function bindEvents() {
   $("clearFiltersButton").addEventListener("click", resetFilters);
   document.querySelectorAll("[data-week-preset]").forEach((button) => button.addEventListener("click", () => setWeekPreset(button.dataset.weekPreset)));
   $("resetButton").addEventListener("click", resetCurrent);
-  $("exportButton").addEventListener("click", openExportConfirmation);
+  $("exportButton").addEventListener("click", openExportChoice);
+  $("exportListButton").addEventListener("click", () => openExportConfirmation("list"));
   $("previousPreview").addEventListener("click", () => { state.previewPage = Math.max(0, state.previewPage - 1); renderPreview(); });
   $("nextPreview").addEventListener("click", () => { state.previewPage += 1; renderPreview(); });
   $("catalogList").addEventListener("change", onCatalogChange);
@@ -241,8 +245,17 @@ function bindEvents() {
   $("photoCameraInput").addEventListener("change", onPhotoChange);
   $("enhancePhotoButton").addEventListener("click", togglePhotoEnhancement);
   $("clearPhotoButton").addEventListener("click", clearPhoto);
+  $("markerList").addEventListener("dragstart", onMarkerListDragStart);
+  $("markerList").addEventListener("click", onMarkerListClick);
+  $("photoStage").addEventListener("dragover", onPhotoStageDragOver);
+  $("photoStage").addEventListener("dragleave", () => $("photoStage").classList.remove("drop-ready"));
+  $("photoStage").addEventListener("drop", onPhotoStageDrop);
+  $("photoStage").addEventListener("click", onPhotoStageClick);
+  $("cancelExportChoiceButton").addEventListener("click", () => $("exportChoiceDialog").close());
+  $("chooseListExportButton").addEventListener("click", () => { $("exportChoiceDialog").close(); openExportConfirmation("list"); });
+  $("chooseLabelsExportButton").addEventListener("click", () => { $("exportChoiceDialog").close(); openExportConfirmation("labels"); });
   $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
-  $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); exportPdf(); });
+  $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); pendingExportKind === "list" ? exportListPdf() : exportPdf(); });
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") document.querySelectorAll(".filter-menu").forEach((menu) => menu.classList.add("hidden"));
@@ -262,8 +275,8 @@ function setTab(tab) {
 function updateGuide(tab) {
   const guides = {
     etiquetas: ["Guía rápida · Etiquetas", ["Elige una tienda y semanas.", "Marca los productos necesarios.", "Confirma la selección y exporta."]],
-    consulta: ["Guía rápida · Consulta", ["Busca por ingrediente, DIA o SAP.", "Valida MIN, MAX y formato.", "Agrega sólo los productos correctos."]],
-    acomodo: ["Guía rápida · Acomodo", ["Toma o adjunta la estación completa.", "Arrastra cada número hasta el producto.", "Compara con las guías y valida el rack."]],
+    consulta: ["Guía rápida · Consulta", ["Filtra por tienda, semanas o ingrediente.", "Revisa sólo usos mayores a cero.", "Exporta la lista o elige etiquetas."]],
+    acomodo: ["Guía rápida · Acomodo", ["Toma o adjunta la estación completa.", "Arrastra un insumo a la foto.", "Ajusta su número y compara con la guía."]],
   };
   const [title, steps] = guides[tab] || guides.etiquetas;
   $("guideTitle").textContent = title;
@@ -403,10 +416,11 @@ function updateContext() {
 }
 
 function renderCatalog() {
-  $("filteredCount").textContent = String(state.filtered.length);
-  const items = state.filtered.slice(0, 300);
-  $("catalogList").innerHTML = items.map((item) => `<label class="catalog-item ${state.selected.has(item.id) ? "selected" : ""}"><input type="checkbox" value="${item.id}" ${state.selected.has(item.id) ? "checked" : ""} /><span class="catalog-copy"><b>${esc(item.name)}</b><small>${esc(item.sap)}${item.code ? ` · DIA ${esc(item.code)}` : ""}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</span><span class="usage-badge">${formatNumber(item.usage, 1)}</span></label>`).join("") || '<div class="empty-state">No hay ingredientes con estos filtros.</div>';
-  if (state.filtered.length > 300) $("catalogList").insertAdjacentHTML("beforeend", `<div class="empty-state">Mostrando 300 de ${state.filtered.length}. Usa la búsqueda para acotar.</div>`);
+  const positiveItems = positiveReportItems();
+  $("filteredCount").textContent = String(positiveItems.length);
+  const items = positiveItems.slice(0, 300);
+  $("catalogList").innerHTML = items.map((item) => `<label class="catalog-item ${state.selected.has(item.id) ? "selected" : ""}"><input type="checkbox" value="${item.id}" ${state.selected.has(item.id) ? "checked" : ""} /><span class="catalog-copy"><b>${esc(item.name)}</b><small>${esc(item.sap)}${item.code ? ` · DIA ${esc(item.code)}` : ""}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</span><span class="usage-badge">${formatNumber(item.usage, 1)}</span></label>`).join("") || '<div class="empty-state">No hay ingredientes con uso mayor a cero para estos filtros.</div>';
+  if (positiveItems.length > 300) $("catalogList").insertAdjacentHTML("beforeend", `<div class="empty-state">Mostrando 300 de ${positiveItems.length}. Usa la búsqueda para acotar.</div>`);
 }
 
 function renderPreview() {
@@ -421,7 +435,7 @@ function renderPreview() {
   $("previewPage").textContent = `Página ${state.previewPage + 1} de ${pages}`;
   $("previousPreview").disabled = state.previewPage === 0;
   $("nextPreview").disabled = state.previewPage >= pages - 1;
-  $("exportButton").disabled = !selected.length;
+  $("exportButton").disabled = positiveReportItems().length === 0;
 }
 
 function labelCardHtml(item) {
@@ -432,13 +446,19 @@ function labelCardHtml(item) {
 }
 
 function renderConsulta() {
-  const items = state.filtered.slice(0, 500);
+  const items = positiveReportItems().slice(0, 500);
   $("consultaBody").innerHTML = items.map((item) => {
     const calc = calculate(item);
     const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
-    const override = state.overrides[item.id] || "auto";
-    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td><td><select class="table-format" data-id="${item.id}"><option value="auto" ${override === "auto" ? "selected" : ""}>Base</option><option value="unidad" ${override === "unidad" ? "selected" : ""}>Unidad</option><option value="pickpack" ${override === "pickpack" ? "selected" : ""}>Pick Pack</option></select></td><td><span class="status-dot ${review ? "review" : ""}">${review ? "Revisar" : "Validado"}</span></td></tr>`;
-  }).join("") || '<tr><td colspan="9" class="empty-state">Sin resultados.</td></tr>';
+    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${esc(item.woe || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td><td><span class="status-dot ${review ? "review" : ""}">${review ? "Revisar" : "Validado"}</span></td></tr>`;
+  }).join("") || '<tr><td colspan="9" class="empty-state">Sin insumos con uso mayor a cero.</td></tr>';
+}
+
+function positiveReportItems() {
+  return state.filtered.filter((item) => {
+    const calc = calculate(item);
+    return Number(item.usage) > 0 && Number(calc.min) > 0 && Number(calc.max) > 0;
+  });
 }
 
 function onCatalogChange(event) {
@@ -455,18 +475,15 @@ function onConsultaChange(event) {
   if (event.target.classList.contains("row-select")) {
     if (event.target.checked) state.selected.add(id); else state.selected.delete(id);
   }
-  if (event.target.classList.contains("table-format")) {
-    if (event.target.value === "auto") delete state.overrides[id]; else state.overrides[id] = event.target.value;
-    persistState();
-  }
   renderAll();
 }
 
 function selectFiltered() {
-  state.filtered.forEach((item) => state.selected.add(item.id));
+  const items = positiveReportItems();
+  items.forEach((item) => state.selected.add(item.id));
   state.previewPage = Math.max(0, Math.ceil(state.selected.size / PAGE_SIZE) - 1);
   renderAll();
-  toast(`${state.filtered.length} ingrediente(s) agregados a la exportación.`);
+  toast(`${items.length} ingrediente(s) con uso positivo agregados.`);
 }
 
 function clearSelection() { state.selected.clear(); state.previewPage = 0; renderAll(); }
@@ -511,7 +528,7 @@ function resetCurrent() {
 
 function selectedItemsCurrent() {
   const byId = new Map(state.aggregated.map((item) => [item.id, item]));
-  return [...state.selected].map((id) => byId.get(id)).filter(Boolean);
+  return [...state.selected].map((id) => byId.get(id)).filter((item) => item && Number(item.usage) > 0 && calculate(item).min > 0 && calculate(item).max > 0);
 }
 
 function onPhotoChange(event) {
@@ -543,9 +560,10 @@ function togglePhotoEnhancement() {
 function renderMarkers() {
   if (!state.store) return;
   const items = selectedItemsCurrent();
+  if (activeMarkerId && !items.some((item) => item.id === activeMarkerId)) activeMarkerId = null;
   const positions = state.markerPositions[state.store.code] || (state.markerPositions[state.store.code] = {});
   $("markerCount").textContent = String(items.length);
-  $("markerList").innerHTML = items.map((item, index) => `<div class="marker-row"><span class="marker-number">${index + 1}</span><span><b>${esc(item.name)}</b><small>${esc(item.sap)}</small></span></div>`).join("") || '<div class="empty-state">Selecciona etiquetas para crear marcadores.</div>';
+  $("markerList").innerHTML = items.map((item, index) => `<button class="marker-row ${activeMarkerId === item.id ? "active" : ""}" type="button" draggable="true" data-marker-id="${item.id}" aria-pressed="${activeMarkerId === item.id}"><span class="marker-number">${index + 1}</span><span><b>${esc(item.name)}</b><small>${esc(item.sap)}</small><em>Arrastra o toca para ubicar</em></span></button>`).join("") || '<div class="empty-state">Elige ingredientes para crear marcadores.</div>';
   const layer = $("markerLayer");
   layer.innerHTML = "";
   items.forEach((item, index) => {
@@ -553,7 +571,8 @@ function renderMarkers() {
     const position = positions[item.id] || defaultPosition;
     const marker = document.createElement("button");
     marker.type = "button";
-    marker.className = "marker";
+    marker.className = `marker ${activeMarkerId === item.id ? "active" : ""}`;
+    marker.dataset.markerId = String(item.id);
     marker.textContent = String(index + 1);
     marker.title = item.name;
     marker.style.left = `${position.x}%`;
@@ -563,9 +582,65 @@ function renderMarkers() {
   });
 }
 
+function activateMarker(ingredientId) {
+  activeMarkerId = Number(ingredientId);
+  document.querySelectorAll("[data-marker-id]").forEach((element) => {
+    const active = Number(element.dataset.markerId) === activeMarkerId;
+    element.classList.toggle("active", active);
+    if (element.classList.contains("marker-row")) element.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function onMarkerListClick(event) {
+  const row = event.target.closest(".marker-row");
+  if (!row) return;
+  activateMarker(row.dataset.markerId);
+  if (!$("photoStage").classList.contains("has-photo")) toast("Toma o adjunta una foto; después toca la ubicación del insumo.");
+}
+
+function onMarkerListDragStart(event) {
+  const row = event.target.closest(".marker-row");
+  if (!row || !event.dataTransfer) return;
+  activateMarker(row.dataset.markerId);
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", row.dataset.markerId);
+}
+
+function onPhotoStageDragOver(event) {
+  event.preventDefault();
+  if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+  $("photoStage").classList.add("drop-ready");
+}
+
+function onPhotoStageDrop(event) {
+  event.preventDefault();
+  $("photoStage").classList.remove("drop-ready");
+  const ingredientId = Number(event.dataTransfer?.getData("text/plain") || activeMarkerId);
+  if (!Number.isFinite(ingredientId)) return;
+  placeMarkerAt(ingredientId, event.clientX, event.clientY);
+}
+
+function onPhotoStageClick(event) {
+  if (event.target.closest(".marker") || !activeMarkerId) return;
+  if (!$("photoStage").classList.contains("has-photo")) { toast("Primero toma o adjunta la foto de la estación."); return; }
+  placeMarkerAt(activeMarkerId, event.clientX, event.clientY);
+}
+
+function placeMarkerAt(ingredientId, clientX, clientY) {
+  const rect = $("markerLayer").getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const x = Math.max(0, Math.min(92, ((clientX - rect.left - 21) / rect.width) * 100));
+  const y = Math.max(0, Math.min(92, ((clientY - rect.top - 17) / rect.height) * 100));
+  const positions = state.markerPositions[state.store.code] || (state.markerPositions[state.store.code] = {});
+  positions[ingredientId] = { x, y };
+  activeMarkerId = ingredientId;
+  persistState();
+  renderMarkers();
+}
+
 function bindMarkerDrag(marker, ingredientId, positions) {
   let active = false;
-  marker.addEventListener("pointerdown", (event) => { active = true; marker.classList.add("dragging"); marker.setPointerCapture(event.pointerId); });
+  marker.addEventListener("pointerdown", (event) => { active = true; activateMarker(ingredientId); marker.classList.add("dragging"); marker.setPointerCapture(event.pointerId); });
   marker.addEventListener("pointermove", (event) => {
     if (!active) return;
     const rect = $("markerLayer").getBoundingClientRect();
@@ -599,19 +674,115 @@ async function exportPdf() {
   } finally { hideLoading(); }
 }
 
-function openExportConfirmation() {
-  const items = selectedItemsCurrent();
-  if (!items.length) { toast("Selecciona al menos un ingrediente antes de exportar."); return; }
+function openExportChoice() {
+  if (!positiveReportItems().length) { toast("No hay insumos con uso mayor a cero para exportar."); return; }
+  $("exportChoiceDialog").showModal();
+}
+
+function listItemsCurrent() {
+  const selected = selectedItemsCurrent();
+  return selected.length ? selected : positiveReportItems();
+}
+
+function openExportConfirmation(kind = "labels") {
+  const items = kind === "list" ? listItemsCurrent() : selectedItemsCurrent();
+  if (!items.length) { toast(kind === "list" ? "No hay filas con uso mayor a cero." : "Selecciona al menos un ingrediente para crear etiquetas."); return; }
   if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
-  const pages = Math.ceil(items.length / PAGE_SIZE);
-  $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${items.length} etiquetas · ${pages} hoja(s).`;
+  pendingExportKind = kind;
+  const pageSize = kind === "list" ? LIST_PAGE_SIZE : PAGE_SIZE;
+  const pages = Math.ceil(items.length / pageSize);
+  const outputLabel = kind === "list" ? "filas en lista operativa" : "etiquetas de rack";
+  $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${items.length} ${outputLabel} · ${pages} hoja(s) Carta.`;
+  $("confirmExportButton").textContent = kind === "list" ? "Exportar lista" : "Exportar etiquetas";
   $("confirmExportDialog").showModal();
+}
+
+async function exportListPdf() {
+  const items = listItemsCurrent();
+  if (!items.length) { toast("No hay filas con uso mayor a cero para exportar."); return; }
+  if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
+  showLoading("Renderizando lista", `${items.length} fila(s) · Carta horizontal`);
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  try {
+    const pdf = buildListPdf(items);
+    const expectedPages = Math.ceil(items.length / LIST_PAGE_SIZE);
+    if (pdf.internal.getNumberOfPages() !== expectedPages) throw new Error("Número de páginas inesperado");
+    if (pdf.internal.pageSize.getWidth() <= pdf.internal.pageSize.getHeight()) throw new Error("Orientación inválida");
+    const filename = `${safeName(state.store.label)}_Sem_${safeName(compactWeeks([...state.weeks]))}_Lista_MIN_MAX.pdf`;
+    pdf.save(filename);
+    $("exportSummary").textContent = `${items.length} filas · ${expectedPages} hoja(s) Carta.`;
+    $("exportDialog").showModal();
+  } catch (error) {
+    console.error(error);
+    toast("La validación detuvo la lista PDF. Revisa los datos e intenta nuevamente.");
+  } finally { hideLoading(); }
+}
+
+function buildListPdf(items) {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: "mm", format: "letter", orientation: "landscape", compress: true, putOnlyUsedFonts: true });
+  pdf.setProperties({ title: "Lista operativa MIN MAX", subject: `${pdfSafeText(state.store.label)} - Semanas ${compactWeeks([...state.weeks])}`, creator: "Max & Min Remaster" });
+  const width = pdf.internal.pageSize.getWidth();
+  const height = pdf.internal.pageSize.getHeight();
+  const margin = 6;
+  const headerY = 4;
+  const headerH = 8;
+  const tableY = 18;
+  const rowH = 8.5;
+  const columns = [
+    ["INGREDIENTE / SAP", 82], ["CATEGORÍA", 38], ["#DIA", 18], ["#SAP", 20],
+    ["USO PROM.", 22], ["MÍN.", 18], ["MÁX.", 18], ["ESTADO", width - margin * 2 - 216],
+  ];
+  const pages = Math.ceil(items.length / LIST_PAGE_SIZE);
+
+  for (let pageIndex = 0; pageIndex < pages; pageIndex += 1) {
+    if (pageIndex) pdf.addPage("letter", "landscape");
+    pdf.setFillColor(255, 255, 255); pdf.rect(0, 0, width, height, "F");
+    drawPdfHeader(pdf, margin, headerY, width - margin * 2, headerH);
+    pdf.setTextColor(0, 59, 42); pdf.setFont("helvetica", "bold"); pdf.setFontSize(6.4);
+    pdf.text(`LISTA OPERATIVA - SOLO VALORES > 0 - HOJA ${pageIndex + 1} DE ${pages}`, margin, 15.1);
+    drawListTableHeader(pdf, columns, margin, tableY);
+    const pageItems = items.slice(pageIndex * LIST_PAGE_SIZE, (pageIndex + 1) * LIST_PAGE_SIZE);
+    pageItems.forEach((item, rowIndex) => drawListRow(pdf, columns, item, margin, tableY + 7 + rowIndex * rowH, rowH, rowIndex));
+    pdf.setTextColor(100, 116, 109); pdf.setFont("helvetica", "normal"); pdf.setFontSize(5.5);
+    pdf.text("Sistema de Evidencias OPS - Max & Min", width - margin, height - 3.2, { align: "right" });
+  }
+  return pdf;
+}
+
+function drawListTableHeader(pdf, columns, x, y) {
+  let cursor = x;
+  pdf.setFillColor(0, 59, 42); pdf.setDrawColor(0, 59, 42); pdf.rect(x, y, columns.reduce((sum, column) => sum + column[1], 0), 7, "FD");
+  pdf.setTextColor(255, 255, 255); pdf.setFont("helvetica", "bold"); pdf.setFontSize(5.6);
+  columns.forEach(([label, columnWidth]) => { pdf.text(label, cursor + 1.5, y + 4.6); cursor += columnWidth; });
+}
+
+function drawListRow(pdf, columns, item, x, y, rowHeight, rowIndex) {
+  const calc = calculate(item);
+  const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
+  const values = [
+    `${pdfSafeText(item.sap)} - ${pdfSafeText(item.name)}`, pdfSafeText(item.category), item.code || "Pendiente", item.woe || "Pendiente",
+    formatNumber(item.usage, 1), formatMinMax(calc.min, calc.mode), formatMinMax(calc.max, calc.mode), review ? "Revisar" : "Validado",
+  ];
+  const totalWidth = columns.reduce((sum, column) => sum + column[1], 0);
+  pdf.setFillColor(rowIndex % 2 ? 247 : 255, rowIndex % 2 ? 250 : 255, rowIndex % 2 ? 248 : 255);
+  pdf.setDrawColor(218, 229, 224); pdf.rect(x, y, totalWidth, rowHeight, "FD");
+  let cursor = x;
+  values.forEach((value, columnIndex) => {
+    const columnWidth = columns[columnIndex][1];
+    if (columnIndex) pdf.line(cursor, y, cursor, y + rowHeight);
+    pdf.setTextColor(columnIndex === 7 && review ? 168 : 27, columnIndex === 7 && review ? 102 : 43, columnIndex === 7 && review ? 0 : 36);
+    pdf.setFont("helvetica", columnIndex === 0 || columnIndex >= 4 ? "bold" : "normal");
+    fitPdfFont(pdf, value, columnWidth - 3, 5.9, 4.7);
+    pdf.text(fitPdfText(pdf, value, columnWidth - 3), cursor + 1.5, y + 5.3);
+    cursor += columnWidth;
+  });
 }
 
 function buildPdf(items) {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ unit: "mm", format: "letter", orientation: "landscape", compress: true, putOnlyUsedFonts: true });
-  pdf.setProperties({ title: "Etiquetas MIN MAX", subject: `${state.store.label} · Semanas ${compactWeeks([...state.weeks])}`, creator: "Max & Min Remaster" });
+  pdf.setProperties({ title: "Etiquetas MIN MAX", subject: `${pdfSafeText(state.store.label)} - Semanas ${compactWeeks([...state.weeks])}`, creator: "Max & Min Remaster" });
   const width = pdf.internal.pageSize.getWidth();
   const height = pdf.internal.pageSize.getHeight();
   const margin = 6;
@@ -641,7 +812,7 @@ function buildPdf(items) {
 
 function drawPdfHeader(pdf, x, y, width, height) {
   const values = [
-    ["TIENDA", state.store.label],
+    ["TIENDA", pdfSafeText(state.store.label)],
     ["SEMANAS", compactWeeks([...state.weeks])],
     ["ACTUALIZACIÓN", formatDate(manifest.generated)],
   ];
@@ -673,8 +844,8 @@ function drawPdfLabel(pdf, item, x, y, width, height) {
   pdf.setDrawColor(22, 31, 28); pdf.line(x, bodyY, x + width, bodyY); pdf.line(x + width / 2, bodyY, x + width / 2, bodyY + bodyH); pdf.line(x, y + height - footerH, x + width, y + height - footerH);
   pdf.setDrawColor(188, 199, 194); pdf.setLineWidth(.25); pdf.line(x + width / 3, y + height - footerH, x + width / 3, y + height); pdf.line(x + width * 2 / 3, y + height - footerH, x + width * 2 / 3, y + height);
   pdf.setTextColor(20, 29, 26); pdf.setFont("helvetica", "bold");
-  drawFittedLines(pdf, item.sap, x + 3, y + 2.2, width - 6, topH - 8.2, 10.4, 6.2, 2);
-  const identity = `${item.name} | #DIA ${item.code || "—"} | #SAP ${item.woe || "—"}`;
+  drawFittedLines(pdf, pdfSafeText(item.sap), x + 3, y + 2.2, width - 6, topH - 8.2, 10.4, 6.2, 2);
+  const identity = `${pdfSafeText(item.name)} | #DIA ${item.code || "-"} | #SAP ${item.woe || "-"}`;
   pdf.setDrawColor(218, 225, 222); pdf.setLineWidth(.2); pdf.line(x + 3, y + topH - 6.4, x + width - 3, y + topH - 6.4);
   pdf.setTextColor(72, 88, 81); pdf.setFont("helvetica", "normal"); fitPdfFont(pdf, identity, width - 6, 6.1, 4.8);
   pdf.text(fitPdfText(pdf, identity, width - 6), x + width / 2, y + topH - 2.15, { align: "center" });
@@ -728,7 +899,7 @@ function updateHealth() {
   const counts = manifest.counts;
   const total = Number(counts.ingredients || 0);
   const matched = Number(counts.sapMatched || 0);
-  $("healthBadge").querySelector("span").textContent = `Datos hasta Sem ${manifest.weeks.at(-1)} · ${matched}/${total} SAP · ${counts.storesWithData} tiendas`;
+  $("healthBadge").textContent = `Datos hasta Sem ${manifest.weeks.at(-1)} · ${matched}/${total} SAP · ${counts.storesWithData} tiendas`;
 }
 
 async function fetchStoreData(path, version = manifest.generated) {
@@ -772,6 +943,7 @@ function cleanPresentation(value) {
   return cleaned || "Unidad";
 }
 
+function pdfSafeText(value) { return String(value || "").replace(/[·•–—]/g, "-"); }
 function round1(value) { return Math.round((Number(value) || 0) * 10) / 10; }
 function formatMinMax(value, mode) { return Number(value || 0).toLocaleString("es-MX", { minimumFractionDigits: mode === "unidad" ? 1 : 0, maximumFractionDigits: mode === "unidad" ? 1 : 0 }); }
 function formatNumber(value, digits = 0) { return Number(value || 0).toLocaleString("es-MX", { maximumFractionDigits: digits }); }

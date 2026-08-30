@@ -12,8 +12,9 @@ const manifest = JSON.parse(manifestSource.replace(/^window\.MAXMIN_MANIFEST=/, 
 const store = manifest.stores.find((item) => item.code === "38107");
 if (!store) throw new Error("No se encontró Pedregal 38107");
 const storeData = JSON.parse(fs.readFileSync(path.join(root, store.file), "utf8"));
-const weeks = [18, 19, 20, 21, 22, 23, 24, 25];
+const weeks = manifest.weeks.slice(-8);
 const map = new Map();
+
 for (const week of weeks) {
   const flat = storeData[String(week)] || [];
   for (let index = 0; index < flat.length; index += 3) {
@@ -25,6 +26,7 @@ for (const week of weeks) {
     map.set(ingredientId, item);
   }
 }
+
 const items = [...map.values()].map((item) => ({
   ...item,
   ...manifest.ingredients[item.id],
@@ -33,7 +35,7 @@ const items = [...map.values()].map((item) => ({
 })).sort((a, b) => a.name.localeCompare(b.name, "es", { numeric: true }));
 
 const context = {
-  window: { MAXMIN_MANIFEST: manifest, jspdf: { jsPDF }, addEventListener() {} },
+  window: { MAXMIN_MANIFEST: manifest, MAXMIN_NORMALIZED: { weeks: [], categories: [], ingredients: [], stores: [] }, jspdf: { jsPDF }, addEventListener() {} },
   document: { getElementById() { return null; }, querySelectorAll() { return []; }, body: {} },
   localStorage: { getItem() { return null; }, setItem() {} },
   navigator: {}, console, setTimeout, clearTimeout, URL,
@@ -44,17 +46,19 @@ vm.createContext(context);
 vm.runInContext(fs.readFileSync(path.join(root, "js/app.js"), "utf8"), context, { filename: "js/app.js" });
 vm.runInContext(`
   state.store = manifest.stores.find((item) => item.code === "38107");
-  state.weeks = new Set([18,19,20,21,22,23,24,25]);
+  state.weeks = new Set(${JSON.stringify(weeks)});
   state.orders = 2;
   state.mode = "unidad";
   state.overrides = {};
   globalThis.__positiveItems = globalThis.__items.filter((item) => {
     const calc = calculate(item);
     return Number(item.usage) > 0 && Number(calc.min) > 0 && Number(calc.max) > 0;
-  }).slice(0, 15);
-  globalThis.__pdf = buildPdf(globalThis.__positiveItems);
+  }).slice(0, 30);
+  if (globalThis.__positiveItems.length < 21) throw new Error("Se requieren al menos 21 insumos positivos; sólo se encontraron " + globalThis.__positiveItems.length);
+  globalThis.__pdf = buildListPdf(globalThis.__positiveItems);
 `, context);
-const output = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, "docs/Etiquetas_MIN_MAX_Muestra_38107_Sem18-25.pdf");
+
+const output = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, "output/pdf/Lista_MIN_MAX_Muestra_38107.pdf");
 fs.mkdirSync(path.dirname(output), { recursive: true });
 fs.writeFileSync(output, Buffer.from(context.__pdf.output("arraybuffer")));
-console.log(JSON.stringify({ output, labels: context.__positiveItems.length, pages: context.__pdf.internal.getNumberOfPages() }));
+console.log(JSON.stringify({ output, rows: context.__positiveItems.length, pages: context.__pdf.internal.getNumberOfPages(), weeks }));

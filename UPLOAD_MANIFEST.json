@@ -1,0 +1,21 @@
+{
+  "project": "sbx-mex/Max-Min",
+  "baseCommit": "057a17ea6b3b1b6618273de998529fe5017a62c1",
+  "generated": "2026-08-30",
+  "purpose": "Cinco mejoras de experiencia, exportación dual y auditoría Python",
+  "totalFiles": 12,
+  "files": [
+    {"path": ".github/workflows/validate.yml", "bytes": 1087, "sha256": "c0fa97d9b1ff2a036b0fe6d8662f7589911a59dd2df4303d7d5bd1cc02bbb412"},
+    {"path": "ACTUALIZACION_UX_5_MEJORAS.md", "bytes": 942, "sha256": "748a585dacaa0f405a973f69d40be1232b55f88493d36f83c693f55bb1428b71"},
+    {"path": "audit/experience_report.json", "bytes": 1801, "sha256": "77e821833105a675286d4347984f1156edc579393fcb0091bceb60ff5145ae74"},
+    {"path": "css/styles.css", "bytes": 20668, "sha256": "5e2e849552ea2c8fd9bc10a95f9ba2461bd50c114c6266cd4f9248e35f6e22e4"},
+    {"path": "index.html", "bytes": 11232, "sha256": "38942f7d5cd5393dcf361f5cf22262f268c2f546a56d406e4fc8dd2b9b43e291"},
+    {"path": "js/app.js", "bytes": 49107, "sha256": "785153c18a4ba0717592255a53d5ca982442aca04db4a611bc59f626b4556f61"},
+    {"path": "sw.js", "bytes": 1748, "sha256": "0dbc771a96647409a400b7abfb254c5a019bb274138f4c95959c2cf7be43a385"},
+    {"path": "tools/audit_experience.py", "bytes": 7483, "sha256": "c6a84d923721f4774ebe3a47dd55a6a295319b465de567f2e35e093b7549ab90"},
+    {"path": "tools/audit_pdf_export.py", "bytes": 4014, "sha256": "d6352ae38aa29d6ddc99dd3f8e1ea70c4467bcadac1ad3c15380407b4de8e19d"},
+    {"path": "tools/generate_list_pdf_sample.cjs", "bytes": 3022, "sha256": "aa4e9a7c30020c8fd24b50fab4256348a5e501ca1cb20ca9575d42dfc0d6dd20"},
+    {"path": "tools/generate_pdf_sample.cjs", "bytes": 2779, "sha256": "5b546e7a848a81aaf0ba392553ce7ed12dbeabf35f5d7308440cf38a4a0f1b9a"},
+    {"path": "tools/verify_upload_patch.py", "bytes": 1361, "sha256": "e25032b5bf1d6f30cc1a881500967e28b3cc1336d85830837802ea907a260647"}
+  ]
+}
