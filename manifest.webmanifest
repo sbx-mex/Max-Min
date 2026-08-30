@@ -1,32 +1,17 @@
 {
-  "name": "Máximos y Mínimos 2.0",
+  "name": "Max & Min · Remaster",
   "short_name": "Max&Min",
-  "description": "Herramienta operativa para máximos, mínimos, consulta y acomodo visual.",
+  "description": "Validación y exportación segura de etiquetas Max & Min por tienda y semanas.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "lang": "es-MX",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#f4faf7",
+  "orientation": "any",
+  "background_color": "#f7f4ee",
   "theme_color": "#006241",
-  "categories": [
-    "productivity",
-    "business",
-    "utilities"
-  ],
   "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }

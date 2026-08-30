@@ -1,0 +1,4340 @@
+{
+  "Nueces y Frutas Secas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 6642
+  },
+  "Mocha Powder": {
+    "unidad": "BOL: Bol 3.9 Lb",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7479
+  },
+  "Agitador de Madera": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 40
+  },
+  "Salsa de Limon 46 oz": {
+    "unidad": "BTL: Btl 46oz",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "Pastel de Zanahoria Nuevo": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 7",
+    "factor": 7,
+    "muestras": 7374
+  },
+  "Muffin Chocochip Nuevo": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7312
+  },
+  "Filtro p/cafetera  14x6": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 500",
+    "factor": 500,
+    "muestras": 7446
+  },
+  "Polvo SCBB 24/56.7": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 24",
+    "factor": 24,
+    "muestras": 7480
+  },
+  "Pastel Classic Chocolate": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 7",
+    "factor": 7,
+    "muestras": 7199
+  },
+  "Agua Evian": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 24",
+    "factor": 24,
+    "muestras": 7362
+  },
+  "Pan de Queso": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 191
+  },
+  "Envuelto de Atun": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1054
+  },
+  "Agua de Coco RTD": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7066
+  },
+  "Panini Pavo y Panela": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7478
+  },
+  "Panini 3 Quesos": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6608
+  },
+  "ZZZCroissant Jamon y Queso": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 133
+  },
+  "Piadini de Claras y Espinacas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6841
+  },
+  "Dona Doble Chocolate": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 18",
+    "factor": 18,
+    "muestras": 7384
+  },
+  "Leche Coco 8/1.89 Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7480
+  },
+  "Yogurt Batido c/Frutas Rojas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7275
+  },
+  "Cafe Decaf Espresso Roast 5 Lb": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7472
+  },
+  "Grilled Cheese Sandwich": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7031
+  },
+  "Cafe Espresso Roast 5 Lb": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7482
+  },
+  "Cafe Chiapas 5 Lb": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7414
+  },
+  "Galleta Oreo troceada Bol/500gr": {
+    "unidad": "BOL: Bolsa 500g",
+    "pickpack": "BOL: Bolsa 500g",
+    "factor": 500,
+    "muestras": 7466
+  },
+  "Cafe 250g 6/cs Salvador Monte": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 127
+  },
+  "Te Teavana Green Iced CJ/24": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 24",
+    "factor": 24,
+    "muestras": 7232
+  },
+  "Te Teavana Black Iced CJ/20": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 6739
+  },
+  "Pan de elote": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 5",
+    "factor": 5,
+    "muestras": 7438
+  },
+  "English Breakfast C/100": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1321
+  },
+  "Emperors Clouds & M C/100": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 960
+  },
+  "ZZZ10908 Te Eark Grey C/100": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Te Hibiscus C/100": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 100",
+    "factor": 100,
+    "muestras": 7022
+  },
+  "Te Mint Blend C/100": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 100",
+    "factor": 100,
+    "muestras": 6921
+  },
+  "Te Youhberry C/100": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 94
+  },
+  "Te Chai C/100": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 100",
+    "factor": 100,
+    "muestras": 6311
+  },
+  "Te Chamomile C/100": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 100",
+    "factor": 100,
+    "muestras": 6849
+  },
+  "ZZZ10976 Salsa Caramel Brulee 1.": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 55
+  },
+  "Cafe Cold Brew 5 Lb": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7463
+  },
+  "Te Teavana Passion Iced CJ/24": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 24",
+    "factor": 24,
+    "muestras": 7333
+  },
+  "Chunks Chocolate Bolsa 500 g": {
+    "unidad": "BOL: Bolsa 500g",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7477
+  },
+  "SVETIA CJ/2000 PZAS SBX": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3232
+  },
+  "Azucar Mascabado Starbucks": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7449
+  },
+  "012924 Cafe 250g 12/cs Xmas Rese": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Cookie Straw CJ/6 LTA/25 pzas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 150",
+    "factor": 150,
+    "muestras": 6009
+  },
+  "Cafe 250g 6/cs Microblend no11": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 9
+  },
+  "Cafe 250g 6/cs Microblend no21": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "Cafe Microblend no21 5 Lb": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 33
+  },
+  "Jamon Serrano TM 100grs": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 171
+  },
+  "RB Cerezas Melrose Lata 3.2Kg": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Pan de Muerto C/12 Pzas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 10
+  },
+  "Freeze Dried Strawberry 12/50g": {
+    "unidad": "BOL: Bolsa 50g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7480
+  },
+  "Tapa 16/20 oz Hot Delivery": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 4034
+  },
+  "Been There Tuxtla Gutierre 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Cronuts Chocolate": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 22Pz",
+    "factor": 22,
+    "muestras": 6948
+  },
+  "Mini Cronuts": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 57
+  },
+  "Tapa Nitro para vasos 12/20 Oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5643
+  },
+  "Tapa Nitro para vasos 16 Oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5569
+  },
+  "ZZZJarabe Orange Piloncillo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Popote Verde Estuchado Compostab": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7480
+  },
+  "Jarabe Toffee Nut 1 lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 274
+  },
+  "Inclusion Dragon Fruit Liof C/12": {
+    "unidad": "BTE: Bte 75 grs",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7479
+  },
+  "ZZZSalsa de calabaza": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 125
+  },
+  "5380 Xmas Espresso": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 36
+  },
+  "Cafe Microblend no11 5 Lb": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Melrose Bitters Bot 125ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Chocolate Bitters Bot 125ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Reserve Mocha Blend 3kg": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "RB Helado de Vainilla 3gal": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Cafe Christmas Blend 5 LB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 592
+  },
+  "Pechuga de Pavo 500grs": {
+    "unidad": "PAQ: Paq 500g",
+    "pickpack": "PAQ: Paq 1 Kg",
+    "factor": 1,
+    "muestras": 7480
+  },
+  "Panque Limon": {
+    "unidad": "REB: Reb",
+    "pickpack": "PZA: 7 Rebanada",
+    "factor": 7,
+    "muestras": 7469
+  },
+  "Dulces Tejas Almendras": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7409
+  },
+  "Base Frappuccino Creme Syrup 3.0": {
+    "unidad": "BTL: Bot 1.89Lt",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7479
+  },
+  "ZZZJarabe Almendra 1Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 245
+  },
+  "Jarabe Avellana 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7480
+  },
+  "Jarabe Frambuesa 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7442
+  },
+  "Jarabe Coco 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7408
+  },
+  "Jarabe S Free Vainilla 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7479
+  },
+  "Jarabe Peppermint 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7454
+  },
+  "Jarabe Cinnamon  Dolce 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7447
+  },
+  "Jarabe Classic 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7479
+  },
+  "Aranchiatta": {
+    "unidad": "PZA:",
+    "pickpack": "CHA: Charola 12",
+    "factor": 12,
+    "muestras": 7373
+  },
+  "Blister Chipotle": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 250",
+    "factor": 250,
+    "muestras": 7477
+  },
+  "ESS Reusable cup": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 216",
+    "factor": 216,
+    "muestras": 2023
+  },
+  "Concentrado zarzamora Bte 1lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7451
+  },
+  "Concentrado piñacoco Bte 1Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7429
+  },
+  "Chocolate Abuela 1 kg": {
+    "unidad": "BOL: Bolsa 1Kg",
+    "pickpack": "PZA: 1 Kg",
+    "factor": 1,
+    "muestras": 7474
+  },
+  "Galleta de Temporada": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2400
+  },
+  "Tapa 8 oz Hot Traveler": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7408
+  },
+  "Malta Reserve Bar Bolsa 1Kg": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Jarabe Caña Azucar 1lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "BTE: Bote",
+    "factor": 1,
+    "muestras": 7090
+  },
+  "ZZBS Croissant Multigrano": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 111
+  },
+  "Blister Aguacate": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 60",
+    "factor": 60,
+    "muestras": 7043
+  },
+  "Been There Mexico City 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 73
+  },
+  "Been There Mexico 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 94
+  },
+  "Tapa 16/20 oz Hot Traveler": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5050
+  },
+  "Been There Puerto Vallarta 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Been There Guanajuato 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "Been There Queretaro 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 18
+  },
+  "Been There Puebla 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "Been There Morelia 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Been There Guadalajara 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 38
+  },
+  "Tapa Domo 12/20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7395
+  },
+  "Been There Monterrey 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 28
+  },
+  "Been There Chihuahua 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "CasaAgua Natural": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7054
+  },
+  "CasaAgua Gasific": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7333
+  },
+  "Jarabe de Vainilla Bean": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "Tapa Domo 16 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7063
+  },
+  "Tapa Plana 12/20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7468
+  },
+  "Tapa Plana 16 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7471
+  },
+  "Jarabe Demerara 1Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "RB Chocolatin New": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Vaso de Papel 4 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7275
+  },
+  "Vaso de Plastico 12 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5294
+  },
+  "Pike Place Roast": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 3656
+  },
+  "Vaso de Plastico 16 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5385
+  },
+  "Vaso de Plastico 20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5310
+  },
+  "Vaso de Papel 8 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7409
+  },
+  "Ensalada Cesar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4426
+  },
+  "Vaso de Papel 12 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 4977
+  },
+  "Vaso de Papel 16 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 5375
+  },
+  "Vaso de Papel 20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 600",
+    "factor": 600,
+    "muestras": 5651
+  },
+  "Fajilla de Carton": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1500",
+    "factor": 1500,
+    "muestras": 7480
+  },
+  "Matcha sin Azucar": {
+    "unidad": "BOL: Bolsa 100g",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "ZZZTopping Nuez Moscada Molida": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 106
+  },
+  "012854 Food Traveler": {
+    "unidad": "PZA:",
+    "pickpack": "PAQ: Paquete 20",
+    "factor": 20,
+    "muestras": 4366
+  },
+  "Bolsa con Asa Chica": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 250",
+    "factor": 250,
+    "muestras": 6154
+  },
+  "001339 Xmas Blend": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "RB Pan de Elote": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "RB Cronuts Choco": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Bolsa Individual Pastry": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7479
+  },
+  "Charola Porta Vasos": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 300",
+    "factor": 300,
+    "muestras": 5788
+  },
+  "ZZZ306516 Leche Entera Suprema 1": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "306517 Leche Deslact Suprema 1LT": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7478
+  },
+  "306035 Leche Light 1 LT": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7483
+  },
+  "306036 Leche Deslacto Light 1LT": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7478
+  },
+  "306577 YogurtNaturalSinAzu900gr": {
+    "unidad": "BTE: Bte 900 g",
+    "pickpack": "BTE: Bte 900 g",
+    "factor": 900,
+    "muestras": 7466
+  },
+  "RB Tanqueray Dry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 28
+  },
+  "RB Ketel One": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "RB Zacapa 23": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "ZZZRB Don Julio 70": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "RB Agua Tonica": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 28
+  },
+  "RB Bailys Original": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "RB Frutas Citricas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 24
+  },
+  "RB Licor de Café": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "RB Piña Deshidratada": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "013481 CONTENEDOR ALMEJA 6ECO": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 250",
+    "factor": 250,
+    "muestras": 2802
+  },
+  "Etiqueta de Seguridad": {
+    "unidad": "PZA:",
+    "pickpack": "ROL: Rollo 500",
+    "factor": 500,
+    "muestras": 6130
+  },
+  "001657 Leche de Soya Kosher": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 61
+  },
+  "Media Baguette": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 70",
+    "factor": 70,
+    "muestras": 7479
+  },
+  "Aderezo Chipotle Heinz 390 gr": {
+    "unidad": "BTE: Bote 390g",
+    "pickpack": "CJA: Caja 24",
+    "factor": 24,
+    "muestras": 7479
+  },
+  "Bolsa Pastry Panini": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7477
+  },
+  "Coffee Traveler 960z": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 30",
+    "factor": 30,
+    "muestras": 6220
+  },
+  "Chorizo Pamplona 500 gr": {
+    "unidad": "PAQ: Paq 500g",
+    "pickpack": "PAQ: Paq 500g",
+    "factor": 500,
+    "muestras": 7479
+  },
+  "TAPA DOMO 16OZ ECOCOMP NAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2879
+  },
+  "TAPA DOMO 12-22 OZ ECOCOMP NAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2937
+  },
+  "TAPA NITRO VASO16OZ ECOCOMP NAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3280
+  },
+  "TAPA NITRO VASO12-22OZ ECOCOMPNA": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3496
+  },
+  "TAPA PLANA VASO16 OZ ECOCOMP NAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2936
+  },
+  "TAPA PLANA VASO12-22OZECOCOMPNAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3022
+  },
+  "VASO 12OZ BEBIDA FRIA ECOCOMPNAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3132
+  },
+  "VASO 16OZ BEBIDA FRIA ECOCOMPNAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3526
+  },
+  "VASO 22OZ BEBIDA FRIA ECOCOMPNAL": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3612
+  },
+  "Minerva Lager L": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 19
+  },
+  "Minerva Stout": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 19
+  },
+  "Casa Madero 3V": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 27
+  },
+  "Ste. Michelle": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "ZZZGalleta coloreable": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 28
+  },
+  "Canela molida cj/1kg": {
+    "unidad": "CJA: Caja 1kg",
+    "pickpack": "CJA: Caja 1kg",
+    "factor": 1,
+    "muestras": 7456
+  },
+  "CHRISTMAS BLONDE ROAST 250GRS": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 40
+  },
+  "Jarabe Red Velvet": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 144
+  },
+  "Leche de Almendras CJ/6PZAS": {
+    "unidad": "BTE: Bte 946ml",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7479
+  },
+  "Reserve Mini hogaza": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "ZZZReserve Aceituna verde": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Cargadores de N2O para Sifon": {
+    "unidad": "PAQ: Paquete 24",
+    "pickpack": "CJA: Caja 25",
+    "factor": 25,
+    "muestras": 7479
+  },
+  "Strawberry Acai Juice 6/1LT": {
+    "unidad": "BTE: Bote 1 L",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "Base de MangoDragonFruit 1litro": {
+    "unidad": "BTE: Bote 1 L",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7479
+  },
+  "Vaso Compostable Caliente 8 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2614
+  },
+  "Vaso Compostable Caliente 12 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2805
+  },
+  "Vaso Compostable Caliente 16 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2900
+  },
+  "Vaso Compostable Caliente 20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2878
+  },
+  "Tapa Compostable Caliente 8 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2614
+  },
+  "ZZZLeche de Avena sin Azucar 946": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2807
+  },
+  "Tapa 16/20 Caliente Delivery ECO": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 2062
+  },
+  "BS Pan Queso Crudo act": {
+    "unidad": "BOL: Bol 35 pzs",
+    "pickpack": "CJA: Caja 3",
+    "factor": 3,
+    "muestras": 6548
+  },
+  "Tapa CompostaCaliente12/16/20 oz": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 3127
+  },
+  "Waffle Belga": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 30",
+    "factor": 30,
+    "muestras": 7304
+  },
+  "Queso Manchego 500grs": {
+    "unidad": "PAQ: Paq 500g",
+    "pickpack": "PAQ: Paq 500g",
+    "factor": 500,
+    "muestras": 7480
+  },
+  "Macarones": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 15",
+    "factor": 15,
+    "muestras": 6900
+  },
+  "fajilla carton 12/16/20 reserve": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 16
+  },
+  "Croissant Mantequilla": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 668
+  },
+  "GalletaRedVelvet": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "Galleta Decorada": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 192
+  },
+  "PORTAVASOS 2 CAVIDADES CJ/600 PZ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 600",
+    "factor": 600,
+    "muestras": 6153
+  },
+  "Cong Panini 3 Quesos": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 703
+  },
+  "Tarta Moras c/chocolatebco": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7273
+  },
+  "R CostaRicaHoney": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "Jarabe Brown Sugar 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7460
+  },
+  "Jarabe Vainilla Toasted 1 Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1124
+  },
+  "Cong Piadini de Claras Espinacas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 754
+  },
+  "Cong Envuelto Poblano": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 771
+  },
+  "Cong Grilled Cheese Sandwich": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 756
+  },
+  "RB Vino Blanco Char 750Ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 10
+  },
+  "RB Whis Suntory Toki 750Ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "RB Averna Amaro": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "COR23 ReuHotCup": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 72
+  },
+  "COR23 ReusCC16": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 86
+  },
+  "COR23 ReusCC24": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 27
+  },
+  "COR23 Tz14 Rain": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 216
+  },
+  "COR23 Tu16 SirenT": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "COR23 Pour Over": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 135
+  },
+  "COR23 Cold Brew": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 180
+  },
+  "Choco Malta Powder": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 118
+  },
+  "COR23 PrensaFran": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 327
+  },
+  "ZZZDona Vainilla Old Fashion Cja": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "COR23 Tz14Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 580
+  },
+  "COR23 SS16ToneB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "COR23 ToteBag": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 148
+  },
+  "Tiramisu": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Azucar Refinada Starbucks": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1000",
+    "factor": 1000,
+    "muestras": 7297
+  },
+  "ZZZ28439 1P Jarabe Apple Brown S": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 146
+  },
+  "COR23 CC24 Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 160
+  },
+  "Etiqueta Delivery Cierre De Bols": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2291
+  },
+  "Etiqueta Delivery Para Bebidas C": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2268
+  },
+  "Salsa De Caramelo Para Bebida Cj": {
+    "unidad": "BOL: Bolsa 1Kg",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7481
+  },
+  "Nesp ToffeNut": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 108
+  },
+  "Bis Super Croissant Cja/80 Pzas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 80",
+    "factor": 80,
+    "muestras": 7478
+  },
+  "Bis Mini Croissant Cja/115 Pzs S": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 207
+  },
+  "Cake Pop Vainilla Cumpleanos Cja": {
+    "unidad": "BLI: Blis 3pz",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7456
+  },
+  "Cake Pop Chocolate Cja/12 Bliste": {
+    "unidad": "BLI: Blis 3pz",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7204
+  },
+  "Bis Pan De Chocolate Margarina C": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 68",
+    "factor": 68,
+    "muestras": 7449
+  },
+  "Bis Pan Mini De Chocolate Margar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 59
+  },
+  "Mermelada Chabacano St Dalfour C": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 72",
+    "factor": 72,
+    "muestras": 5348
+  },
+  "Lomo De Cerdo Canadiense Paq/500": {
+    "unidad": "PAQ: Paq 500g",
+    "pickpack": "PAQ: Paq 500g",
+    "factor": 500,
+    "muestras": 7084
+  },
+  "ZZZServilleta con Logo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Mermelada Fresa St Dalfour Cja/7": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 72",
+    "factor": 72,
+    "muestras": 7204
+  },
+  "52649 C4B Lavender Powder Cj/4 B": {
+    "unidad": "BOL: Bol 340g",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7395
+  },
+  "Res SS16GoldLeaf": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Res SS16GoldShin": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "ResSS16BananaLea": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 23
+  },
+  "ResMug12SSCopper": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 18
+  },
+  "Salsa De Fresa Cj/12 Pzas/1 Lt S": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7476
+  },
+  "Orejitas De Pan (Palmerita) Cj/2": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 213
+  },
+  "ZZZ23476 C4B Cafe Xmas Blonde Ro": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Tapa Plana Delivery Cal 12 OZ": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 503
+  },
+  "Wt25CrarryingBag": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 87
+  },
+  "Barra Cacao": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 260
+  },
+  "Ensalada Durazno": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 66
+  },
+  "Pasta Pesto": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 416
+  },
+  "Bis Nal Croissant Curvo Con Semi": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 38",
+    "factor": 38,
+    "muestras": 6989
+  },
+  "Contenedor Almeja 6 Pulg De Plas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 250",
+    "factor": 250,
+    "muestras": 7422
+  },
+  "57334 C6P Base Summer Berry 4x 1": {
+    "unidad": "PZA: Pza 1 LT",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7472
+  },
+  "55802 C5B Raspberry Flavoured Pe": {
+    "unidad": "BOL: Bol 907 Gr",
+    "pickpack": "CJA: Caja 5",
+    "factor": 5,
+    "muestras": 7479
+  },
+  "Bis Nal Cheesecake Roulet Maxi C": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 54Pz",
+    "factor": 54,
+    "muestras": 7432
+  },
+  "ZZZSp25ReusSpring": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 11
+  },
+  "SI25ReusTierra": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Sp25StopperP": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 44
+  },
+  "Galleta Lavanda": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 14",
+    "factor": 14,
+    "muestras": 6026
+  },
+  "Cibatta Pollo": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 8",
+    "factor": 8,
+    "muestras": 5231
+  },
+  "Focaccia Cherry": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 6617
+  },
+  "Jugo Verde SBX": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 8",
+    "factor": 8,
+    "muestras": 6201
+  },
+  "Jugo Zanahoria SBX": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 8",
+    "factor": 8,
+    "muestras": 6166
+  },
+  "Popote Perlas Generico Recetas": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 500",
+    "factor": 500,
+    "muestras": 7476
+  },
+  "Croissant Jamon Y Queso Map Pza": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 359
+  },
+  "Serv Dist Panque De Naranja Cj/1": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7151
+  },
+  "Sandwich Pechuga de Pollo y Toci": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5114
+  },
+  "SI25DW12Beach": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 47
+  },
+  "SI25Tu20Swimm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 187
+  },
+  "SI25CC24Fun": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 61
+  },
+  "SI25Tu16Bubble": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 24
+  },
+  "SI25SSCC24Paddle": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 306
+  },
+  "SI25SSDoodle": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 78
+  },
+  "SI25Mug14Mothers": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "SI25KeychainZoo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 677
+  },
+  "SI25Tz14Eleph": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 9
+  },
+  "SI25Tz14Glass": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 48
+  },
+  "SI25CC24Dome": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 99
+  },
+  "SI25SSCC24Father": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 36
+  },
+  "SI25CC24Colors": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 585
+  },
+  "SI25CC24Drinks": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 198
+  },
+  "SI25CC24Bling": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 41
+  },
+  "SI25KeyChainCC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 38
+  },
+  "SI25ReusDelivery": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "COR25CircCup": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 796
+  },
+  "Tejas Pistache": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1138
+  },
+  "Bebida Limon RTD": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 78
+  },
+  "Shot MagicR": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "Shot GinGinie": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 19
+  },
+  "Nariño Colom": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 1912
+  },
+  "301427 Leche Entera Cj/6 Pzas/2L": {
+    "unidad": "LT: 2 Litros",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "COR25SS16Sus": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "COR25Tu16Susta": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "COR25Mug 16Sus": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "COR25Gl16Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "16191 Bebida De Avena Cj/6 Li": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "16086-Frapuccino Base Local Coff": {
+    "unidad": "BTL: Bot 1.89Lt",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 7480
+  },
+  "Rol De Canela Cj/10 Pzas/130Gr S": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 10",
+    "factor": 10,
+    "muestras": 7325
+  },
+  "Envuelto Hawaiano Cj/12 Pzas/185": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 6012
+  },
+  "SII25ClipBoyB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 293
+  },
+  "SII25ClipGirlB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 397
+  },
+  "SII25SS16Pearl": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "SII25SSCC24Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 49
+  },
+  "SII25Iceflow30": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "SII25Tu20Soft": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SII25Quencher30": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "SII25StrawLluvia": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 76
+  },
+  "SII25Tu16FarmR": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 48
+  },
+  "SII25CC24Jeweled": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 180
+  },
+  "SII25KeyChain": {
+    "unidad": "PZA:",
+    "pickpack": "PAQ: Paq 4",
+    "factor": 4,
+    "muestras": 1358
+  },
+  "SII25BdayStopper": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 329
+  },
+  "Fl25Mug14Bar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Fl25ReusBar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 16
+  },
+  "Fl25ReusCCBa": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 86
+  },
+  "Fl25StopperBar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 58
+  },
+  "Fl25StrawBar": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 19
+  },
+  "Fl25Manga": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 68
+  },
+  "SII25CC24B2S": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "SII25ReusPSL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "SII25StopPSL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 38
+  },
+  "Fl25MonVXMC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 16
+  },
+  "Fl25MonTSC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "SII25LlaveroB2S": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 87
+  },
+  "Pay Limón": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 48
+  },
+  "Servilleta Logo 2025": {
+    "unidad": "PAQ: Paq 250",
+    "pickpack": "CJA: Caja 6000",
+    "factor": 6000,
+    "muestras": 7480
+  },
+  "Reusables SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 740
+  },
+  "Tazas SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 181
+  },
+  "CCupPlastic SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 136
+  },
+  "Llavero SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1299
+  },
+  "Stoppers SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 846
+  },
+  "Tote bags SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 99
+  },
+  "Lifestyle SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 648
+  },
+  "Rollo Pap Térm Liner BIXO Cj/32": {
+    "unidad": "ROL: Rollo 7500 cm",
+    "pickpack": "CJA: Caja 32",
+    "factor": 32,
+    "muestras": 7483
+  },
+  "Pastel Tres Leches Celebracion C": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 33
+  },
+  "Fl25GlassCC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Fl25SS20Siren": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 39
+  },
+  "Fl25SSTu20Vac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 56
+  },
+  "Fl25CCSS24Pearl": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 67
+  },
+  "Fl25CC24Dome": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 157
+  },
+  "Fl25KeyChainD": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 213
+  },
+  "Fl25StanPearl": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Fl25SSCC24Anniv": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 30
+  },
+  "Fl25Tu16Anniv": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 11
+  },
+  "Fl25MonederoAniv": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 386
+  },
+  "Fl25SS20DDM": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "Fl25CC24DDM": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 152
+  },
+  "Fl25SS16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "Fl25CC24StrawT": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 69
+  },
+  "Fl25Tu16Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 29
+  },
+  "Fl25Mug16Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "Fl25SSCC24Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 80
+  },
+  "Fl25SSTu12Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 49
+  },
+  "Fl25Llavero": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 63
+  },
+  "COR25DW12Prism": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 77
+  },
+  "COR26Mug14Copper": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 202
+  },
+  "COR25SS20STouch": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "COR26SSThruLid": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 781
+  },
+  "COR26BTL20": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1084
+  },
+  "COR25Stan30Black": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "COR26Stan30White": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 1635
+  },
+  "COR25StanIceflow": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "COR25SSCC24Black": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 9
+  },
+  "Jarabe Vainilla 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7482
+  },
+  "COR25SS16Sleeve": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 41
+  },
+  "COR26PPBTL20S": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 990
+  },
+  "COR26Glass16Sus": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 154
+  },
+  "COR26Tu16Sust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 210
+  },
+  "PanMuertoZarza": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Jarabe Caramelo 1 Lt": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7480
+  },
+  "Jarabe White Mocha 750 ml": {
+    "unidad": "BOL: Bol 750ml",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7480
+  },
+  "Xm25DW12Red": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Xm25Give16Hot": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25Give16CC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25CCGlass18": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Te Tazo Chai Concentrado": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Ca12/946ml",
+    "factor": 946,
+    "muestras": 7478
+  },
+  "Xm25Tz14Glass": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 168
+  },
+  "Xm25BTLStanley": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Xm25Quencher30": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 30
+  },
+  "Xm25StanCB16": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 220
+  },
+  "Xm25MugPinguin": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 54
+  },
+  "Xm25Tu16CPing": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 71
+  },
+  "Xm25BTL24Magn": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 91
+  },
+  "Xm25SS16Peng": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 127
+  },
+  "Xm25SS16Knit": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Xm25SSCC24Topp": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 51
+  },
+  "Xm25RedQuen30": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "ZZZJarabe White Mocha 1 Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Xm25StopElev": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Xm25StopDermo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Xm25Reu24CCST": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25ReuElev": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "Xm25ReuMike": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 54
+  },
+  "Xm25Tag": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 178
+  },
+  "NuecesChoco": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4909
+  },
+  "Muffin Toffee Nut": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 464
+  },
+  "Xm25StopMax": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "Xm25StopHopp": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "MAP SANDWICH ART HUEVO PZA": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7188
+  },
+  "BIS GALLETA MACADAMIA CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 6581
+  },
+  "BIS GALLETA CHOCO CHUNKS CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 18",
+    "factor": 18,
+    "muestras": 6658
+  },
+  "BIS GALLETA DUBAI CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 7103
+  },
+  "DOTS DUBAI STYLE CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 36",
+    "factor": 36,
+    "muestras": 4227
+  },
+  "BIS NAL TRENZA CHOCOLATE CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 58Pz",
+    "factor": 58,
+    "muestras": 6342
+  },
+  "BOLSA GALLETA": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7470
+  },
+  "Wt26CC15Blue": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1747
+  },
+  "Wt26TuSS16Duck": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1805
+  },
+  "Wt26SS16Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 367
+  },
+  "Wt26SSCC24Grad": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1112
+  },
+  "Wt26SSCC24Win": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1100
+  },
+  "Wt26BTL20Gr": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 943
+  },
+  "Wt26ReusSV": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 983
+  },
+  "Wt26CCGl16Red": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 659
+  },
+  "Wt26Mug14Bow": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 925
+  },
+  "Wt26SSBTL20SV": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 917
+  },
+  "Wt26SS20SV": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 502
+  },
+  "Wt26Tu16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 252
+  },
+  "Wt26CC24Spinner": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 417
+  },
+  "Wt262PkStanley": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 68
+  },
+  "Wt26BTLStanley": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1357
+  },
+  "Wt26Dw12Jac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 343
+  },
+  "Wt26SS20Jac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 155
+  },
+  "Wt26SSCC16Jac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 516
+  },
+  "Wt26SS30Jac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 37
+  },
+  "Wt26SS16Choco": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 114
+  },
+  "Wt26CC24Choco": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 393
+  },
+  "Wt26Tu16Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 35
+  },
+  "Wt26SSCC16Grad": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 108
+  },
+  "Wt26LlaveroSV": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 442
+  },
+  "Wt26GlassCC16": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1566
+  },
+  "Wt26SS16Vac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1159
+  },
+  "Wt26SSCC24CarryL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1448
+  },
+  "Wt26SSCC30Togo": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 1199
+  },
+  "Wt26ReusSiren": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 663
+  },
+  "Leche Half & Half Borden": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7457
+  },
+  "Wt26VasoPistache": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1400
+  },
+  "Wt26VasoJacaran": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 2862
+  },
+  "Dona G&G": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 18",
+    "factor": 18,
+    "muestras": 7112
+  },
+  "MacaronsCorazon": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 464
+  },
+  "Mexico Single": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2208
+  },
+  "Ethiopia Single": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 640
+  },
+  "Sal de sobre": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 3000",
+    "factor": 3000,
+    "muestras": 7047
+  },
+  "Salsa de pistache": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 815
+  },
+  "Wt26VasoFresa": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 2280
+  },
+  "LECHE PROTEINA 100 CJ12LT": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7362
+  },
+  "72912 C4B CAFE ORIGINMEXICO 5LB": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 5546
+  },
+  "DiscoveryCDMX": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 1104
+  },
+  "DiscoveryCancun": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 291
+  },
+  "DiscoveryMxPais": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 2546
+  },
+  "DiscoveryCabos": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 156
+  },
+  "DiscoveryGDL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 417
+  },
+  "DiscoveryCozumel": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 150
+  },
+  "DiscoveryPlayaC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 208
+  },
+  "DiscoveryPVallarta": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 254
+  },
+  "DiscoveryTulum": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 218
+  },
+  "DiscoveryEnsenad": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 65
+  },
+  "DiscoveryMTY": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 370
+  },
+  "DiscoveryGTO": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 236
+  },
+  "DiscoveryMazatla": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 143
+  },
+  "DiscoveryChihua": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 120
+  },
+  "DiscoveryAcapulc": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 135
+  },
+  "DiscoveryPuebla": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 220
+  },
+  "DiscoverySanMig": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 115
+  },
+  "DiscoveryMerida": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 138
+  },
+  "DiscoveryLeon": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 168
+  },
+  "DiscoveryQRO": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 202
+  },
+  "DiscoveryChiapas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 170
+  },
+  "DiscoveryOAX": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 88
+  },
+  "DiscoveryZacat": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 63
+  },
+  "DiscoveryMorelia": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 116
+  },
+  "DiscoveryVER": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 109
+  },
+  "Disc2ozCDMX": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 804
+  },
+  "Disc2ozCAN": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 208
+  },
+  "Disc2ozMxPais": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 1937
+  },
+  "Disc2ozCabos": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 96
+  },
+  "Disc2ozGDL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 315
+  },
+  "Disc2ozCozumel": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 115
+  },
+  "Disc2ozPlayaC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 140
+  },
+  "Disc2ozPVallarta": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 182
+  },
+  "Disc2ozTulum": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 155
+  },
+  "Disc2ozMTY": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 259
+  },
+  "Disc2ozPuebla": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 142
+  },
+  "Disc2ozChiapas": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 79
+  },
+  "Disc2ozOAX": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 49
+  },
+  "ZZZTenedor Desechable Envuelto": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5653
+  },
+  "DiscCC24MxPais": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 1879
+  },
+  "DiscSS20MxPais": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 2357
+  },
+  "ToteBag CDMX": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 249
+  },
+  "ToteBag CAN": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 62
+  },
+  "ToteBag MxPais": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 369
+  },
+  "ToteBag Cabos": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 16
+  },
+  "ToteBag GDL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 94
+  },
+  "ToteBag Cozumel": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "ToteBag PlayaC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 43
+  },
+  "ToteBag Pvallart": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 50
+  },
+  "ZZZCuchillo Desechable Envuelto": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5647
+  },
+  "ToteBag Tulum": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 22
+  },
+  "ToteBag MTY": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 93
+  },
+  "BearHugger": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 189
+  },
+  "R Honduras Cafico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 71
+  },
+  "R CostaRica Alsacia": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 128
+  },
+  "Sp26WTBLSS16Cher": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 505
+  },
+  "Sp26CCup16Cherry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1315
+  },
+  "Sp26Mug14Rabbit": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1516
+  },
+  "Sp26CC24Dome": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1724
+  },
+  "Sp26CC216Rabbit": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1010
+  },
+  "Sp26Tu20Blue": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 179
+  },
+  "Sp26SS16Rabbit": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 379
+  },
+  "Sp26StanYellow20": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 844
+  },
+  "Sp26StanQuen20": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 3074
+  },
+  "Sp26Stan30Purp": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1656
+  },
+  "Sp26Gl18Mottled": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1425
+  },
+  "Sp26Tz14GlassC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1520
+  },
+  "Sp26SS12Pink": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 918
+  },
+  "Sp26CookieJP": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 840
+  },
+  "Sp26Tu16Cherry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 799
+  },
+  "Sp26CC16Prism": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 256
+  },
+  "Sp26SSCC24Cherry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 652
+  },
+  "Sp26SS16Cherry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 298
+  },
+  "Sp26SSVac40Cherr": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1685
+  },
+  "Sp26ReusTierra": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 754
+  },
+  "Sp26CCReusTierra": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 469
+  },
+  "Sp26NEBlack": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 868
+  },
+  "Sp26NEWhite": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1206
+  },
+  "Sp26NECrossB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 268
+  },
+  "Sp26NELlavero": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 690
+  },
+  "Sp26Tu16Mom": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 3159
+  },
+  "Sp26Mug14Mom": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 2552
+  },
+  "Sunsera Blend": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 1507
+  },
+  "RCostaRPeaberry": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 64
+  },
+  "Doble Huevo Campestre": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 8",
+    "factor": 8,
+    "muestras": 6787
+  },
+  "Cake Pop Frog Cj/12 Blister/3Pza": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 363
+  },
+  "Dots Flor Relleno Yuzu Cj": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2506
+  },
+  "BearHuggerSpring": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1121
+  },
+  "C4B BLOSSOM CH POWDER 340GRS": {
+    "unidad": "BOL: Bol 340g",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 3971
+  },
+  "C16B DAIRY PROTEIN POWDER 200GRS": {
+    "unidad": "BOL: Bol 200g",
+    "pickpack": "CJA: Caja 16",
+    "factor": 16,
+    "muestras": 7478
+  },
+  "Wt26ReusBear": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 143
+  },
+  "PalomitasSal": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 206
+  },
+  "PalomitasHierba": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 95
+  },
+  "BISGALLETA ARANDANO CJ/20 PZ/80G": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5910
+  },
+  "ResSetCT3Pck": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 31
+  },
+  "Bagel Tradicional": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7308
+  },
+  "Queso Crema": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 100",
+    "factor": 100,
+    "muestras": 7290
+  },
+  "Rosca de Reyes": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Crema Para Batir Cja/12 Pzas/950": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Cj12/950ml",
+    "factor": 950,
+    "muestras": 7479
+  },
+  "Toronja en Gajos": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 6767
+  },
+  "CheeseCake Brulee Framb": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 7",
+    "factor": 7,
+    "muestras": 7456
+  },
+  "Azucar Dieta Splenda": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2000",
+    "factor": 2000,
+    "muestras": 7471
+  },
+  "Envuelto Poblano": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6969
+  },
+  "ZZZSalsa de Fresa 46 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Cafe 250g 12/cs Espresso": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 3874
+  },
+  "Cafe 250g 12/cs Verona": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 4931
+  },
+  "Cafe 250g 12/cs Colombia Nsup": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 4412
+  },
+  "Cafe 250g 12/cs Kenya": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 3295
+  },
+  "Cafe 250g 12/cs Sumatra": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 4183
+  },
+  "Fruta Mixta 2": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 7143
+  },
+  "Cafe 250g 12/cs Chiapas": {
+    "unidad": "BOL: Bolsa 250g",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 5462
+  },
+  "Leche Soya": {
+    "unidad": "LT: Litro",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 7479
+  },
+  "Salsa de Dulce Leche 46 oz": {
+    "unidad": "BTL: Btl 46oz",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 7426
+  },
+  "Revista Chilango": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "ZZZCheeseccake Roulet": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Vaso Rewards": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 270
+  },
+  "Been There  Merida 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 9
+  },
+  "Been There Playa del Carmen 14oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Been There Veracruz 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Been There Cozumen 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Been There Cancun  14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "Been There Mazatlan 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 11
+  },
+  "ZZZRB Johnnie Walker Red 750ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Revista Travesias": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "RB Vermouth Antica 1 Lt": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "RB Bitter Campari 750Ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "RB Bitter Lavanda 125Ml": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "R Salvador SR": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 14
+  },
+  "Pasta Oriental": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 23
+  },
+  "BTTu16Mex": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 51
+  },
+  "SI25SSCC24Swimm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 32
+  },
+  "SI25Tu20Zoo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 36
+  },
+  "Fl25Tu20Silicon": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 11
+  },
+  "SII25StanOrange": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Tumb Plastic SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 57
+  },
+  "Pines SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "Set Reusa SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 9
+  },
+  "Fl25Pines": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Fl25SSTu20Anni": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 12
+  },
+  "Fl25PinesDDM": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "Fl25ReusCCPikeP": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Fl25GlassCCSust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 35
+  },
+  "COR26Mug2Copper": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25Tu16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 42
+  },
+  "Xm25Llavero": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Xm25CC24Snow": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Xm25Tu12Lux": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Xm25StopMike": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25StopDust": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25Reu1Hol": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Xm25Reu2Hol": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 17
+  },
+  "Sp26SS20Orange": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 2741
+  },
+  "Sp26SSCC16Band": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 3084
+  },
+  "Sp26SSCC24Oran": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 3212
+  },
+  "Sp26SSCC24CarryC": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 2946
+  },
+  "Sp26Tu16Orange": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 2737
+  },
+  "Sp26CC24Or": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 1452
+  },
+  "Sp26KeychainOr": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 2150
+  },
+  "Sp26Vac16Stan": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 3341
+  },
+  "EtiquetaDLVTrnfTermRol1600": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "013373 Hacienda Alsacia": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Minerva Pale Ale": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "R Vietnam Dung": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "COR25 CC24Siren": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SII25CC24FRBlue": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "CCup Acero SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 52
+  },
+  "Tumb acero SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 53
+  },
+  "Fl25Mug14Bear": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Fl25CCSS16Vac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Fl25ReusEspresso": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "Xm25SSCC24R": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "Xm25Reus16ST": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Sp26CC24Teach": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 2",
+    "factor": 2,
+    "muestras": 1744
+  },
+  "Sp26Tu16Teach": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1642
+  },
+  "ESS Chemex 15oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Filtros Chemex": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Been There Acapulco 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Been There Oaxaca 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Revista Travesias PVP": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "COR23 SS16StSwi": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "COR23 GlCC18 Omb": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 17
+  },
+  "R Bali MT": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SI25Tu16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Fl25Tu16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 25
+  },
+  "Fl25ReusCCEsp": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Xm25CC24Hol": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 48
+  },
+  "Sp26CookieBucket": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 7
+  },
+  "Sp26WTBL19Under": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 1198
+  },
+  "Sp26Tu20Blossom": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1207
+  },
+  "Sp26SS16Under": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1406
+  },
+  "ZZZ11314 Topping Graham Smores B": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2801
+  },
+  "Been There Leon 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Been There Tulum 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "RB Johnnie Walker Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "RB Miel de Abeja": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "R Brasil Fazenda": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 102
+  },
+  "COR23 DW12 Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "COR23 Tu20STBlck": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "COR23 SS25StyBTL": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "COR23 Mug20 Stan": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "R ColombiaEspera": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 35
+  },
+  "Envuelto Boloñesa Pza Map Sbx": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3706
+  },
+  "SI25DW12Mothers": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SI25Reus24Teach": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "SI25BTL24Zoo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SI25Quencher30": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "SI25ReusMom": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SII25Tu16Blue": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SII25DW12Studded": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "SII25SSCC24FRB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SII25BTL20FarmR": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SII25ReusColor": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SII25CCDomeBday": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SII25CCLlavero": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 8
+  },
+  "Fl25SSTu16B": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SII25LlaveroAlo": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 20
+  },
+  "Stanley SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 24
+  },
+  "CCup Glass SBX Genérico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 29
+  },
+  "Fl25SSMug12Rib": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Fl25SStu16Wave": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Fl25SSCC16Purple": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Fl25SSBTL20": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Fl25DW12Luster": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 4
+  },
+  "Fl25Mug14Calav": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Fl25Tu16DDM": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Fl25StanIceF": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Fl25Mug14Abrac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25LlaveroBB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25SS12Vac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25SS16Green": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Xm25BTL20Twi": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Xm25Mug12House": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25SS16Charm": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25CC24House": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25Tu16Bow": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25TuStan20": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25StanVac16": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 5
+  },
+  "Xm25Stopper": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 88
+  },
+  "Xm25Quen30Lil": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Xm25Mug12Stan": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Xm25Tu12Hol": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 6
+  },
+  "Wt26Canteen": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 13
+  },
+  "Wrap Vegetales": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 6",
+    "factor": 6,
+    "muestras": 1430
+  },
+  "Jarabe Mascarpone": {
+    "unidad": "BTE: Bote1.86 L",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 3735
+  },
+  "BIS GALLETA DULCE DE LECHE CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 20",
+    "factor": 20,
+    "muestras": 3670
+  },
+  "BIS GALLETA CHISPAS/CHOCO CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 18",
+    "factor": 18,
+    "muestras": 3577
+  },
+  "MAP SANDWICH PULLED PORK COA PZA": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3704
+  },
+  "CAKE POP COOKIES/CREAM CJ": {
+    "unidad": "BLI: Blis 3pz",
+    "pickpack": "CJA: Caja 12",
+    "factor": 12,
+    "muestras": 3734
+  },
+  "WC26StanQuen30": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 1 pz",
+    "factor": 1,
+    "muestras": 2416
+  },
+  "Bearista Choco": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 35 pz",
+    "factor": 35,
+    "muestras": 3562
+  },
+  "Been There Los Cabos 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "Been There Ensenada 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Been There Zacatecas 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Snack Proteina": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 138
+  },
+  "SI25CCReusTierra": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "SII25Mug14FarmR": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Fl25SS24Vac": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Fl25ReusPikeP": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 3
+  },
+  "Xm25SS16Diam": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "Xm25GlassBear": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 52
+  },
+  "ImánMexico": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 15
+  },
+  "WC26SS20Pull": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2221
+  },
+  "WC26LlaveroB": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1414
+  },
+  "WC26SS16Black": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 986
+  },
+  "WC26Tu24DW": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 979
+  },
+  "WC26NESiren": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 758
+  },
+  "WC26NESBX": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 361
+  },
+  "Cafe Colombia Narino 5 Lb c/4": {
+    "unidad": "BOL: Bol 5 Lb",
+    "pickpack": "CJA: Caja 4",
+    "factor": 4,
+    "muestras": 1596
+  },
+  "Been There San Miguel 14 oz": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 2
+  },
+  "SI25Mug12Teach": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "BIS GALLETA CHOC MEXICANO CJ": {
+    "unidad": "PZA:",
+    "pickpack": "CJA: Caja 18",
+    "factor": 18,
+    "muestras": 1824
+  },
+  "MAP ENVUELTO MEXICANO COA PZA": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1811
+  },
+  "WC26BearWC": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1027
+  },
+  "Xm25StopWill": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 1
+  },
+  "WC26SS30Pride": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 701
+  },
+  "WC26CC24Pride": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 697
+  },
+  "WC26TotePride": {
+    "unidad": "PZA:",
+    "pickpack": "PZA:",
+    "factor": 1,
+    "muestras": 575
+  }
+}

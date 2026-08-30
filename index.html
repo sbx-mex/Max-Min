@@ -3,157 +3,147 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Max&Min 2.0</title>
   <meta name="theme-color" content="#006241" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Max&Min 2.0" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Validación y exportación segura de etiquetas Max & Min por tienda y semanas." />
+  <title>Max & Min · Remaster</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-  <link rel="preload" as="image" href="icons/hero-maxmin.png" />
-  <link rel="preload" as="image" href="icons/splash-1920x1080.png" />
-  <link rel="apple-touch-startup-image" href="icons/splash-1920x1080.png" />
   <link rel="icon" href="icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script defer src="vendor/jspdf.umd.min.js"></script>
+  <script defer src="data/manifest.js"></script>
+  <script defer src="js/app.js"></script>
 </head>
 <body>
-  <header class="topbar no-print" aria-label="Navegación principal">
-    <div class="brand">
-      <div class="app-logo"><img src="icons/icon-192.png" alt="Max&Min 2.0" /></div>
-      <div>
-        <h1>Max&Min 2.0</h1>
-        <p>Herramienta operativa · POS Sem 18–25</p>
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="#" aria-label="Inicio Max & Min">
+        <img src="icons/icon-192.png" alt="" />
+        <span><b>Max & Min</b><small>Remaster · Semanas 1-34</small></span>
+      </a>
+      <nav class="tabs" aria-label="Módulos principales">
+        <button class="tab active" data-tab="etiquetas" type="button">Etiquetas</button>
+        <button class="tab" data-tab="consulta" type="button">Consulta</button>
+        <button class="tab" data-tab="acomodo" type="button">Acomodo</button>
+      </nav>
+      <div class="header-actions">
+        <button id="resetButton" class="button button-quiet" type="button">Limpiar</button>
+        <button id="exportButton" class="button button-primary" type="button">Exportar PDF</button>
       </div>
-    </div>
-    <nav class="tabs" aria-label="Módulos">
-      <button class="tab-btn active" data-tab="maxmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg><span>Max&amp;Min</span></button>
-      <button class="tab-btn" data-tab="consulta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Consulta</span></button>
-      <button class="tab-btn" data-tab="acomodo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 4v16M8 10h13"/></svg><span>Acomodo</span></button>
-    </nav>
-    <div class="actions">
-      <button id="btnExport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span>Exportar PDF</span></button>
-      <button id="btnReset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>Limpiar pestaña</span></button>
     </div>
   </header>
 
-  <main class="app" id="mainContent">
-    <section id="tab-maxmin" class="tab-panel active">
-      <section class="panel controls no-print">
-        <div class="field field-store"><label for="maxStore">Tienda / CeCo</label><select id="maxStore"></select></div>
-        <div class="field"><label for="maxWeeks">Semana</label><select id="maxWeeks" multiple></select></div>
-        <div class="field"><label for="maxOrders"># pedidos</label><select id="maxOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-        <div class="field"><label for="maxMode">Formato</label><select id="maxMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
-      </section>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Control operativo confiable</p>
+        <h1>Valida, ajusta y corta etiquetas listas.</h1>
+        <p id="contextLine">38107 · Pedregal · Uso Sem 18-25</p>
+      </div>
+      <div class="health-badge" id="healthBadge"><i></i><span>Cargando cruces...</span></div>
+    </section>
 
-      <section id="letterMax" class="letter printable">
-        <div class="sheet-head">
-          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
-          <div><h2>MÁXIMOS Y MÍNIMOS</h2><p id="maxSubtitle">Tienda · Semanas</p></div>
-          <div class="print-meta"><b>STARBUCKS</b><span id="maxDate"></span></div>
-        </div>
-        <div class="data-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</span></div>
-        <div class="photo-tools no-print"><button class="ghost" id="clearPhotoMax">Borrar foto</button></div>
-        <div class="photo-wrap" id="photoWrapMax">
-          <input id="photoInputMax" class="no-print" type="file" accept="image/*" capture="environment" />
-          <label for="photoInputMax" id="photoLabelMax" class="photo-label no-print">Tomar / adjuntar foto</label>
-          <img id="rackPhotoMax" alt="Foto del área" />
-          <div id="markerLayerMax" class="marker-layer"></div>
-        </div>
-        <div class="selector no-print">
-          <input id="searchItemMax" list="maxItemsList" placeholder="Buscar artículo para agregar..." />
-          <datalist id="maxItemsList"></datalist>
-          <button id="btnAddMax">Agregar item</button>
-        </div>
-        <table class="items-table compact-table">
-          <thead><tr><th>No.</th><th>Artículo</th><th>Mínimo</th><th>Máximo</th><th>Presentación</th><th class="no-print">Acción</th></tr></thead>
-          <tbody id="selectedBodyMax"></tbody>
-        </table>
-        <p class="footnote">POS Sem 18–25 · Promedio dinámico por semanas seleccionadas · No incluye merma/variación</p>
-      </section>
+    <section class="filter-card" aria-label="Filtros de análisis">
+      <div class="filter-grid">
+        <label class="field field-store">
+          <span>Tienda / CeCo</span>
+          <input id="storeInput" list="storeOptions" type="search" autocomplete="off" placeholder="Buscar CeCo o tienda" />
+          <datalist id="storeOptions"></datalist>
+        </label>
+        <div id="weeksFilter" class="multi-filter"></div>
+        <div id="categoriesFilter" class="multi-filter"></div>
+        <div id="ingredientsFilter" class="multi-filter"></div>
+        <label class="field">
+          <span># de pedidos</span>
+          <select id="ordersSelect"><option value="2">2 pedidos</option><option value="3">3 pedidos</option><option value="4">4 pedidos</option><option value="5">5 pedidos</option></select>
+        </label>
+        <label class="field">
+          <span>Formato base</span>
+          <select id="modeSelect"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select>
+        </label>
+      </div>
+      <div class="filter-footer">
+        <div class="formula-note"><b>Promedio dinámico:</b> uso de las semanas elegidas ÷ semanas ÷ 7.</div>
+        <button id="clearFiltersButton" class="link-button" type="button">Restablecer filtros</button>
+      </div>
+    </section>
+
+    <section id="tab-etiquetas" class="tab-panel active">
+      <div class="metric-grid" id="metricGrid"></div>
+      <div class="workspace-grid">
+        <section class="card catalog-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">1 · Selección</p><h2>Ingredientes disponibles</h2></div>
+            <span id="filteredCount" class="count-pill">0</span>
+          </div>
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="catalogSearch" type="search" placeholder="Buscar ingrediente, SAP o Código DIA" /></label>
+          <div class="selection-actions">
+            <button id="selectFilteredButton" class="button button-primary" type="button">Elegir filtrados</button>
+            <button id="clearSelectionButton" class="button button-quiet" type="button">Vaciar selección</button>
+          </div>
+          <div id="catalogList" class="catalog-list" aria-live="polite"></div>
+        </section>
+
+        <section class="card preview-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">2 · Validación</p><h2>Vista previa de corte</h2></div>
+            <span id="selectedCount" class="count-pill count-pill-green">0</span>
+          </div>
+          <div class="sheet-header-preview">
+            <span><small>Tienda</small><b id="previewStore">-</b></span>
+            <span><small>Semanas</small><b id="previewWeeks">-</b></span>
+            <span><small>Actualización</small><b id="previewDate">-</b></span>
+          </div>
+          <div id="labelPreview" class="label-grid"></div>
+          <div class="preview-pagination">
+            <button id="previousPreview" class="icon-button" type="button" aria-label="Página anterior">←</button>
+            <span id="previewPage">Página 1 de 1</span>
+            <button id="nextPreview" class="icon-button" type="button" aria-label="Página siguiente">→</button>
+          </div>
+        </section>
+      </div>
     </section>
 
     <section id="tab-consulta" class="tab-panel">
-      <section class="panel controls consulta-controls no-print">
-        <div class="field field-store"><label for="conStore">Tienda / CeCo</label><select id="conStore"></select></div>
-        <div class="field"><label for="conWeeks">Semana</label><select id="conWeeks" multiple></select></div>
-        <div class="field"><label for="conCategory">Categoría</label><select id="conCategory"><option value="">Todas</option></select></div>
-        <div class="field"><label for="conOrders"># pedidos</label><select id="conOrders"><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-        <div class="field"><label for="conMode">Formato</label><select id="conMode"><option value="unidad">Unidad</option><option value="pickpack">Pick Pack</option></select></div>
-      </section>
-
-      <section id="letterConsulta" class="letter printable consulta-card">
-        <div class="sheet-head">
-          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
-          <div><h2>CONSULTA</h2><p id="conSubtitle">Tienda · Semanas</p></div>
-          <div class="print-meta"><b>STARBUCKS</b><span id="conDate"></span></div>
+      <section class="card table-card">
+        <div class="card-heading">
+          <div><p class="eyebrow">Cruce operativo</p><h2>Consulta y validación por ingrediente</h2></div>
+          <button id="addVisibleButton" class="button button-primary" type="button">Agregar visibles</button>
         </div>
-        <div class="data-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>Uso Sem 18–25: información solo de Punto de Venta. No incluye merma y/o variación. El promedio se calcula acorde a las semanas seleccionadas.</span></div>
-        <div class="selector no-print consulta-selector">
-          <input id="searchItemConsulta" list="consultaItemsList" placeholder="Buscar artículo específico o deja vacío para agregar toda la categoría..." />
-          <datalist id="consultaItemsList"></datalist>
-          <button id="btnAddConsulta">Agregar consulta</button>
-          <button id="btnClearConsulta" class="soft">Borrar consulta</button>
+        <p class="card-description">La descripción SAP se toma de Lista_Precios_Base.xlsx. Los ajustes de formato se guardan en este dispositivo.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>Código DIA</th><th>Uso prom.</th><th>Mín.</th><th>Máx.</th><th>Formato</th><th>Estado</th></tr></thead>
+            <tbody id="consultaBody"></tbody>
+          </table>
         </div>
-        <table class="items-table consulta-table">
-          <thead><tr><th>No.</th><th>Artículo</th><th>Uso Prom Sem</th><th>Mínimo</th><th>Máximo</th><th class="no-print">Acción</th></tr></thead>
-          <tbody id="selectedBodyConsulta"></tbody>
-        </table>
-        <p class="footnote">Consulta rápida · Uso POS dinámico por semana · Decide con datos</p>
       </section>
     </section>
 
     <section id="tab-acomodo" class="tab-panel">
-      <section class="panel controls no-print acomodo-controls">
-        <div class="field field-store"><label for="acoStore">Tienda / CeCo</label><select id="acoStore"></select></div>
-        <div class="field"><label for="acoTitle">Título</label><input id="acoTitle" value="Acomodo visual" /></div>
-      </section>
-
-      <section id="letterAcomodo" class="letter printable">
-        <div class="sheet-head">
-          <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div>
-          <div><h2>ACOMODO</h2><p id="acoSubtitle">Guía visual editable</p></div>
-          <div class="print-meta"><b>STARBUCKS</b><span id="acoDate"></span></div>
-        </div>
-        <div class="photo-tools no-print"><button class="ghost" id="clearPhotoAcomodo">Borrar foto</button></div>
-        <div class="photo-wrap" id="photoWrapAcomodo">
-          <input id="photoInputAcomodo" class="no-print" type="file" accept="image/*" capture="environment" />
-          <label for="photoInputAcomodo" id="photoLabelAcomodo" class="photo-label no-print">Tomar / adjuntar foto</label>
-          <img id="rackPhotoAcomodo" alt="Foto de acomodo" />
-          <div id="markerLayerAcomodo" class="marker-layer"></div>
-        </div>
-        <div class="acomodo-add no-print">
-          <input id="acomodoName" placeholder="Nombre editable del artículo / espacio" />
-          <input id="acomodoMin" placeholder="Mín opcional" />
-          <input id="acomodoMax" placeholder="Máx opcional" />
-          <button id="btnAddAcomodo">Agregar</button>
-        </div>
-        <table class="items-table compact-table acomodo-table">
-          <thead><tr><th>No.</th><th>Artículo / Espacio</th><th>Mínimo</th><th>Máximo</th><th class="no-print">Acción</th></tr></thead>
-          <tbody id="selectedBodyAcomodo"></tbody>
-        </table>
-        <p class="footnote">Orden visual · Disciplina operativa · Mejora continua</p>
-      </section>
+      <div class="workspace-grid acomodo-grid">
+        <section class="card">
+          <div class="card-heading"><div><p class="eyebrow">Guía visual</p><h2>Foto y marcadores</h2></div><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar foto</button></div>
+          <div id="photoStage" class="photo-stage">
+            <input id="photoInput" type="file" accept="image/*" capture="environment" />
+            <label id="photoPrompt" for="photoInput"><b>Agregar foto del rack</b><span>Los números corresponden a las etiquetas seleccionadas.</span></label>
+            <img id="rackPhoto" alt="Foto del rack" />
+            <div id="markerLayer" class="marker-layer"></div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="card-heading"><div><p class="eyebrow">Orden</p><h2>Ingredientes marcados</h2></div><span id="markerCount" class="count-pill">0</span></div>
+          <div id="markerList" class="marker-list"></div>
+        </section>
+      </div>
     </section>
   </main>
 
-  
-  <script src="js/data_index.js"></script>
-  <script src="js/data_sem_18.js"></script>
-  <script src="js/data_sem_19.js"></script>
-  <script src="js/data_sem_20.js"></script>
-  <script src="js/data_sem_21.js"></script>
-  <script src="js/data_sem_22.js"></script>
-  <script src="js/data_sem_23.js"></script>
-  <script src="js/data_sem_24.js"></script>
-  <script src="js/data_sem_25.js"></script>
-  <script src="js/app.js"></script>
+  <div id="loadingOverlay" class="loading-overlay hidden" role="status" aria-live="polite"><div><i></i><b id="loadingTitle">Preparando datos</b><span id="loadingText">Un momento...</span></div></div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
-    }
-  </script>
+  <dialog id="exportDialog" class="export-dialog">
+    <div class="export-dialog-body"><span class="success-mark">✓</span><p class="eyebrow">Exportación validada</p><h2>PDF listo para imprimir y recortar</h2><p id="exportSummary"></p><button id="closeExportDialog" class="button button-primary" type="button">Entendido</button></div>
+  </dialog>
 </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "status": "ok",
+  "weeks": "1-34",
+  "stores": 954,
+  "ingredients": 701,
+  "positiveRows": 4764428,
+  "sapMatched": 626,
+  "formatMatched": 594,
+  "pdf": {
+    "format": "letter",
+    "orientation": "landscape",
+    "labelsPerPage": 12,
+    "grid": "4x3",
+    "multiPage": true
+  },
+  "limits": {
+    "maxFilesPerFolder": 100,
+    "maxImmediateBytesPerFolder": 26214400
+  }
+}
