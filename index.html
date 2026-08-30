@@ -126,7 +126,7 @@
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>#DIA</th><th>#SAP</th><th>Uso prom.</th><th>Mín.</th><th>Máx.</th><th>Estado</th></tr></thead>
+            <thead><tr><th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>#DIA</th><th>#SAP</th><th>Uso prom. Sem</th><th>Mín.</th><th>Máx.</th></tr></thead>
             <tbody id="consultaBody"></tbody>
           </table>
         </div>
@@ -152,25 +152,25 @@
 
         <section class="card acomodo-items-card">
           <div class="card-heading">
-            <div><p class="eyebrow">3 · Artículos</p><h2>Lista del rack</h2><p class="card-description">Filtra los artículos del rack y agrega hasta 6. Toca un artículo y después toca su ubicación en la foto.</p></div>
-            <span id="markerCount" class="count-pill">0 / 6</span>
+            <div><p class="eyebrow">3 · Artículos</p><h2>Lista del rack</h2><p class="card-description">Elige únicamente los artículos de este rack. Puedes ubicar hasta 25 y exportarlos en varias hojas.</p></div>
+            <span id="markerCount" class="count-pill">0 / 25</span>
           </div>
           <div class="acomodo-toolbar">
-            <button id="addAcomodoItemsButton" class="button button-primary" type="button">Agregar hasta 6 filtrados</button>
+            <button id="addAcomodoItemsButton" class="button button-primary" type="button">Agregar artículos filtrados</button>
             <button id="clearAcomodoItemsButton" class="button button-quiet" type="button">Vaciar lista</button>
-            <span id="acomodoSelectionHint">Recomendado: 5 o 6 artículos por rack.</span>
+            <span id="acomodoSelectionHint">El usuario decide cuáles incluir · máximo 25.</span>
           </div>
-          <div class="marker-table-head" aria-hidden="true"><span>#</span><span>Ingrediente / SAP</span><span>Uso prom.</span><span>Mín.</span><span>Máx.</span></div>
+          <div class="marker-table-head" aria-hidden="true"><span>#</span><span>Ingrediente / SAP</span><span>Uso prom. Sem</span><span>Mín.</span><span>Máx.</span></div>
           <div id="markerList" class="marker-list"></div>
           <div class="acomodo-footer">
             <details class="support-guide">
               <summary>Referencia discreta para validar la estación</summary>
               <a class="support-visual" href="assets/reference/BOH_5S_Referencia.webp" target="_blank" rel="noopener"><img src="assets/reference/BOH_5S_Referencia.webp" alt="Referencia visual de un BOH organizado con metodología 5S" /><span>Ver referencia BOH</span></a>
-              <div class="support-links"><a href="docs/guias/Guia_5S_BOH.pdf" target="_blank" rel="noopener">Guía 5S y hoja de rack</a><a href="docs/guias/Alineacion_acomodo_items.pdf" target="_blank" rel="noopener">Acomodo por categoría</a></div>
+              <div class="support-links"><a href="docs/guias/Guia_5S_BOH.pdf" class="internal-pdf-link">Guía 5S y hoja de rack</a><a href="docs/guias/Alineacion_acomodo_items.pdf" class="internal-pdf-link">Acomodo por categoría</a></div>
             </details>
             <div class="panel-export-action acomodo-export-action">
               <span class="step-chip">4</span>
-              <div><b>Revisa y exporta</b><small>Foto arriba 60% · lista abajo 40% · incluye # de pedidos.</small></div>
+              <div><b>Revisa y exporta</b><small>Foto arriba · artículos abajo · # pedidos visible · multipágina segura.</small></div>
               <button id="exportAcomodoButton" class="button button-primary" type="button">Exportar acomodo PDF</button>
             </div>
           </div>
@@ -200,5 +200,10 @@
   <dialog id="exportDialog" class="export-dialog">
     <div class="export-dialog-body"><img class="dialog-visual" src="assets/ui/Un_placer_haber_Ayudado.webp" alt="Un placer haber ayudado" /><p class="eyebrow">Exportación lista</p><h2>PDF preparado</h2><p id="exportSummary"></p><button id="closeExportDialog" class="button button-primary" type="button">Cerrar</button></div>
   </dialog>
+  <dialog id="supportPdfDialog" class="pdf-viewer-dialog">
+    <header><strong id="supportPdfTitle">Guía de apoyo</strong><button id="closeSupportPdfButton" class="button button-quiet" type="button" aria-label="Cerrar guía">Cerrar (Esc)</button></header>
+    <iframe id="supportPdfFrame" title="Guía PDF de apoyo"></iframe>
+  </dialog>
+
 </body>
 </html>
