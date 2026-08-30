@@ -4,7 +4,8 @@ const FACTOR_PEDIDOS = { 2: 5, 3: 4, 4: 3, 5: 2 };
 const STORAGE_KEY = "maxmin-remaster-v4";
 const PAGE_SIZE = 12;
 const LIST_PAGE_SIZE = 20;
-const ACOMODO_MAX_ITEMS = 6;
+const ACOMODO_MAX_ITEMS = 25;
+const ACOMODO_PAGE_SIZE = 8;
 const NORMALIZED_INGREDIENT_BASE = 1000000;
 const NORMALIZED_CATEGORY_BASE = 10000;
 const $ = (id) => document.getElementById(id);
@@ -259,6 +260,9 @@ function bindEvents() {
   $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
   $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); runConfirmedExport(); });
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
+  document.querySelectorAll(".internal-pdf-link").forEach((link) => link.addEventListener("click", openSupportPdf));
+  $("closeSupportPdfButton").addEventListener("click", () => { $("supportPdfDialog").close(); $("supportPdfFrame").src = "about:blank"; });
+  $("supportPdfDialog").addEventListener("close", () => { $("supportPdfFrame").src = "about:blank"; });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") document.querySelectorAll(".filter-menu").forEach((menu) => menu.classList.add("hidden"));
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); $("catalogSearch").focus(); }
@@ -278,7 +282,7 @@ function updateGuide(tab) {
   const guides = {
     etiquetas: ["Ruta rápida · Etiquetas", ["Filtra tienda y semanas", "Elige ingredientes", "Revisa las fichas", "Confirma y exporta"]],
     consulta: ["Ruta rápida · Consulta", ["Filtra el alcance", "Revisa la tabla", "Elige una salida", "Confirma el PDF"]],
-    acomodo: ["Ruta rápida · Acomodo", ["Filtra el rack", "Toma la foto", "Ubica 5 o 6 artículos", "Revisa y exporta"]],
+    acomodo: ["Ruta rápida · Acomodo", ["Filtra el rack", "Toma la foto", "Elige y ubica artículos", "Revisa y exporta"]],
   };
   const [title, steps] = guides[tab] || guides.etiquetas;
   $("guideTitle").textContent = title;
@@ -481,9 +485,8 @@ function renderConsulta() {
   $("addVisibleButton").disabled = items.length === 0;
   $("consultaBody").innerHTML = items.map((item) => {
     const calc = calculate(item);
-    const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
-    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${esc(item.woe || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td><td><span class="status-dot ${review ? "review" : ""}">${review ? "Revisar" : "Validado"}</span></td></tr>`;
-  }).join("") || '<tr><td colspan="9" class="empty-state">Sin insumos con uso mayor a cero.</td></tr>';
+    return `<tr><td><input class="row-select" type="checkbox" data-id="${item.id}" ${state.selected.has(item.id) ? "checked" : ""}></td><td class="cell-title"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small>${recipeNotice(item) ? `<em class="recipe-note">${esc(recipeNotice(item))}</em>` : ""}</td><td>${esc(item.category)}</td><td>${esc(item.code || "Pendiente")}</td><td>${esc(item.woe || "Pendiente")}</td><td>${formatNumber(item.usage, 1)}</td><td><b>${formatMinMax(calc.min, calc.mode)}</b></td><td><b>${formatMinMax(calc.max, calc.mode)}</b></td></tr>`;
+  }).join("") || '<tr><td colspan="8" class="empty-state">Sin insumos con uso mayor a cero.</td></tr>';
 }
 
 function positiveReportItems() {
@@ -520,13 +523,16 @@ function selectFiltered() {
 
 
 function addAcomodoItems() {
-  const candidates = state.filtered.filter((item) => Number(item.usage) > 0).slice(0, ACOMODO_MAX_ITEMS);
+  const candidates = state.filtered.filter((item) => Number(item.usage) > 0);
   if (!candidates.length) { toast("No hay artículos con uso para agregar. Ajusta los filtros."); return; }
-  state.selected = new Set(candidates.map((item) => item.id));
-  activeMarkerId = candidates[0]?.id || null;
+  const chosen = candidates.slice(0, ACOMODO_MAX_ITEMS);
+  state.selected = new Set(chosen.map((item) => item.id));
+  activeMarkerId = chosen[0]?.id || null;
   persistState();
   renderAll();
-  toast(`${candidates.length} artículo(s) agregados al rack.`);
+  toast(candidates.length > ACOMODO_MAX_ITEMS
+    ? `Se agregaron los primeros ${ACOMODO_MAX_ITEMS}. Acota el filtro para elegir otros.`
+    : `${chosen.length} artículo(s) agregados al rack.`);
 }
 
 function clearAcomodoItems() {
@@ -611,21 +617,22 @@ function togglePhotoEnhancement() {
 
 function renderMarkers() {
   if (!state.store) return;
-  const items = selectedItemsCurrent().slice(0, ACOMODO_MAX_ITEMS);
+  const allSelected = selectedItemsCurrent();
+  const items = allSelected.slice(0, ACOMODO_MAX_ITEMS);
   if (activeMarkerId && !items.some((item) => item.id === activeMarkerId)) activeMarkerId = null;
   const positions = state.markerPositions[state.store.code] || (state.markerPositions[state.store.code] = {});
   $("markerCount").textContent = `${items.length} / ${ACOMODO_MAX_ITEMS}`;
   $("acomodoSelectionHint").textContent = items.length
-    ? `${items.length} artículo(s) listos · ${state.orders} pedidos`
-    : "Recomendado: 5 o 6 artículos por rack.";
+    ? `${items.length} artículo(s) elegidos · ${state.orders} pedidos`
+    : "El usuario decide cuáles incluir · máximo 25.";
   $("markerList").innerHTML = items.map((item, index) => {
     const calc = calculate(item);
     return `<button class="marker-row ${activeMarkerId === item.id ? "active" : ""}" type="button" draggable="true" data-marker-id="${item.id}" aria-pressed="${activeMarkerId === item.id}"><span class="marker-number">${index + 1}</span><span class="marker-identity"><b>${esc(item.sap)}</b><small>${esc(item.name)}</small><em>Toca y ubica en la foto</em></span><strong>${formatNumber(item.usage, 1)}</strong><strong>${formatMinMax(calc.min, calc.mode)}</strong><strong>${formatMinMax(calc.max, calc.mode)}</strong></button>`;
-  }).join("") || '<div class="empty-state">Filtra el rack y usa “Agregar hasta 6 filtrados”.</div>';
+  }).join("") || '<div class="empty-state">Elige ingredientes en el filtro y usa “Agregar artículos filtrados”.</div>';
   const layer = $("markerLayer");
   layer.innerHTML = "";
   items.forEach((item, index) => {
-    const defaultPosition = { x: 8 + (index % 6) * 15, y: 10 };
+    const defaultPosition = { x: 5 + (index % 10) * 9.5, y: 7 + Math.floor(index / 10) * 11 };
     const position = positions[item.id] || defaultPosition;
     const marker = document.createElement("button");
     marker.type = "button";
@@ -638,6 +645,7 @@ function renderMarkers() {
     bindMarkerDrag(marker, item.id, positions);
     layer.appendChild(marker);
   });
+  if (allSelected.length > ACOMODO_MAX_ITEMS) toast(`Acomodo admite hasta ${ACOMODO_MAX_ITEMS} artículos. Ajusta tu selección.`);
   updateWorkflowProgress();
 }
 
@@ -744,7 +752,7 @@ function openExportConfirmation(kind = "labels") {
   if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
   pendingExportKind = kind;
   const exportItems = kind === "acomodo" ? items.slice(0, ACOMODO_MAX_ITEMS) : items;
-  const pageSize = kind === "list" ? LIST_PAGE_SIZE : kind === "acomodo" ? ACOMODO_MAX_ITEMS : PAGE_SIZE;
+  const pageSize = kind === "list" ? LIST_PAGE_SIZE : kind === "acomodo" ? ACOMODO_PAGE_SIZE : PAGE_SIZE;
   const pages = Math.ceil(exportItems.length / pageSize);
   const outputLabel = kind === "list" ? "filas en lista operativa" : kind === "acomodo" ? "artículos en acomodo" : "etiquetas de rack";
   $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${state.orders} pedidos · ${exportItems.length} ${outputLabel} · ${pages} hoja(s) Carta.`;
@@ -758,17 +766,18 @@ function runConfirmedExport() {
   else exportPdf();
 }
 
-async function exportAcomodoPdf() {
+async async function exportAcomodoPdf() {
   const items = selectedItemsCurrent().slice(0, ACOMODO_MAX_ITEMS);
   if (!items.length || !$("photoStage").classList.contains("has-photo")) { toast("Acomodo necesita foto y al menos un artículo."); return; }
   showLoading("Renderizando acomodo", `${items.length} artículo(s) · ${state.orders} pedidos`);
   await new Promise((resolve) => setTimeout(resolve, 80));
   try {
     const pdf = buildAcomodoPdf(items, rackPhotoDataUrl());
-    if (pdf.internal.getNumberOfPages() !== 1) throw new Error("Acomodo debe ocupar una hoja");
+    const expectedPages = Math.ceil(items.length / ACOMODO_PAGE_SIZE);
+    if (pdf.internal.getNumberOfPages() !== expectedPages) throw new Error("Paginación inesperada en Acomodo");
     const filename = `${safeName(state.store.label)}_Sem_${safeName(compactWeeks([...state.weeks]))}_Acomodo.pdf`;
     pdf.save(filename);
-    $("exportSummary").textContent = `${items.length} artículos · 1 hoja Carta · ${state.orders} pedidos.`;
+    $("exportSummary").textContent = `${items.length} artículos · ${expectedPages} hoja(s) Carta · ${state.orders} pedidos.`;
     $("exportDialog").showModal();
   } catch (error) {
     console.error(error);
@@ -796,43 +805,42 @@ function buildAcomodoPdf(items, photoData) {
   const width = pdf.internal.pageSize.getWidth();
   const height = pdf.internal.pageSize.getHeight();
   const margin = 6;
-  drawPdfHeader(pdf, margin, 4, width - margin * 2, 8);
+  const pages = Math.ceil(items.length / ACOMODO_PAGE_SIZE);
+  const properties = pdf.getImageProperties(photoData);
   const photoY = 15;
   const photoH = 112;
   const photoW = width - margin * 2;
-  pdf.setFillColor(244, 248, 246); pdf.roundedRect(margin, photoY, photoW, photoH, 2, 2, "F");
-  const properties = pdf.getImageProperties(photoData);
   const scale = Math.min(photoW / properties.width, photoH / properties.height);
   const drawW = properties.width * scale;
   const drawH = properties.height * scale;
-  pdf.addImage(photoData, "JPEG", margin + (photoW - drawW) / 2, photoY + (photoH - drawH) / 2, drawW, drawH, undefined, "FAST");
-  pdf.setTextColor(0, 59, 42); pdf.setFont("helvetica", "bold"); pdf.setFontSize(7);
-  pdf.text("ARTÍCULOS DEL RACK", margin, 133);
-  const listY = 137;
   const columns = [10, 150, 30, 30, 30];
-  const headers = ["#", "INGREDIENTE / SAP", "USO PROM.", "MÍN.", "MÁX."];
-  let cursor = margin;
-  pdf.setFillColor(0, 59, 42); pdf.rect(margin, listY, columns.reduce((a,b)=>a+b,0), 7, "F");
-  pdf.setTextColor(255,255,255); pdf.setFontSize(5.8);
-  headers.forEach((label,index) => { pdf.text(label, cursor + 1.5, listY + 4.7); cursor += columns[index]; });
-  items.forEach((item,index) => {
-    const calc=calculate(item);
-    const y=listY+7+index*10.5;
-    pdf.setFillColor(index%2?247:255,index%2?250:255,index%2?248:255);
-    pdf.setDrawColor(218,229,224); pdf.rect(margin,y,columns.reduce((a,b)=>a+b,0),10.5,"FD");
-    const values=[String(index+1), `${pdfSafeText(item.sap)} | ${pdfSafeText(item.name)}`, formatNumber(item.usage,1), formatMinMax(calc.min,calc.mode), formatMinMax(calc.max,calc.mode)];
-    let x=margin;
-    values.forEach((value,columnIndex)=>{
-      const columnW=columns[columnIndex];
-      if(columnIndex) pdf.line(x,y,x,y+10.5);
-      pdf.setTextColor(24,35,31); pdf.setFont("helvetica",columnIndex===1?"bold":"normal");
-      fitPdfFont(pdf,value,columnW-3,6.4,4.8);
-      pdf.text(fitPdfText(pdf,value,columnW-3),x+1.5,y+6.6);
-      x+=columnW;
+  const headers = ["#", "INGREDIENTE / SAP", "USO PROM. SEM", "MÍN.", "MÁX."];
+
+  for (let pageIndex = 0; pageIndex < pages; pageIndex += 1) {
+    if (pageIndex) pdf.addPage("letter", "landscape");
+    pdf.setFillColor(255,255,255); pdf.rect(0,0,width,height,"F");
+    drawPdfHeader(pdf, margin, 4, width - margin * 2, 8);
+    pdf.setFillColor(244,248,246); pdf.roundedRect(margin,photoY,photoW,photoH,2,2,"F");
+    pdf.addImage(photoData,"JPEG",margin+(photoW-drawW)/2,photoY+(photoH-drawH)/2,drawW,drawH,undefined,"FAST");
+    const listY=132;
+    let cursor=margin;
+    pdf.setFillColor(0,59,42); pdf.rect(margin,listY,columns.reduce((a,b)=>a+b,0),7,"F");
+    pdf.setTextColor(255,255,255); pdf.setFont("helvetica","bold"); pdf.setFontSize(5.8);
+    headers.forEach((label,index)=>{pdf.text(label,cursor+1.5,listY+4.7);cursor+=columns[index];});
+    const pageItems=items.slice(pageIndex*ACOMODO_PAGE_SIZE,(pageIndex+1)*ACOMODO_PAGE_SIZE);
+    pageItems.forEach((item,index)=>{
+      const calc=calculate(item);
+      const y=listY+7+index*8.6;
+      pdf.setFillColor(index%2?247:255,index%2?250:255,index%2?248:255);
+      pdf.setDrawColor(218,229,224); pdf.rect(margin,y,columns.reduce((a,b)=>a+b,0),8.6,"FD");
+      const values=[String(pageIndex*ACOMODO_PAGE_SIZE+index+1),`${pdfSafeText(item.sap)} | ${pdfSafeText(item.name)}`,formatNumber(item.usage,1),formatMinMax(calc.min,calc.mode),formatMinMax(calc.max,calc.mode)];
+      let x=margin;
+      values.forEach((value,columnIndex)=>{const columnW=columns[columnIndex];if(columnIndex)pdf.line(x,y,x,y+8.6);pdf.setTextColor(24,35,31);pdf.setFont("helvetica",columnIndex===1?"bold":"normal");fitPdfFont(pdf,value,columnW-3,6.1,4.6);pdf.text(fitPdfText(pdf,value,columnW-3),x+1.5,y+5.5);x+=columnW;});
     });
-  });
-  pdf.setTextColor(100,116,109); pdf.setFont("helvetica","normal"); pdf.setFontSize(5.5);
-  pdf.text("Sistema de Evidencias OPS - Max & Min", width-margin, height-3.2, {align:"right"});
+    pdf.setTextColor(100,116,109);pdf.setFont("helvetica","normal");pdf.setFontSize(5.5);
+    pdf.text(`Hoja ${pageIndex+1} de ${pages}`,width/2,height-3.2,{align:"center"});
+    pdf.text("Sistema de Evidencias OPS - Max & Min",width-margin,height-3.2,{align:"right"});
+  }
   return pdf;
 }
 
@@ -843,27 +851,24 @@ function buildListPdf(items) {
   const width = pdf.internal.pageSize.getWidth();
   const height = pdf.internal.pageSize.getHeight();
   const margin = 6;
-  const headerY = 4;
-  const headerH = 8;
-  const tableY = 18;
+  const tableY = 14.5;
   const rowH = 8.5;
   const columns = [
-    ["INGREDIENTE / SAP", 82], ["CATEGORÍA", 38], ["#DIA", 18], ["#SAP", 20],
-    ["USO PROM.", 22], ["MÍN.", 18], ["MÁX.", 18], ["ESTADO", width - margin * 2 - 216],
+    ["INGREDIENTE / SAP", 86], ["CATEGORÍA", 39], ["#DIA", 18], ["#SAP", 20],
+    ["USO PROM. SEM", 25], ["MÍN.", 18], ["MÁX.", 18], ["# PEDIDOS", width - margin * 2 - 224],
   ];
   const pages = Math.ceil(items.length / LIST_PAGE_SIZE);
 
   for (let pageIndex = 0; pageIndex < pages; pageIndex += 1) {
     if (pageIndex) pdf.addPage("letter", "landscape");
-    pdf.setFillColor(255, 255, 255); pdf.rect(0, 0, width, height, "F");
-    drawPdfHeader(pdf, margin, headerY, width - margin * 2, headerH);
-    pdf.setTextColor(0, 59, 42); pdf.setFont("helvetica", "bold"); pdf.setFontSize(6.4);
-    pdf.text(`LISTA OPERATIVA - SOLO VALORES > 0 - HOJA ${pageIndex + 1} DE ${pages}`, margin, 15.1);
-    drawListTableHeader(pdf, columns, margin, tableY);
-    const pageItems = items.slice(pageIndex * LIST_PAGE_SIZE, (pageIndex + 1) * LIST_PAGE_SIZE);
-    pageItems.forEach((item, rowIndex) => drawListRow(pdf, columns, item, margin, tableY + 7 + rowIndex * rowH, rowH, rowIndex));
-    pdf.setTextColor(100, 116, 109); pdf.setFont("helvetica", "normal"); pdf.setFontSize(5.5);
-    pdf.text("Sistema de Evidencias OPS - Max & Min", width - margin, height - 3.2, { align: "right" });
+    pdf.setFillColor(255,255,255); pdf.rect(0,0,width,height,"F");
+    drawPdfHeader(pdf,margin,4,width-margin*2,8);
+    drawListTableHeader(pdf,columns,margin,tableY);
+    const pageItems=items.slice(pageIndex*LIST_PAGE_SIZE,(pageIndex+1)*LIST_PAGE_SIZE);
+    pageItems.forEach((item,rowIndex)=>drawListRow(pdf,columns,item,margin,tableY+7+rowIndex*rowH,rowH,rowIndex));
+    pdf.setTextColor(100,116,109);pdf.setFont("helvetica","normal");pdf.setFontSize(5.5);
+    pdf.text(`Hoja ${pageIndex+1} de ${pages}`,width/2,height-3.2,{align:"center"});
+    pdf.text("Sistema de Evidencias OPS - Max & Min",width-margin,height-3.2,{align:"right"});
   }
   return pdf;
 }
@@ -877,24 +882,15 @@ function drawListTableHeader(pdf, columns, x, y) {
 
 function drawListRow(pdf, columns, item, x, y, rowHeight, rowIndex) {
   const calc = calculate(item);
-  const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
   const values = [
     `${pdfSafeText(item.sap)} - ${pdfSafeText(item.name)}`, pdfSafeText(item.category), item.code || "Pendiente", item.woe || "Pendiente",
-    formatNumber(item.usage, 1), formatMinMax(calc.min, calc.mode), formatMinMax(calc.max, calc.mode), review ? "Revisar" : "Validado",
+    formatNumber(item.usage,1), formatMinMax(calc.min,calc.mode), formatMinMax(calc.max,calc.mode), String(state.orders),
   ];
-  const totalWidth = columns.reduce((sum, column) => sum + column[1], 0);
-  pdf.setFillColor(rowIndex % 2 ? 247 : 255, rowIndex % 2 ? 250 : 255, rowIndex % 2 ? 248 : 255);
-  pdf.setDrawColor(218, 229, 224); pdf.rect(x, y, totalWidth, rowHeight, "FD");
-  let cursor = x;
-  values.forEach((value, columnIndex) => {
-    const columnWidth = columns[columnIndex][1];
-    if (columnIndex) pdf.line(cursor, y, cursor, y + rowHeight);
-    pdf.setTextColor(columnIndex === 7 && review ? 168 : 27, columnIndex === 7 && review ? 102 : 43, columnIndex === 7 && review ? 0 : 36);
-    pdf.setFont("helvetica", columnIndex === 0 || columnIndex >= 4 ? "bold" : "normal");
-    fitPdfFont(pdf, value, columnWidth - 3, 5.9, 4.7);
-    pdf.text(fitPdfText(pdf, value, columnWidth - 3), cursor + 1.5, y + 5.3);
-    cursor += columnWidth;
-  });
+  const totalWidth=columns.reduce((sum,column)=>sum+column[1],0);
+  pdf.setFillColor(rowIndex%2?247:255,rowIndex%2?250:255,rowIndex%2?248:255);
+  pdf.setDrawColor(218,229,224);pdf.rect(x,y,totalWidth,rowHeight,"FD");
+  let cursor=x;
+  values.forEach((value,columnIndex)=>{const columnWidth=columns[columnIndex][1];if(columnIndex)pdf.line(cursor,y,cursor,y+rowHeight);pdf.setTextColor(27,43,36);pdf.setFont("helvetica",columnIndex===0||columnIndex>=4?"bold":"normal");fitPdfFont(pdf,value,columnWidth-3,5.9,4.7);const align=columnIndex===7?"center":"left";pdf.text(fitPdfText(pdf,value,columnWidth-3),align==="center"?cursor+columnWidth/2:cursor+1.5,y+5.3,{align});cursor+=columnWidth;});
 }
 
 function buildPdf(items) {
@@ -1037,6 +1033,14 @@ async function fetchStoreData(path, version = manifest.generated) {
     } finally { clearTimeout(timeout); }
   }
   throw lastError;
+}
+
+function openSupportPdf(event) {
+  event.preventDefault();
+  const link = event.currentTarget;
+  $("supportPdfTitle").textContent = link.textContent.trim() || "Guía de apoyo";
+  $("supportPdfFrame").src = link.getAttribute("href");
+  $("supportPdfDialog").showModal();
 }
 
 function latestWeeks(amount) {
