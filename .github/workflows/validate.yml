@@ -30,6 +30,7 @@ jobs:
       - run: node --check sw.js
       - run: node tools/audit_business_rules.cjs
       - run: python tools/cleanup_obsolete.py --report /tmp/cleanup_report.json
+      - run: python tools/audit_data_integrity.py --report /tmp/data_integrity_report.json
       - run: python tools/audit_project.py
       - run: python tools/audit_experience.py --pdf-output /tmp/Lista_MIN_MAX_Muestra.pdf --report /tmp/experience_report.json
       - run: python tools/prepare_pdf_release.py --output /tmp/Etiquetas_MIN_MAX_Muestra.pdf --report /tmp/pdf_release_report.json

@@ -19,7 +19,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: pip install openpyxl
       - run: python tools/cleanup_obsolete.py --apply --report audit/cleanup_report.json
+      - run: python tools/audit_data_integrity.py --report audit/data_integrity_report.json
       - run: python tools/audit_project.py
       - run: |
           if git diff --quiet; then
