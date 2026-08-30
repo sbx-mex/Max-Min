@@ -1,0 +1,23 @@
+{
+  "status": "ok",
+  "files": 1898,
+  "positiveRows": 4884818,
+  "weeks": 35,
+  "engines": {
+    "maxMin": {
+      "status": "ok",
+      "files": 949,
+      "positiveRows": 4884818,
+      "weeks": 35,
+      "issues": []
+    },
+    "normalizados": {
+      "status": "ok",
+      "files": 949,
+      "positiveRows": 1053226,
+      "weeks": 35,
+      "issues": []
+    }
+  },
+  "issues": []
+}

@@ -2,22 +2,24 @@
   "status": "cleaned",
   "apply": true,
   "targets": [
-    "icons/hero-maxmin.png",
-    "icons/splash-1920x1080.png",
-    "js/data_index.js",
-    "js/data_part_01.js",
-    "js/data_part_02.js",
-    "js/data_part_03.js",
-    "js/data_part_04.js",
-    "js/data_part_05.js",
-    "js/data_part_06.js",
-    "js/data_sem_18.js",
-    "js/data_sem_19.js",
-    "js/data_sem_20.js",
-    "js/data_sem_21.js",
-    "js/data_sem_22.js",
-    "js/data_sem_23.js",
-    "js/data_sem_24.js",
-    "js/data_sem_25.js"
+    "data/stores_12/38128.json",
+    "data/stores_12/38168.json",
+    "data/stores_12/38272.json",
+    "data/stores_12/38362.json",
+    "data/stores_12/38443.json",
+    "data/stores_12/38465.json",
+    "data/stores_12/38652.json",
+    "data/stores_12/38726.json"
+  ],
+  "legacyTargets": [],
+  "orphanStoreFiles": [
+    "data/stores_12/38128.json",
+    "data/stores_12/38168.json",
+    "data/stores_12/38272.json",
+    "data/stores_12/38362.json",
+    "data/stores_12/38443.json",
+    "data/stores_12/38465.json",
+    "data/stores_12/38652.json",
+    "data/stores_12/38726.json"
   ]
 }
