@@ -21,6 +21,7 @@ required = [
     "vendor/jspdf.umd.min.js", "data/manifest.js", "tools/build_data.py", "tools/update_week.py",
     "sources/Directorio.xlsx", "sources/Lista_Precios_Base.xlsx",
     "updates/incoming/README.md", ".github/workflows/update-week.yml",
+    "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
 ]
 for relative in required:
     if not (ROOT / relative).is_file():
@@ -89,10 +90,22 @@ markers = [
     "pdf.internal.getNumberOfPages()", "fetchStoreData(store.file", "compactWeeks",
     'const headerH = 8', 'item.woe || "—"', "#DIA", "#SAP", "PEDIDOS",
     "latestWeeks", "data-week-preset", "activeFilterSummary",
+    "openExportConfirmation", "confirmExportDialog", "confirmExportSummary",
 ]
 for marker in markers:
     if marker not in app:
         fail(f"falta marcador crítico: {marker}")
+
+index_markers = [
+    "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
+    "Sistema de Evidencias OPS", "Jorge Alcantar Aguiar", "Enrique César Flores",
+]
+for marker in index_markers:
+    if marker not in index:
+        fail(f"falta elemento visual: {marker}")
+for obsolete_copy in ["Control operativo confiable", "Valida, ajusta y corta etiquetas listas.", "Promedio dinámico:"]:
+    if obsolete_copy in index:
+        fail(f"persiste texto que debe estar oculto: {obsolete_copy}")
 
 report = {
     "status": "ok",

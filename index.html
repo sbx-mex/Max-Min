@@ -19,7 +19,7 @@
     <div class="header-inner">
       <a class="brand" href="#" aria-label="Inicio Max & Min">
         <img src="icons/icon-192.png" alt="" />
-        <span><b>Max & Min</b><small id="versionRange">Remaster · Cargando semanas</small></span>
+        <span class="sr-only"><b>Max & Min</b><small id="versionRange">Remaster · Cargando semanas</small></span>
       </a>
       <nav class="tabs" aria-label="Módulos principales">
         <button class="tab active" data-tab="etiquetas" type="button">Etiquetas</button>
@@ -34,14 +34,7 @@
   </header>
 
   <main class="app-shell">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Control operativo confiable</p>
-        <h1>Valida, ajusta y corta etiquetas listas.</h1>
-        <p id="contextLine">38107 · Pedregal · Uso Sem 18-25</p>
-      </div>
-      <div class="health-badge" id="healthBadge"><i></i><span>Cargando cruces...</span></div>
-    </section>
+    <div class="sr-only" aria-live="polite"><span id="contextLine"></span><span id="healthBadge"></span></div>
 
     <section class="filter-card" aria-label="Filtros de análisis">
       <div class="filter-grid">
@@ -63,10 +56,7 @@
         </label>
       </div>
       <div class="filter-footer">
-        <div>
-          <div class="formula-note"><b>Promedio dinámico:</b> uso de las semanas elegidas ÷ semanas ÷ 7.</div>
-          <div id="activeFilterSummary" class="active-filter-summary" aria-live="polite">Preparando filtros...</div>
-        </div>
+        <div id="activeFilterSummary" class="active-filter-summary" aria-live="polite">Preparando filtros...</div>
         <div class="filter-shortcuts" role="group" aria-label="Selección rápida de semanas">
           <span>Semanas rápidas</span>
           <button class="shortcut-button" data-week-preset="latest" type="button">Última</button>
@@ -82,7 +72,6 @@
     </section>
 
     <section id="tab-etiquetas" class="tab-panel active">
-      <div class="metric-grid" id="metricGrid"></div>
       <div class="workspace-grid">
         <section class="card catalog-card">
           <div class="card-heading">
@@ -152,11 +141,26 @@
     </section>
   </main>
 
+  <footer class="app-footer">
+    <img src="icons/icon-192.png" alt="" />
+    <div><strong>Sistema de Evidencias OPS</strong><span>Diseñado por Jorge Alcantar Aguiar &amp; Enrique César Flores</span></div>
+  </footer>
+
   <div id="loadingOverlay" class="loading-overlay hidden" role="status" aria-live="polite"><div><i></i><b id="loadingTitle">Preparando datos</b><span id="loadingText">Un momento...</span></div></div>
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
+  <dialog id="confirmExportDialog" class="export-dialog">
+    <div class="export-dialog-body">
+      <img class="dialog-visual" src="assets/ui/Damos_Seguimiento.webp" alt="Le damos seguimiento: estamos trabajando para ti" />
+      <p class="eyebrow">Antes de exportar</p>
+      <h2>Confirma tu selección</h2>
+      <p id="confirmExportSummary"></p>
+      <div class="dialog-actions"><button id="cancelExportButton" class="button button-quiet" type="button">Volver</button><button id="confirmExportButton" class="button button-primary" type="button">Exportar PDF</button></div>
+    </div>
+  </dialog>
+
   <dialog id="exportDialog" class="export-dialog">
-    <div class="export-dialog-body"><span class="success-mark">✓</span><p class="eyebrow">Exportación validada</p><h2>PDF listo para imprimir y recortar</h2><p id="exportSummary"></p><button id="closeExportDialog" class="button button-primary" type="button">Entendido</button></div>
+    <div class="export-dialog-body"><img class="dialog-visual" src="assets/ui/Un_placer_haber_Ayudado.webp" alt="Un placer haber ayudado" /><p class="eyebrow">Exportación lista</p><h2>PDF preparado</h2><p id="exportSummary"></p><button id="closeExportDialog" class="button button-primary" type="button">Cerrar</button></div>
   </dialog>
 </body>
 </html>

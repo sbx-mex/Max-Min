@@ -180,13 +180,15 @@ function bindEvents() {
   $("clearFiltersButton").addEventListener("click", resetFilters);
   document.querySelectorAll("[data-week-preset]").forEach((button) => button.addEventListener("click", () => setWeekPreset(button.dataset.weekPreset)));
   $("resetButton").addEventListener("click", resetCurrent);
-  $("exportButton").addEventListener("click", exportPdf);
+  $("exportButton").addEventListener("click", openExportConfirmation);
   $("previousPreview").addEventListener("click", () => { state.previewPage = Math.max(0, state.previewPage - 1); renderPreview(); });
   $("nextPreview").addEventListener("click", () => { state.previewPage += 1; renderPreview(); });
   $("catalogList").addEventListener("change", onCatalogChange);
   $("consultaBody").addEventListener("change", onConsultaChange);
   $("photoInput").addEventListener("change", onPhotoChange);
   $("clearPhotoButton").addEventListener("click", clearPhoto);
+  $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
+  $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); exportPdf(); });
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") document.querySelectorAll(".filter-menu").forEach((menu) => menu.classList.add("hidden"));
@@ -298,7 +300,6 @@ function calculate(item) {
 function renderAll() {
   if (!state.store) return;
   updateContext();
-  renderMetrics();
   renderCatalog();
   renderPreview();
   renderConsulta();
@@ -313,18 +314,6 @@ function updateContext() {
   $("previewDate").textContent = formatDate(manifest.generated);
   const filters = [`Sem ${weeks}`, state.categories.size ? `${state.categories.size} categoría(s)` : "Todas las categorías", state.ingredients.size ? `${state.ingredients.size} ingrediente(s)` : "Todos los ingredientes"];
   $("activeFilterSummary").textContent = filters.join(" · ");
-}
-
-function renderMetrics() {
-  const selectedItems = selectedItemsCurrent();
-  const reviewCount = state.filtered.filter((item) => item.sapStatus !== "ok" || item.formatStatus !== "ok").length;
-  const avgUsage = state.filtered.length ? state.filtered.reduce((sum, item) => sum + item.usage, 0) / state.filtered.length : 0;
-  $("metricGrid").innerHTML = [
-    ["Ingredientes filtrados", state.filtered.length, `${state.aggregated.length} disponibles en tienda`],
-    ["Etiquetas elegidas", selectedItems.length, `${Math.max(1, Math.ceil(selectedItems.length / PAGE_SIZE))} hoja(s) Carta`],
-    ["Uso ideal promedio", formatNumber(avgUsage, 1), `Promedio de ${state.weeks.size} semana(s)`],
-    ["Cruces por revisar", reviewCount, reviewCount ? "SAP o presentación pendientes" : "Cruces completos"],
-  ].map(([label, value, detail]) => `<article class="metric"><small>${esc(String(label))}</small><b>${esc(String(value))}</b><span>${esc(String(detail))}</span></article>`).join("");
 }
 
 function renderCatalog() {
@@ -504,12 +493,21 @@ async function exportPdf() {
     if (pdf.internal.pageSize.getWidth() <= pdf.internal.pageSize.getHeight()) throw new Error("Orientación inválida");
     const filename = `${safeName(state.store.label)}_Sem_${safeName(compactWeeks([...state.weeks]))}_Etiquetas_MIN_MAX.pdf`;
     pdf.save(filename);
-    $("exportSummary").textContent = `${items.length} etiquetas · ${expectedPages} hoja(s) · Carta horizontal · cuadrícula 4 × 3.`;
+    $("exportSummary").textContent = `${items.length} etiquetas · ${expectedPages} hoja(s) Carta.`;
     $("exportDialog").showModal();
   } catch (error) {
     console.error(error);
     toast("La validación detuvo el PDF. Revisa los datos e intenta nuevamente.");
   } finally { hideLoading(); }
+}
+
+function openExportConfirmation() {
+  const items = selectedItemsCurrent();
+  if (!items.length) { toast("Selecciona al menos un ingrediente antes de exportar."); return; }
+  if (!window.jspdf?.jsPDF) { toast("El motor PDF local no está disponible."); return; }
+  const pages = Math.ceil(items.length / PAGE_SIZE);
+  $("confirmExportSummary").textContent = `${state.store.label} · Sem ${compactWeeks([...state.weeks])} · ${items.length} etiquetas · ${pages} hoja(s).`;
+  $("confirmExportDialog").showModal();
 }
 
 function buildPdf(items) {

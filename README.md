@@ -21,6 +21,8 @@ Aplicación estática/PWA para validar uso ideal, formato de surtido y etiquetas
 
 La cabecera se resume como `38107 · Pedregal · Uso Sem 18-25`. En cada hoja PDF se imprime una sola fila superior con Tienda, Semanas y Fecha de actualización.
 
+La interfaz mantiene un enfoque **menos es más**: los conteos aparecen junto a la selección y la vista previa, sin tarjetas métricas duplicadas. Antes de exportar confirma tienda, semanas, etiquetas y hojas; al terminar muestra un cierre visual. Consulta [PATCH_UI_LIMPIA.md](PATCH_UI_LIMPIA.md).
+
 ## Ejecutar
 
 La carga por tienda usa `fetch`, por lo que se debe servir por HTTP:
