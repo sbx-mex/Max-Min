@@ -18,6 +18,7 @@ from datetime import date
 from pathlib import Path
 
 from build_data import FILES_PER_FOLDER, RECORD, load_crosses, load_directory_records, minified_json, norm_variants, text
+from data_integrity import write_normalized_integrity
 
 
 class SpoolWriter:
@@ -209,6 +210,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
         "rule": "Cada ingrediente usa sólo sus semanas reportadas; la última semana determina cuándo dejó de descontarse por receta.",
     }
     (normalized_root / "manifest.js").write_text("window.MAXMIN_NORMALIZED=" + minified_json(manifest) + ";\n", encoding="utf-8")
+    write_normalized_integrity(root, manifest)
 
     report = {
         "status": "ok",

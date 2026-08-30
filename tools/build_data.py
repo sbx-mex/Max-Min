@@ -20,6 +20,8 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
+from data_integrity import write_integrity
+
 RECORD = struct.Struct("<BHHI")
 FILES_PER_FOLDER = 80
 
@@ -320,6 +322,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
         "formula": "Promedio de uso de semanas seleccionadas / 7. Máximo: 2 pedidos x5, 3 x4, 4 x3, 5 x2.",
     }
     (data_root / "manifest.js").write_text("window.MAXMIN_MANIFEST=" + minified_json(manifest) + ";\n", encoding="utf-8")
+    write_integrity(output, manifest)
     report = {
         "status": "ok",
         "generated": manifest["generated"],

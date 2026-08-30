@@ -16,6 +16,7 @@ from datetime import date
 from pathlib import Path
 
 from build_data import FILES_PER_FOLDER, load_crosses, load_directory_records, minified_json, norm, norm_variants, normalized_csv_lines, text
+from data_integrity import write_integrity
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_HEADERS = {"Semana", "Tiendas", "Categoría Inventario", "Ingrediente", "Indicadores", "Uso Ideal* (#)"}
@@ -247,6 +248,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     counts["positiveByWeek"] = {str(value): published_by_week[str(value)] for value in manifest["weeks"]}
     counts["positiveRows"] = sum(published_by_week.values())
     (root / "data" / "manifest.js").write_text("window.MAXMIN_MANIFEST=" + minified_json(manifest) + ";\n", encoding="utf-8")
+    write_integrity(root, manifest)
 
     review_path = root / "audit" / "ingredients_review.csv"
     with review_path.open("w", encoding="utf-8-sig", newline="") as stream:

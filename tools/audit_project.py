@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 from build_data import load_directory_records
@@ -21,6 +22,7 @@ def fail(message: str) -> None:
 required = [
     "index.html", "css/styles.css", "js/app.js", "sw.js", "manifest.webmanifest",
     "vendor/jspdf.umd.min.js", "data/manifest.js", "tools/build_data.py", "tools/update_week.py",
+    "data/integrity.json", "data/normalized/integrity.json", "tools/data_integrity.py", "tools/audit_data_integrity.py",
     "data/normalized/manifest.js", "tools/build_normalized.py", "tools/audit_business_rules.cjs", "sources/Normalizados.zip",
     "sources/Directorio.xlsx", "sources/Lista_Precios_Base.xlsx",
     "updates/incoming/README.md", ".github/workflows/update-week.yml",
@@ -83,7 +85,21 @@ if set(counts["rowsByWeek"]) != {str(week) for week in weeks} or set(counts["pos
 if any(int(counts["positiveByWeek"][str(week)]) > int(counts["rowsByWeek"][str(week)]) for week in weeks):
     fail("un conteo positivo supera las filas de su semana")
 
+referenced_store_files = [str(store["file"]) for store in manifest["stores"]]
+if len(referenced_store_files) != len(set(referenced_store_files)):
+    fail("el manifiesto contiene archivos de tienda duplicados")
+actual_store_files = {
+    path.relative_to(ROOT).as_posix()
+    for path in (ROOT / "data").glob("stores_*/*.json")
+}
+orphan_store_files = sorted(actual_store_files - set(referenced_store_files))
+if orphan_store_files:
+    preview = ", ".join(orphan_store_files[:8])
+    suffix = f" y {len(orphan_store_files) - 8} más" if len(orphan_store_files) > 8 else ""
+    fail(f"persisten archivos de tienda huérfanos: {preview}{suffix}")
+
 total_records = 0
+records_by_week: Counter[str] = Counter()
 for store in manifest["stores"]:
     path = ROOT / store["file"]
     if not path.is_file():
@@ -94,9 +110,25 @@ for store in manifest["stores"]:
             fail(f"semana inválida en {path}")
         if len(flat) % 3:
             fail(f"registro compacto incompleto en {path}")
-        total_records += len(flat) // 3
+        records = len(flat) // 3
+        total_records += records
+        records_by_week[str(int(week))] += records
 if total_records != counts["positiveRows"]:
-    fail(f"reconciliación fallida: {total_records} vs {counts['positiveRows']}")
+    differences = [
+        f"Sem {week}: {records_by_week[str(week)]} vs {counts['positiveByWeek'][str(week)]}"
+        for week in weeks
+        if records_by_week[str(week)] != int(counts["positiveByWeek"][str(week)])
+    ]
+    fail(
+        f"reconciliación fallida: {total_records} vs {counts['positiveRows']}; "
+        + "; ".join(differences[:8])
+    )
+for week in weeks:
+    if records_by_week[str(week)] != int(counts["positiveByWeek"][str(week)]):
+        fail(
+            f"reconciliación semanal fallida en {week}: "
+            f"{records_by_week[str(week)]} vs {counts['positiveByWeek'][str(week)]}"
+        )
 
 normalized_source = (ROOT / "data" / "normalized" / "manifest.js").read_text(encoding="utf-8")
 normalized_prefix = "window.MAXMIN_NORMALIZED="
