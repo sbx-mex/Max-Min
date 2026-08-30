@@ -1,10 +1,10 @@
 {
   "status": "ok",
-  "weeks": "1-34",
-  "stores": 954,
-  "ingredients": 701,
-  "positiveRows": 4764428,
-  "sapMatched": 626,
+  "weeks": "1-35",
+  "stores": 949,
+  "ingredients": 706,
+  "positiveRows": 4884818,
+  "sapMatched": 630,
   "formatMatched": 594,
   "pdf": {
     "format": "letter",

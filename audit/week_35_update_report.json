@@ -1,0 +1,94 @@
+{
+  "status": "ok",
+  "week": 35,
+  "replace": false,
+  "source": "Max & Min_35.csv",
+  "sourceSha256": "c86b938689384230f4331c3b75e61ec2e6d98275bb3899bf1d18821ab47e5b46",
+  "rows": 127354,
+  "positiveRows": 126918,
+  "storesUpdated": 892,
+  "filesModified": 900,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [
+    "38202",
+    "38269",
+    "38632",
+    "43182",
+    "43205"
+  ],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43103",
+      "positiveRows": 122
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 138
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 145
+    }
+  ],
+  "excludedUnknownRows": 405,
+  "newCategories": [],
+  "newIngredients": [
+    "SII26Doodle16",
+    "SII26SSBTL12Aniv",
+    "SII26SS12Aniv",
+    "SII26Mug14Aniv",
+    "SII26CC24Rain"
+  ],
+  "weeksAvailable": "1-35",
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4220935
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4183793
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 4413917
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4295548
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 4305018
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4285055
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4151563
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4130478
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 4347355
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4195402
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4218517
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 3360795
+    }
+  }
+}
