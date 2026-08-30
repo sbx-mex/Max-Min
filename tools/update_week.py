@@ -11,11 +11,11 @@ import json
 import math
 import re
 import zipfile
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
-from build_data import FILES_PER_FOLDER, load_crosses, minified_json, norm, norm_variants, normalized_csv_lines, text
+from build_data import FILES_PER_FOLDER, load_crosses, load_directory_records, minified_json, norm, norm_variants, normalized_csv_lines, text
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_HEADERS = {"Semana", "Tiendas", "Categoría Inventario", "Ingrediente", "Indicadores", "Uso Ideal* (#)"}
@@ -92,6 +92,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     if week not in existing_weeks and existing_weeks and week != max(existing_weeks) + 1:
         fail(f"la siguiente semana esperada es {max(existing_weeks) + 1}, no {week}")
 
+    directory_records = load_directory_records(args.directory)
     directory, micros, presentations = load_crosses(args.directory, args.prices, args.presentations)
     raw, source_name = source_bytes(args.input.resolve(), week)
     source_sha = hashlib.sha256(raw).hexdigest()
@@ -108,6 +109,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     positive_rows = 0
     new_categories: list[str] = []
     new_ingredients: list[str] = []
+    unknown_store_rows: Counter[str] = Counter()
 
     for row_number, row in enumerate(reader, start=2):
         raw_rows += 1
@@ -129,7 +131,10 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         if usage <= 0 or not ceco or not category or not source_ingredient:
             continue
         if ceco not in directory:
-            fail(f"fila {row_number}: CeCo {ceco} no existe en Directorio.xlsx")
+            unknown_store_rows[ceco] += 1
+            if args.unknown_store_policy == "fail":
+                fail(f"fila {row_number}: CeCo {ceco} no existe en Directorio.xlsx")
+            continue
         if category not in category_ids:
             category_ids[category] = len(categories)
             categories.append(category)
@@ -149,12 +154,33 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         fail("el CSV semanal no contiene registros")
 
     store_entries = list(manifest["stores"])
+    removed_directory_stores: list[str] = []
+    if args.sync_directory:
+        for store in list(store_entries):
+            ceco = str(store["code"])
+            if ceco in directory:
+                continue
+            path = root / str(store["file"])
+            if path.is_file():
+                path.unlink()
+            store_entries.remove(store)
+            removed_directory_stores.append(ceco)
+    for store in store_entries:
+        ceco = str(store["code"])
+        if ceco not in directory_records:
+            continue
+        store["name"] = directory[ceco]
+        store["label"] = f"{ceco} · {directory[ceco]}"
+        store["status"] = directory_records[ceco]["status"]
     stores_by_code = {str(store["code"]): store for store in store_entries}
     added_stores: list[str] = []
     for ceco in sorted(by_store, key=lambda value: (int(value) if value.isdigit() else math.inf, value)):
         if ceco not in stores_by_code:
             relative = allocate_store_path(root, store_entries, ceco)
-            store = {"code": ceco, "name": directory[ceco], "label": f"{ceco} · {directory[ceco]}", "file": relative}
+            store = {
+                "code": ceco, "name": directory[ceco], "label": f"{ceco} · {directory[ceco]}",
+                "file": relative, "status": directory_records[ceco]["status"],
+            }
             store_entries.append(store)
             stores_by_code[ceco] = store
             added_stores.append(ceco)
@@ -181,15 +207,19 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         if ceco in by_store or args.replace:
             modified_files.append(path.relative_to(root).as_posix())
 
-    store_entries.sort(key=lambda store: (int(store["code"]) if str(store["code"]).isdigit() else math.inf, str(store["code"])))
+    store_entries.sort(key=lambda store: (
+        int(directory_records[str(store["code"])]["priority"]),
+        int(store["code"]) if str(store["code"]).isdigit() else math.inf,
+        str(store["code"]),
+    ))
     manifest["stores"] = store_entries
     manifest["storesWithoutData"] = [
-        {"code": code, "name": directory[code]}
+        {"code": code, "name": directory[code], "status": directory_records[code]["status"]}
         for code in sorted(directory, key=lambda value: (int(value) if value.isdigit() else math.inf, value))
         if code not in {str(store["code"]) for store in store_entries}
     ]
     manifest["weeks"] = sorted(set(existing_weeks + [week]))
-    manifest["version"] = "4.1-weekly"
+    manifest["version"] = "4.2-directory-status"
     manifest["generated"] = date.today().isoformat()
     manifest["lastUpdate"] = {"week": week, "source": source_name, "sha256": source_sha}
     counts = manifest["counts"]
@@ -206,6 +236,16 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     counts["sapMatched"] = sum(item["sapStatus"] == "ok" for item in ingredients)
     counts["formatMatched"] = sum(item["formatStatus"] == "ok" for item in ingredients)
     counts["indicatorNonBlank"] = 0
+    counts["openStores"] = sum(record["status"] == "Abierta" for record in directory_records.values())
+    counts["temporaryClosedStores"] = sum(record["status"] == "Cierre Temporal" for record in directory_records.values())
+    counts["excludedUnknownRows"] = sum(unknown_store_rows.values())
+    published_by_week: Counter[str] = Counter()
+    for store in store_entries:
+        payload = json.loads((root / str(store["file"])).read_text(encoding="utf-8"))
+        for published_week, flat in payload.items():
+            published_by_week[str(published_week)] += len(flat) // 3
+    counts["positiveByWeek"] = {str(value): published_by_week[str(value)] for value in manifest["weeks"]}
+    counts["positiveRows"] = sum(published_by_week.values())
     (root / "data" / "manifest.js").write_text("window.MAXMIN_MANIFEST=" + minified_json(manifest) + ";\n", encoding="utf-8")
 
     review_path = root / "audit" / "ingredients_review.csv"
@@ -235,9 +275,15 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         "rows": raw_rows,
         "positiveRows": positive_rows,
         "storesUpdated": len(by_store),
-        "filesModified": len(modified_files) + 3,
+        "filesModified": len(modified_files) + len(removed_directory_stores) + 3,
         "newStores": added_stores,
         "removedStores": removed_stores,
+        "removedByDirectory": removed_directory_stores,
+        "excludedUnknownStores": [
+            {"ceco": code, "positiveRows": unknown_store_rows[code]}
+            for code in sorted(unknown_store_rows)
+        ],
+        "excludedUnknownRows": sum(unknown_store_rows.values()),
         "newCategories": new_categories,
         "newIngredients": new_ingredients,
         "weeksAvailable": f"{min(manifest['weeks'])}-{max(manifest['weeks'])}",
@@ -254,6 +300,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--week", type=int, required=True)
     parser.add_argument("--replace", action="store_true")
+    parser.add_argument("--sync-directory", action="store_true")
+    parser.add_argument("--unknown-store-policy", choices=("fail", "skip"), default="skip")
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--directory", type=Path, default=ROOT / "sources" / "Directorio.xlsx")
     parser.add_argument("--prices", type=Path, default=ROOT / "sources" / "Lista_Precios_Base.xlsx")

@@ -1,0 +1,30 @@
+{
+  "status": "ok",
+  "baseCommit": "40a18e4",
+  "directory": {
+    "stores": 952,
+    "open": 942,
+    "temporaryClosed": 10
+  },
+  "week35": {
+    "sourceRows": 127354,
+    "publishedPositiveRows": 126918,
+    "storesUpdated": 892,
+    "excludedUnknownRows": 405,
+    "weeksAvailable": "1-35"
+  },
+  "publishedEngine": {
+    "storesWithData": 949,
+    "ingredients": 706,
+    "positiveRows": 4884818,
+    "maxFilesPerFolder": 80,
+    "maxFolderBytes": 4413917
+  },
+  "pdf": {
+    "format": "Carta horizontal",
+    "grid": "4x3",
+    "labels": 15,
+    "pages": 2,
+    "headerRowsPerPage": 1
+  }
+}

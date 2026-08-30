@@ -7,6 +7,8 @@ import json
 import re
 from pathlib import Path
 
+from build_data import load_directory_records
+
 ROOT = Path(__file__).resolve().parents[1]
 LIMIT_BYTES = 25 * 1024 * 1024
 LIMIT_FILES = 100
@@ -22,6 +24,8 @@ required = [
     "sources/Directorio.xlsx", "sources/Lista_Precios_Base.xlsx",
     "updates/incoming/README.md", ".github/workflows/update-week.yml",
     "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
+    "assets/reference/BOH_5S_Referencia.webp", "docs/guias/Guia_5S_BOH.pdf",
+    "docs/guias/Alineacion_acomodo_items.pdf", "tools/audit_week_source.py",
 ]
 for relative in required:
     if not (ROOT / relative).is_file():
@@ -49,10 +53,25 @@ if not manifest_source.startswith(prefix) or not manifest_source.rstrip().endswi
 manifest = json.loads(manifest_source[len(prefix):].strip()[:-1])
 counts = manifest["counts"]
 weeks = [int(value) for value in manifest["weeks"]]
+directory = load_directory_records(ROOT / "sources" / "Directorio.xlsx")
 if not weeks or weeks[0] != 1 or weeks != list(range(1, weeks[-1] + 1)):
     fail(f"las semanas no son continuas desde 1: {weeks}")
-if counts["directoryStores"] < counts["storesWithData"] or counts["storesWithData"] != len(manifest["stores"]):
+if counts["directoryStores"] != len(directory) or counts["storesWithData"] != len(manifest["stores"]):
     fail("conteo inconsistente de tiendas")
+if counts.get("openStores") != sum(item["status"] == "Abierta" for item in directory.values()):
+    fail("conteo inconsistente de tiendas abiertas")
+if counts.get("temporaryClosedStores") != sum(item["status"] == "Cierre Temporal" for item in directory.values()):
+    fail("conteo inconsistente de cierres temporales")
+store_priorities = []
+for store in manifest["stores"]:
+    code = str(store["code"])
+    if code not in directory:
+        fail(f"tienda fuera del directorio vigente: {code}")
+    if store.get("status") != directory[code]["status"]:
+        fail(f"estatus desactualizado para {code}")
+    store_priorities.append(int(directory[code]["priority"]))
+if store_priorities != sorted(store_priorities):
+    fail("las tiendas abiertas deben aparecer antes de los cierres temporales")
 if counts["ingredients"] != len(manifest["ingredients"]) or counts["categories"] != len(manifest["categories"]):
     fail("conteo inconsistente de ingredientes o categorías")
 if counts["indicatorNonBlank"] != 0:
@@ -91,6 +110,7 @@ markers = [
     'const headerH = 8', 'item.woe || "—"', "#DIA", "#SAP", "PEDIDOS",
     "latestWeeks", "data-week-preset", "activeFilterSummary",
     "openExportConfirmation", "confirmExportDialog", "confirmExportSummary",
+    "createSingleStoreFilter", "store.status", "historyNote", "photoCameraInput",
 ]
 for marker in markers:
     if marker not in app:
@@ -99,6 +119,7 @@ for marker in markers:
 index_markers = [
     "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
     "Sistema de Evidencias OPS", "Jorge Alcantar Aguiar", "Enrique César Flores",
+    "assets/reference/BOH_5S_Referencia.webp", "docs/guias/Guia_5S_BOH.pdf",
 ]
 for marker in index_markers:
     if marker not in index:

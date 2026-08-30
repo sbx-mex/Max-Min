@@ -38,11 +38,7 @@
 
     <section class="filter-card" aria-label="Filtros de análisis">
       <div class="filter-grid">
-        <label class="field field-store">
-          <span>Tienda / CeCo</span>
-          <input id="storeInput" list="storeOptions" type="search" autocomplete="off" placeholder="Buscar CeCo o tienda" />
-          <datalist id="storeOptions"></datalist>
-        </label>
+        <div id="storeFilter" class="single-filter field-store"></div>
         <div id="weeksFilter" class="multi-filter"></div>
         <div id="categoriesFilter" class="multi-filter"></div>
         <div id="ingredientsFilter" class="multi-filter"></div>
@@ -56,7 +52,7 @@
         </label>
       </div>
       <div class="filter-footer">
-        <div id="activeFilterSummary" class="active-filter-summary" aria-live="polite">Preparando filtros...</div>
+        <div><div id="activeFilterSummary" class="active-filter-summary" aria-live="polite">Preparando filtros...</div><div id="historyNote" class="history-note hidden">Sem 25 o anteriores · histórico de uso de vasos y tapas.</div></div>
         <div class="filter-shortcuts" role="group" aria-label="Selección rápida de semanas">
           <span>Semanas rápidas</span>
           <button class="shortcut-button" data-week-preset="latest" type="button">Última</button>
@@ -65,9 +61,9 @@
           <button id="clearFiltersButton" class="link-button" type="button">Restablecer</button>
         </div>
       </div>
-      <details class="ops-guide">
-        <summary>Guía rápida de uso</summary>
-        <div class="ops-guide-grid"><span><b>1</b> Elige tienda y semanas.</span><span><b>2</b> Filtra y marca ingredientes.</span><span><b>3</b> Valida la vista y exporta.</span></div>
+      <details id="opsGuide" class="ops-guide">
+        <summary id="guideTitle">Guía rápida · Etiquetas</summary>
+        <div id="guideSteps" class="ops-guide-grid"></div>
       </details>
     </section>
 
@@ -112,7 +108,6 @@
           <div><p class="eyebrow">Cruce operativo</p><h2>Consulta y validación por ingrediente</h2></div>
           <button id="addVisibleButton" class="button button-primary" type="button">Agregar visibles</button>
         </div>
-        <p class="card-description">La descripción SAP se toma de Lista_Precios_Base.xlsx. Los ajustes de formato se guardan en este dispositivo.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>Código DIA</th><th>Uso prom.</th><th>Mín.</th><th>Máx.</th><th>Formato</th><th>Estado</th></tr></thead>
@@ -125,17 +120,24 @@
     <section id="tab-acomodo" class="tab-panel">
       <div class="workspace-grid acomodo-grid">
         <section class="card">
-          <div class="card-heading"><div><p class="eyebrow">Guía visual</p><h2>Foto y marcadores</h2></div><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar foto</button></div>
+          <div class="card-heading"><div><p class="eyebrow">Validación visual</p><h2>Foto de la estación</h2></div><div class="photo-actions"><label class="button button-primary" for="photoCameraInput">Tomar foto</label><label class="button button-quiet" for="photoInput">Adjuntar</label><button id="enhancePhotoButton" class="button button-quiet" type="button" disabled>Nitidez</button><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar</button></div></div>
+          <input id="photoCameraInput" class="file-input" type="file" accept="image/*" capture="environment" />
+          <input id="photoInput" class="file-input" type="file" accept="image/*" />
+          <div class="station-steps"><span><b>1</b> Foto completa</span><span><b>2</b> Ubica números</span><span><b>3</b> Compara y valida</span></div>
           <div id="photoStage" class="photo-stage">
-            <input id="photoInput" type="file" accept="image/*" capture="environment" />
-            <label id="photoPrompt" for="photoInput"><b>Agregar foto del rack</b><span>Los números corresponden a las etiquetas seleccionadas.</span></label>
-            <img id="rackPhoto" alt="Foto del rack" />
+            <div id="photoPrompt" class="photo-prompt"><b>Toma o adjunta la estación</b><span>Después arrastra cada número hasta el producto.</span></div>
+            <img id="rackPhoto" alt="Foto de la estación para validar el acomodo" />
             <div id="markerLayer" class="marker-layer"></div>
           </div>
         </section>
         <section class="card">
-          <div class="card-heading"><div><p class="eyebrow">Orden</p><h2>Ingredientes marcados</h2></div><span id="markerCount" class="count-pill">0</span></div>
+          <div class="card-heading"><div><p class="eyebrow">Ubicación</p><h2>Productos por identificar</h2></div><span id="markerCount" class="count-pill">0</span></div>
           <div id="markerList" class="marker-list"></div>
+          <details class="support-guide">
+            <summary>Apoyo para validar la estación</summary>
+            <a class="support-visual" href="assets/reference/BOH_5S_Referencia.webp" target="_blank" rel="noopener"><img src="assets/reference/BOH_5S_Referencia.webp" alt="Referencia visual de un BOH organizado con metodología 5S" /><span>Ver referencia BOH</span></a>
+            <div class="support-links"><a href="docs/guias/Guia_5S_BOH.pdf" target="_blank" rel="noopener">Guía 5S y hoja de rack</a><a href="docs/guias/Alineacion_acomodo_items.pdf" target="_blank" rel="noopener">Acomodo por categoría</a></div>
+          </details>
         </section>
       </div>
     </section>

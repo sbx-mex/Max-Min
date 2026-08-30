@@ -1,0 +1,94 @@
+{
+  "status": "ok",
+  "file": "/workspace/scratch/d1494abea7fb/Max-Min_Patch_35/output/pdf/Etiquetas_MIN_MAX_38107_Pedregal_Sem_18-25_Validada.pdf",
+  "pages": 2,
+  "labels": 15,
+  "labelsPerPage": [
+    12,
+    3
+  ],
+  "pageFormat": "Carta horizontal",
+  "grid": "4x3",
+  "header": "una fila compacta por página",
+  "requiredFields": [
+    "Descripción SAP",
+    "Nombre Inventario",
+    "#DIA",
+    "#SAP",
+    "MIN",
+    "MAX",
+    "Formato",
+    "Unidad de medida",
+    "# Pedidos"
+  ],
+  "pageReports": [
+    {
+      "page": 1,
+      "sizePoints": [
+        792.0,
+        612.0
+      ],
+      "labels": 12,
+      "headerOccurrences": 1,
+      "textCharacters": 1682
+    },
+    {
+      "page": 2,
+      "sizePoints": [
+        792.0,
+        612.0
+      ],
+      "labels": 3,
+      "headerOccurrences": 1,
+      "textCharacters": 416
+    }
+  ],
+  "sha256": "1ae0e492c4c97f4b4cac2992ace2aa6e3f29198ebc2aca76860f9302da1b6727",
+  "bytes": 8332,
+  "renderDpi": 180,
+  "renderer": "pdftocairo",
+  "visualSafety": [
+    {
+      "page": 1,
+      "pixels": [
+        1980,
+        1530
+      ],
+      "contentBox": [
+        40,
+        27,
+        1940,
+        1500
+      ],
+      "safeMarginsPixels": [
+        40,
+        27,
+        40,
+        30
+      ],
+      "inkCoverage": 0.1103,
+      "headerInkCoverage": 0.089
+    },
+    {
+      "page": 2,
+      "pixels": [
+        1980,
+        1530
+      ],
+      "contentBox": [
+        40,
+        27,
+        1940,
+        440
+      ],
+      "safeMarginsPixels": [
+        40,
+        27,
+        40,
+        1090
+      ],
+      "inkCoverage": 0.0307,
+      "headerInkCoverage": 0.089
+    }
+  ]
+}

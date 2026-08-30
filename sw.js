@@ -1,9 +1,11 @@
-const CACHE = "maxmin-remaster-v6-20260830";
+const CACHE = "maxmin-remaster-v7-20260830";
 const APP_SHELL = [
   "./", "./index.html", "./css/styles.css", "./js/app.js", "./data/manifest.js",
   "./vendor/jspdf.umd.min.js", "./manifest.webmanifest", "./icons/icon-192.png",
   "./icons/icon-512.png", "./icons/favicon-32.png", "./icons/apple-touch-icon.png",
-  "./assets/ui/Damos_Seguimiento.webp", "./assets/ui/Un_placer_haber_Ayudado.webp"
+  "./assets/ui/Damos_Seguimiento.webp", "./assets/ui/Un_placer_haber_Ayudado.webp",
+  "./assets/reference/BOH_5S_Referencia.webp", "./docs/guias/Guia_5S_BOH.pdf",
+  "./docs/guias/Alineacion_acomodo_items.pdf"
 ];
 
 self.addEventListener("install", (event) => {

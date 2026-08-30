@@ -27,7 +27,9 @@ const state = {
 let weeksFilter;
 let categoriesFilter;
 let ingredientsFilter;
+let storeFilter;
 let toastTimer;
+let rackPhotoUrl;
 
 function init() {
   if (!manifest || !Array.isArray(manifest.stores) || !manifest.stores.length) {
@@ -36,7 +38,7 @@ function init() {
   }
   restoreState();
   $("versionRange").textContent = `Remaster · Semanas ${manifest.weeks.at(0)}-${manifest.weeks.at(-1)}`;
-  buildStoreOptions();
+  buildStoreFilter();
   buildFilters();
   bindEvents();
   setTab(state.tab);
@@ -76,8 +78,8 @@ function persistState() {
   }));
 }
 
-function buildStoreOptions() {
-  $("storeOptions").innerHTML = manifest.stores.map((store) => `<option value="${esc(store.label)}"></option>`).join("");
+function buildStoreFilter() {
+  storeFilter = createSingleStoreFilter($("storeFilter"));
 }
 
 function buildFilters() {
@@ -102,6 +104,54 @@ function buildFilters() {
     selected: state.ingredients,
     onChange: () => { applyFilters(); },
   });
+}
+
+function createSingleStoreFilter(root) {
+  root.innerHTML = '<label>Tienda / CeCo</label><button class="filter-trigger" type="button" aria-expanded="false"><span>Seleccionar tienda</span><b>⌄</b></button><div class="filter-menu hidden"><input class="filter-search" type="search" autocomplete="off" placeholder="Buscar CeCo o tienda" aria-label="Buscar CeCo o tienda" /><div class="store-options" role="listbox"></div></div>';
+  const trigger = root.querySelector(".filter-trigger");
+  const menu = root.querySelector(".filter-menu");
+  const search = root.querySelector(".filter-search");
+  const optionsRoot = root.querySelector(".store-options");
+  const orderedStores = [...manifest.stores].sort((a, b) => {
+    const statusOrder = Number(a.status === "Cierre Temporal") - Number(b.status === "Cierre Temporal");
+    return statusOrder || Number(a.code) - Number(b.code);
+  });
+
+  function render() {
+    const query = normalize(search.value);
+    const matches = orderedStores.filter((store) => !query || normalize(`${store.code} ${store.name} ${store.status || "Abierta"}`).includes(query));
+    const visible = matches.slice(0, 100);
+    optionsRoot.innerHTML = visible.map((store) => `<button class="store-option ${state.store?.code === store.code ? "selected" : ""} ${store.status === "Cierre Temporal" ? "temporary" : ""}" type="button" role="option" aria-selected="${state.store?.code === store.code}" data-code="${esc(store.code)}"><b>${esc(store.code)}</b><span>${esc(store.name)}</span>${store.status === "Cierre Temporal" ? '<i class="store-status">Temporal</i>' : ""}</button>`).join("") || '<div class="empty-state">Sin coincidencias</div>';
+    if (matches.length > visible.length) optionsRoot.insertAdjacentHTML("beforeend", `<div class="filter-hint">Escribe más para acotar ${matches.length} tiendas.</div>`);
+  }
+
+  function close() {
+    menu.classList.add("hidden");
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  trigger.addEventListener("click", () => {
+    document.querySelectorAll(".filter-menu").forEach((item) => { if (item !== menu) item.classList.add("hidden"); });
+    menu.classList.toggle("hidden");
+    trigger.setAttribute("aria-expanded", String(!menu.classList.contains("hidden")));
+    if (!menu.classList.contains("hidden")) { search.value = ""; render(); search.focus(); }
+  });
+  search.addEventListener("input", render);
+  optionsRoot.addEventListener("click", (event) => {
+    const button = event.target.closest(".store-option");
+    if (!button) return;
+    const store = manifest.stores.find((item) => item.code === button.dataset.code);
+    if (!store) return;
+    close();
+    selectStore(store, true);
+  });
+  document.addEventListener("click", (event) => { if (!root.contains(event.target)) close(); });
+  return {
+    setValue(store) {
+      trigger.querySelector("span").textContent = store ? store.label : "Seleccionar tienda";
+      render();
+    },
+  };
 }
 
 function createMultiFilter(root, config) {
@@ -167,8 +217,6 @@ function createMultiFilter(root, config) {
 
 function bindEvents() {
   document.querySelectorAll(".tab").forEach((button) => button.addEventListener("click", () => setTab(button.dataset.tab)));
-  $("storeInput").addEventListener("change", onStoreInput);
-  $("storeInput").addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); onStoreInput(); } });
   $("ordersSelect").value = String(state.orders);
   $("modeSelect").value = state.mode;
   $("ordersSelect").addEventListener("change", () => { state.orders = Number($("ordersSelect").value); persistState(); renderAll(); });
@@ -186,6 +234,8 @@ function bindEvents() {
   $("catalogList").addEventListener("change", onCatalogChange);
   $("consultaBody").addEventListener("change", onConsultaChange);
   $("photoInput").addEventListener("change", onPhotoChange);
+  $("photoCameraInput").addEventListener("change", onPhotoChange);
+  $("enhancePhotoButton").addEventListener("click", togglePhotoEnhancement);
   $("clearPhotoButton").addEventListener("click", clearPhoto);
   $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
   $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); exportPdf(); });
@@ -200,21 +250,25 @@ function setTab(tab) {
   state.tab = tab;
   document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button.dataset.tab === tab));
   document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.toggle("active", panel.id === `tab-${tab}`));
+  updateGuide(tab);
   persistState();
   renderAll();
 }
 
-function onStoreInput() {
-  const raw = $("storeInput").value.trim();
-  const code = raw.match(/^\d{3,6}/)?.[0];
-  const store = manifest.stores.find((item) => item.label === raw || item.code === code)
-    || manifest.stores.find((item) => normalize(item.label).includes(normalize(raw)));
-  if (!store) { toast("Selecciona una tienda válida del Directorio."); $("storeInput").value = state.store?.label || ""; return; }
-  selectStore(store, true);
+function updateGuide(tab) {
+  const guides = {
+    etiquetas: ["Guía rápida · Etiquetas", ["Elige una tienda y semanas.", "Marca los productos necesarios.", "Confirma la selección y exporta."]],
+    consulta: ["Guía rápida · Consulta", ["Busca por ingrediente, DIA o SAP.", "Valida MIN, MAX y formato.", "Agrega sólo los productos correctos."]],
+    acomodo: ["Guía rápida · Acomodo", ["Toma o adjunta la estación completa.", "Arrastra cada número hasta el producto.", "Compara con las guías y valida el rack."]],
+  };
+  const [title, steps] = guides[tab] || guides.etiquetas;
+  $("guideTitle").textContent = title;
+  $("guideSteps").innerHTML = steps.map((step, index) => `<span><b>${index + 1}</b>${esc(step)}</span>`).join("");
+  $("opsGuide").open = false;
 }
 
 async function selectStore(store, notify) {
-  if (state.store?.code === store.code && state.storeData) return;
+  if (state.store?.code === store.code && state.storeData) { storeFilter.setValue(store); return; }
   showLoading("Cargando tienda", `${store.code} · ${store.name}`);
   try {
     state.storeData = await fetchStoreData(store.file);
@@ -223,7 +277,7 @@ async function selectStore(store, notify) {
     state.ingredients.clear();
     state.selected.clear();
     state.previewPage = 0;
-    $("storeInput").value = store.label;
+    storeFilter.setValue(store);
     aggregateData();
     persistState();
     if (notify) toast(`Tienda cargada: ${store.label}`);
@@ -314,6 +368,7 @@ function updateContext() {
   $("previewDate").textContent = formatDate(manifest.generated);
   const filters = [`Sem ${weeks}`, state.categories.size ? `${state.categories.size} categoría(s)` : "Todas las categorías", state.ingredients.size ? `${state.ingredients.size} ingrediente(s)` : "Todos los ingredientes"];
   $("activeFilterSummary").textContent = filters.join(" · ");
+  $("historyNote").classList.toggle("hidden", ![...state.weeks].some((week) => week <= 25));
 }
 
 function renderCatalog() {
@@ -432,14 +487,26 @@ function onPhotoChange(event) {
   const file = event.target.files?.[0];
   if (!file) return;
   const image = $("rackPhoto");
-  image.onload = () => { $("photoStage").classList.add("has-photo"); renderMarkers(); };
-  image.src = URL.createObjectURL(file);
+  if (rackPhotoUrl) URL.revokeObjectURL(rackPhotoUrl);
+  rackPhotoUrl = URL.createObjectURL(file);
+  image.onload = () => { $("photoStage").classList.add("has-photo"); $("enhancePhotoButton").disabled = false; renderMarkers(); };
+  image.src = rackPhotoUrl;
 }
 
 function clearPhoto() {
   $("photoInput").value = "";
+  $("photoCameraInput").value = "";
   $("rackPhoto").removeAttribute("src");
-  $("photoStage").classList.remove("has-photo");
+  $("photoStage").classList.remove("has-photo", "enhanced");
+  $("enhancePhotoButton").disabled = true;
+  $("enhancePhotoButton").textContent = "Nitidez";
+  if (rackPhotoUrl) URL.revokeObjectURL(rackPhotoUrl);
+  rackPhotoUrl = undefined;
+}
+
+function togglePhotoEnhancement() {
+  const enhanced = $("photoStage").classList.toggle("enhanced");
+  $("enhancePhotoButton").textContent = enhanced ? "Nitidez aplicada" : "Nitidez";
 }
 
 function renderMarkers() {

@@ -27,7 +27,7 @@
 
 1. Sube los archivos indicados respetando sus rutas.
 2. Espera **Validar Max Min Remaster**.
-3. Recarga la aplicación una vez para activar el caché `v6`.
+3. Recarga la aplicación una vez para activar el caché `v7`.
 4. Selecciona al menos una etiqueta y comprueba el flujo: confirmar → exportar → cerrar.
 
 Este parche no modifica datos, fórmulas MIN/MAX, cruces SAP, formatos ni generación multipágina.

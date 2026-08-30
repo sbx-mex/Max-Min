@@ -56,6 +56,33 @@ def rows_from_xlsx(path: Path, sheet_name: str) -> list[tuple[object, ...]]:
     return rows
 
 
+def load_directory_records(path: Path) -> dict[str, dict[str, object]]:
+    rows = rows_from_xlsx(path, "Directorio")
+    if not rows:
+        raise ValueError("Directorio.xlsx está vacío")
+    headers = {norm(value): index for index, value in enumerate(rows[0]) if text(value)}
+    code_index = headers.get("cc")
+    name_index = headers.get("ccnombre")
+    status_index = headers.get("estatus")
+    if code_index is None or name_index is None:
+        raise ValueError("Directorio.xlsx debe contener CC y CC Nombre")
+    records: dict[str, dict[str, object]] = {}
+    for row_number, row in enumerate(rows[1:], start=2):
+        code = text(row[code_index] if code_index < len(row) else "")
+        name = text(row[name_index] if name_index < len(row) else "")
+        status = text(row[status_index] if status_index is not None and status_index < len(row) else "Abierta") or "Abierta"
+        if not code:
+            continue
+        if not name:
+            raise ValueError(f"Directorio.xlsx fila {row_number}: falta CC Nombre")
+        if status not in {"Abierta", "Cierre Temporal"}:
+            raise ValueError(f"Directorio.xlsx fila {row_number}: Estatus inválido: {status}")
+        if code in records:
+            raise ValueError(f"Directorio.xlsx fila {row_number}: CC duplicado: {code}")
+        records[code] = {"name": name, "status": status, "priority": 0 if status == "Abierta" else 1}
+    return records
+
+
 def normalized_csv_lines(binary: io.BufferedReader) -> list[str]:
     raw = binary.read()
     encoding = "utf-16" if raw.startswith((b"\xff\xfe", b"\xfe\xff")) else "utf-8-sig"
@@ -106,8 +133,8 @@ class SpoolWriter:
 
 
 def load_crosses(directory_path: Path, price_path: Path, presentation_path: Path) -> tuple[dict[str, str], dict[str, tuple[str, str, str]], dict[str, dict[str, object]]]:
-    directory_rows = rows_from_xlsx(directory_path, "Directorio")
-    directory = {text(row[0]): text(row[1]) for row in directory_rows[1:] if row and text(row[0])}
+    directory_records = load_directory_records(directory_path)
+    directory = {code: str(record["name"]) for code, record in directory_records.items()}
 
     sap_rows = rows_from_xlsx(price_path, "SAP")
     sap_by_code = {
@@ -145,6 +172,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
     data_root.mkdir(parents=True, exist_ok=True)
     (output / "audit").mkdir(parents=True, exist_ok=True)
 
+    directory_records = load_directory_records(args.directory)
     directory, micros_by_name, presentations = load_crosses(args.directory, args.prices, args.presentations)
     categories: list[str] = []
     category_ids: dict[str, int] = {}
@@ -157,6 +185,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
     stores_with_data: set[str] = set()
     indicator_nonblank = 0
     raw_rows = 0
+    unknown_store_rows: Counter[str] = Counter()
 
     with tempfile.TemporaryDirectory(prefix="maxmin-build-") as temp_name:
         spool_root = Path(temp_name)
@@ -194,7 +223,10 @@ def build(args: argparse.Namespace) -> dict[str, object]:
                     if usage <= 0 or not ceco or not category or not source_name:
                         continue
                     if ceco not in directory:
-                        raise ValueError(f"CeCo {ceco} de {name} no existe en Directorio.xlsx")
+                        unknown_store_rows[ceco] += 1
+                        if args.unknown_store_policy == "fail":
+                            raise ValueError(f"CeCo {ceco} de {name} no existe en Directorio.xlsx")
+                        continue
                     if category not in category_ids:
                         category_ids[category] = len(categories)
                         categories.append(category)
@@ -229,7 +261,10 @@ def build(args: argparse.Namespace) -> dict[str, object]:
         spool.close()
 
         store_entries: list[dict[str, object]] = []
-        sorted_codes = sorted(directory, key=lambda code: (int(code) if code.isdigit() else math.inf, code))
+        sorted_codes = sorted(
+            directory,
+            key=lambda code: (int(directory_records[code]["priority"]), int(code) if code.isdigit() else math.inf, code),
+        )
         data_codes = [code for code in sorted_codes if code in stores_with_data]
         for index, ceco in enumerate(data_codes):
             folder_number = index // FILES_PER_FOLDER + 1
@@ -249,19 +284,20 @@ def build(args: argparse.Namespace) -> dict[str, object]:
                 "name": directory[ceco],
                 "label": f"{ceco} · {directory[ceco]}",
                 "file": target.relative_to(output).as_posix(),
+                "status": directory_records[ceco]["status"],
             })
 
     sap_ok = sum(item["sapStatus"] == "ok" for item in ingredients)
     format_ok = sum(item["formatStatus"] == "ok" for item in ingredients)
     manifest = {
-        "version": "4.1-weekly",
+        "version": "4.2-directory-status",
         "generated": date.today().isoformat(),
         "weeks": weeks,
         "categories": categories,
         "ingredients": ingredients,
         "stores": store_entries,
         "storesWithoutData": [
-            {"code": code, "name": directory[code]}
+            {"code": code, "name": directory[code], "status": directory_records[code]["status"]}
             for code in sorted(directory)
             if code not in stores_with_data
         ],
@@ -277,6 +313,9 @@ def build(args: argparse.Namespace) -> dict[str, object]:
             "sapMatched": sap_ok,
             "formatMatched": format_ok,
             "indicatorNonBlank": indicator_nonblank,
+            "openStores": sum(record["status"] == "Abierta" for record in directory_records.values()),
+            "temporaryClosedStores": sum(record["status"] == "Cierre Temporal" for record in directory_records.values()),
+            "excludedUnknownRows": sum(unknown_store_rows.values()),
         },
         "formula": "Promedio de uso de semanas seleccionadas / 7. Máximo: 2 pedidos x5, 3 x4, 4 x3, 5 x2.",
     }
@@ -289,6 +328,10 @@ def build(args: argparse.Namespace) -> dict[str, object]:
             folder.name: {"files": len(list(folder.iterdir())), "bytes": sum(path.stat().st_size for path in folder.iterdir())}
             for folder in sorted(data_root.glob("stores_*"))
         },
+        "excludedUnknownStores": [
+            {"ceco": code, "positiveRows": unknown_store_rows[code]}
+            for code in sorted(unknown_store_rows)
+        ],
     }
     (output / "audit" / "data_build_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -318,6 +361,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--expected-start", type=int, default=1)
     parser.add_argument("--expected-end", type=int)
+    parser.add_argument("--unknown-store-policy", choices=("fail", "skip"), default="skip")
     return parser.parse_args()
 
 

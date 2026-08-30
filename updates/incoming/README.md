@@ -8,4 +8,4 @@ Semana 35:
 - Si el CSV supera 24 MB: comprímelo como `updates/incoming/Max & Min_35.zip`.
 - El ZIP debe contener exactamente `Max & Min_35.csv`.
 
-Después del procesamiento exitoso, el workflow retira el archivo fuente para evitar acumulación. Los resultados quedan en `data/` y el control en `audit/week_35_update_report.json`.
+Después del procesamiento exitoso, el workflow retira el archivo fuente para evitar acumulación. Los resultados quedan en `data/` y el control en `audit/week_35_update_report.json`. El directorio vigente es autoritativo: las tiendas abiertas se muestran primero, los cierres temporales permanecen disponibles y los CeCo ajenos se reportan sin bloquear la carga.

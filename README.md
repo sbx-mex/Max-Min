@@ -4,7 +4,7 @@ Aplicación estática/PWA para validar uso ideal, formato de surtido y etiquetas
 
 ## Resultado operativo
 
-- Directorio: cruce `CeCo → Tienda` desde `sources/Directorio.xlsx`.
+- Directorio: 952 tiendas vigentes desde `sources/Directorio.xlsx` (942 abiertas y 10 con cierre temporal). Las abiertas aparecen primero.
 - Datos: histórico continuo desde semana 1, carga bajo demanda y actualización semanal incremental.
 - SAP: `Ingrediente → Catálogo Micros → Código DIA → Descripción SAP` desde `sources/Lista_Precios_Base.xlsx`.
 - Indicadores: la fuente mantiene la columna vacía; no se inventa información.
@@ -53,7 +53,7 @@ El constructor acepta tanto los CSV UTF-16 estándar como el formato de comillas
 2. Ejecuta **Actions → Actualizar semana Max Min**.
 3. Indica `week = 35`, la ruta cargada y `replace = false`.
 
-El workflow valida y actualiza únicamente `data/manifest.js`, los JSON afectados y los reportes. Después retira la fuente procesada para que la carpeta no acumule archivos. Consulta [docs/GUIA_ACTUALIZACION_SEMANAL.md](docs/GUIA_ACTUALIZACION_SEMANAL.md).
+El workflow valida la fuente antes de escribir, sincroniza el directorio, actualiza `data/manifest.js`, los JSON afectados y los reportes, y después retira el CSV. Los CeCo fuera del directorio se documentan y se excluyen sin detener las tiendas vigentes. Consulta [docs/GUIA_ACTUALIZACION_SEMANAL.md](docs/GUIA_ACTUALIZACION_SEMANAL.md).
 
 ## Validar antes de publicar
 
