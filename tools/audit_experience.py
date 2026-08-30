@@ -130,7 +130,7 @@ def main() -> None:
     require('["#", "INGREDIENTE / SAP", "USO PROM.", "MÍN.", "MÁX."]' in app, "PDF de Acomodo no conserva el orden operativo")
 
     require('$("healthBadge").textContent' in app and '$("healthBadge").querySelector' not in app, "el indicador de salud puede romper la inicialización")
-    require("Revisa la tabla" in app and "Toma o adjunta foto" in app and "Compara con la guía" in app, "las rutas rápidas no están alineadas con cada pestaña")
+    require("Revisa la tabla" in app and "Toma la foto" in app and "Ubica 5 o 6 artículos" in app and "Revisa y exporta" in app, "las rutas rápidas no están alineadas con cada pestaña")
 
     subprocess.run(["node", "tools/generate_list_pdf_sample.cjs", str(pdf_path)], cwd=ROOT, check=True)
     pdf_report = inspect_pdf(pdf_path)
