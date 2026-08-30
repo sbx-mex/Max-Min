@@ -100,8 +100,23 @@ def main() -> None:
     require("<th>Formato</th>" not in index and "table-format" not in app, "Formato debe controlarse sólo desde el filtro global")
     require("function positiveReportItems()" in app and "Number(item.usage) > 0" in app and "Number(calc.min) > 0" in app and "Number(calc.max) > 0" in app, "falta el filtro estricto de valores positivos")
 
-    for marker in ("exportChoiceDialog", "chooseListExportButton", "chooseLabelsExportButton"):
-        require(marker in index, f"falta selector de exportación: {marker}")
+    header = index.split("</header>", 1)[0]
+    require('id="exportButton"' not in header, "Exportar PDF no debe permanecer como acción global")
+    consulta = index[index.index('id="tab-consulta"'):index.index('id="tab-acomodo"')]
+    etiquetas = index[index.index('id="tab-etiquetas"'):index.index('id="tab-consulta"')]
+    for marker in ("consultaOutputActions", "exportListButton", "addVisibleButton", "exportSelectedLabelsButton"):
+        require(marker in consulta, f"falta acción contextual de Consulta: {marker}")
+    require("exportLabelsButton" in etiquetas, "falta exportación contextual en Etiquetas")
+    require(consulta.index("exportListButton") < consulta.index("addVisibleButton") < consulta.index("exportSelectedLabelsButton"), "la secuencia de botones en Consulta no es intuitiva")
+    require("No necesitas seleccionar" in consulta and "Primero toma lo visible" in consulta, "faltan instrucciones discretas para elegir salida")
+    require("function listItemsCurrent()" in app and "function listItemsCurrent() {\n  return positiveReportItems();\n}" in app, "Lista PDF debe usar siempre las filas visibles")
+    require("state.selected = new Set(items.map((item) => item.id));" in app, "Elegir visibles debe reemplazar una selección anterior")
+
+    for marker in ("Ruta rápida · Etiquetas", "Ruta rápida · Consulta", "Ruta rápida · Acomodo", 'data-step="${index + 1}"', "updateWorkflowProgress"):
+        require(marker in app, f"falta ruta numerada: {marker}")
+    require("grid-template-columns:repeat(4,1fr)" in styles and ".workflow-step.current" in styles, "la ruta de cuatro pasos no tiene jerarquía visual")
+    for marker in (".panel-export-action", ".consulta-output-grid", ".output-option-buttons"):
+        require(marker in styles, f"falta diseño de acción contextual: {marker}")
     for marker in ("function buildListPdf", "function buildPdf", "LIST_PAGE_SIZE = 20", "format: \"letter\"", "orientation: \"landscape\""):
         require(marker in app, f"falta motor PDF dual: {marker}")
 
@@ -110,17 +125,17 @@ def main() -> None:
         require(marker in app, f"falta interacción de acomodo: {marker}")
 
     require('$("healthBadge").textContent' in app and '$("healthBadge").querySelector' not in app, "el indicador de salud puede romper la inicialización")
-    require("Revisa sólo usos mayores a cero." in app and "Arrastra un insumo a la foto." in app, "las guías rápidas no están alineadas con cada pestaña")
+    require("Revisa la tabla" in app and "Toma o adjunta foto" in app and "Compara con la guía" in app, "las rutas rápidas no están alineadas con cada pestaña")
 
     subprocess.run(["node", "tools/generate_list_pdf_sample.cjs", str(pdf_path)], cwd=ROOT, check=True)
     pdf_report = inspect_pdf(pdf_path)
 
     improvements = [
-        {"id": 1, "name": "Consulta limpia", "status": "ok", "evidence": "9 columnas; #DIA y #SAP separados; sin formato por fila"},
-        {"id": 2, "name": "Sólo valores positivos", "status": "ok", "evidence": "catálogo, selección, Consulta y PDF excluyen uso, MIN o MAX iguales a cero"},
-        {"id": 3, "name": "Exportación dual", "status": "ok", "evidence": "lista y etiquetas en Carta horizontal con paginación segura"},
-        {"id": 4, "name": "Acomodo visual 60/40", "status": "ok", "evidence": "foto 3/5 e insumos 2/5; arrastre, toque y ajuste de marcadores"},
-        {"id": 5, "name": "Inicio estable y guiado", "status": "ok", "evidence": "indicador de salud corregido y guías rápidas específicas por pestaña"},
+        {"id": 1, "name": "Botones en contexto", "status": "ok", "evidence": "la exportación salió del encabezado y vive dentro de Etiquetas o Consulta"},
+        {"id": 2, "name": "Ruta numerada", "status": "ok", "evidence": "cada pestaña comunica cuatro pasos y resalta el avance actual"},
+        {"id": 3, "name": "Consulta sin ambigüedad", "status": "ok", "evidence": "Lista PDF usa visibles; Etiquetas exige Elegir visibles y confirma la selección"},
+        {"id": 4, "name": "Exportación segura", "status": "ok", "evidence": "lista y etiquetas conservan Carta horizontal y paginación multipágina"},
+        {"id": 5, "name": "Acomodo guiado", "status": "ok", "evidence": "foto 60%, insumos 40% y pasos 2 Captura, 3 Ubica, 4 Compara"},
     ]
     payload = {"status": "ok", "improvements": improvements, "listPdf": pdf_report}
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

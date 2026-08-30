@@ -28,8 +28,7 @@
         <button class="tab" data-tab="acomodo" type="button">Acomodo</button>
       </nav>
       <div class="header-actions">
-        <button id="resetButton" class="button button-quiet" type="button">Limpiar</button>
-        <button id="exportButton" class="button button-primary" type="button">Exportar PDF</button>
+        <button id="resetButton" class="button button-quiet" type="button">Limpiar pestaña</button>
       </div>
     </div>
   </header>
@@ -38,6 +37,7 @@
     <div class="sr-only" aria-live="polite"><span id="contextLine"></span><span id="healthBadge"></span></div>
 
     <section class="filter-card" aria-label="Filtros de análisis">
+      <div class="filter-heading"><p class="eyebrow">1 · Filtra</p><span>Define tienda, semanas y alcance antes de revisar.</span></div>
       <div class="filter-grid">
         <div id="storeFilter" class="single-filter field-store"></div>
         <div id="weeksFilter" class="multi-filter"></div>
@@ -62,17 +62,17 @@
           <button id="clearFiltersButton" class="link-button" type="button">Restablecer</button>
         </div>
       </div>
-      <details id="opsGuide" class="ops-guide">
-        <summary id="guideTitle">Guía rápida · Etiquetas</summary>
+      <section id="opsGuide" class="ops-guide" aria-label="Ruta rápida de la pestaña">
+        <div class="ops-guide-heading"><b id="guideTitle">Ruta rápida · Etiquetas</b><span>Sigue los pasos de izquierda a derecha.</span></div>
         <div id="guideSteps" class="ops-guide-grid"></div>
-      </details>
+      </section>
     </section>
 
     <section id="tab-etiquetas" class="tab-panel active">
       <div class="workspace-grid">
         <section class="card catalog-card">
           <div class="card-heading">
-            <div><p class="eyebrow">1 · Selección</p><h2>Ingredientes disponibles</h2></div>
+            <div><p class="eyebrow">2 · Elige</p><h2>Ingredientes disponibles</h2></div>
             <span id="filteredCount" class="count-pill">0</span>
           </div>
           <label class="search-box"><span aria-hidden="true">⌕</span><input id="catalogSearch" type="search" placeholder="Buscar ingrediente, descripción, #DIA o #SAP" /></label>
@@ -85,7 +85,7 @@
 
         <section class="card preview-card">
           <div class="card-heading">
-            <div><p class="eyebrow">2 · Validación</p><h2>Vista previa de corte</h2></div>
+            <div><p class="eyebrow">3 · Revisa</p><h2>Vista previa de corte</h2></div>
             <span id="selectedCount" class="count-pill count-pill-green">0</span>
           </div>
           <div class="sheet-header-preview">
@@ -99,6 +99,11 @@
             <span id="previewPage">Página 1 de 1</span>
             <button id="nextPreview" class="icon-button" type="button" aria-label="Página siguiente">→</button>
           </div>
+          <div class="panel-export-action">
+            <span class="step-chip">4</span>
+            <div><b>Confirma y exporta</b><small id="labelsExportHint">Elige ingredientes para habilitar el PDF.</small></div>
+            <button id="exportLabelsButton" class="button button-primary" type="button">Exportar etiquetas PDF</button>
+          </div>
         </section>
       </div>
     </section>
@@ -106,13 +111,19 @@
     <section id="tab-consulta" class="tab-panel">
       <section class="card table-card">
         <div class="card-heading">
-          <div><p class="eyebrow">Cruce operativo</p><h2>Consulta y validación por ingrediente</h2></div>
-          <div class="consulta-actions">
-            <button id="exportListButton" class="button button-quiet" type="button">Lista PDF</button>
-            <button id="addVisibleButton" class="button button-primary" type="button">Elegir visibles</button>
-          </div>
+          <div><p class="eyebrow">2 · Revisa</p><h2>Consulta y validación por ingrediente</h2></div>
         </div>
         <p class="card-description">Sólo se muestran insumos con uso mayor a cero. El formato se controla una sola vez desde “Formato base”.</p>
+        <div id="consultaOutputActions" class="consulta-output-grid" aria-label="Opciones de salida de Consulta">
+          <section class="output-option">
+            <div class="output-option-copy"><span class="step-chip">3A</span><div><b>Lista PDF</b><small><strong id="consultaVisibleCount">0</strong> filas visibles. No necesitas seleccionar.</small></div></div>
+            <button id="exportListButton" class="button button-primary" type="button">Exportar lista PDF</button>
+          </section>
+          <section class="output-option">
+            <div class="output-option-copy"><span class="step-chip">3B</span><div><b>Etiquetas de rack</b><small><strong id="consultaSelectedCount">0</strong> elegidas. Primero toma lo visible.</small></div></div>
+            <div class="output-option-buttons"><button id="addVisibleButton" class="button button-quiet" type="button">Elegir visibles</button><button id="exportSelectedLabelsButton" class="button button-primary" type="button">Exportar etiquetas</button></div>
+          </section>
+        </div>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>#DIA</th><th>#SAP</th><th>Uso prom.</th><th>Mín.</th><th>Máx.</th><th>Estado</th></tr></thead>
@@ -125,10 +136,10 @@
     <section id="tab-acomodo" class="tab-panel">
       <div class="workspace-grid acomodo-grid">
         <section class="card acomodo-photo-card">
-          <div class="card-heading"><div><p class="eyebrow">Validación visual</p><h2>Foto de la estación</h2></div><div class="photo-actions"><label class="button button-primary" for="photoCameraInput">Tomar foto</label><label class="button button-quiet" for="photoInput">Adjuntar</label><button id="enhancePhotoButton" class="button button-quiet" type="button" disabled>Nitidez</button><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar</button></div></div>
+          <div class="card-heading"><div><p class="eyebrow">2 · Captura</p><h2>Foto de la estación</h2></div><div class="photo-actions"><label class="button button-primary" for="photoCameraInput">Tomar foto</label><label class="button button-quiet" for="photoInput">Adjuntar</label><button id="enhancePhotoButton" class="button button-quiet" type="button" disabled>Nitidez</button><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar</button></div></div>
           <input id="photoCameraInput" class="file-input" type="file" accept="image/*" capture="environment" />
           <input id="photoInput" class="file-input" type="file" accept="image/*" />
-          <div class="station-steps"><span><b>1</b> Foto completa</span><span><b>2</b> Ubica números</span><span><b>3</b> Compara y valida</span></div>
+          <div class="station-steps"><span><b>2</b> Foto completa</span><span><b>3</b> Ubica números</span><span><b>4</b> Compara y valida</span></div>
           <div id="photoStage" class="photo-stage">
             <div id="photoPrompt" class="photo-prompt"><b>Toma o adjunta la estación</b><span>Después arrastra cada número hasta el producto.</span></div>
             <img id="rackPhoto" alt="Foto de la estación para validar el acomodo" />
@@ -136,7 +147,7 @@
           </div>
         </section>
         <section class="card acomodo-items-card">
-          <div class="card-heading"><div><p class="eyebrow">Ubicación</p><h2>Insumos por ubicar</h2></div><span id="markerCount" class="count-pill">0</span></div>
+          <div class="card-heading"><div><p class="eyebrow">3 · Ubica</p><h2>Insumos por ubicar</h2></div><span id="markerCount" class="count-pill">0</span></div>
           <p class="card-description">Arrastra un insumo a la foto. Después ajusta su número sobre la ubicación real.</p>
           <div id="markerList" class="marker-list"></div>
           <details class="support-guide">
@@ -157,22 +168,10 @@
   <div id="loadingOverlay" class="loading-overlay hidden" role="status" aria-live="polite"><div><i></i><b id="loadingTitle">Preparando datos</b><span id="loadingText">Un momento...</span></div></div>
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <dialog id="exportChoiceDialog" class="export-dialog export-choice-dialog">
-    <div class="export-dialog-body">
-      <p class="eyebrow">Salida PDF</p>
-      <h2>¿Qué necesitas imprimir?</h2>
-      <div class="export-choice-grid">
-        <button id="chooseListExportButton" class="export-choice" type="button"><b>Lista operativa</b><span>Tabla multipágina con los valores mayores a cero.</span></button>
-        <button id="chooseLabelsExportButton" class="export-choice" type="button"><b>Etiquetas de rack</b><span>Fichas MIN / MAX listas para cortar.</span></button>
-      </div>
-      <button id="cancelExportChoiceButton" class="button button-quiet" type="button">Cancelar</button>
-    </div>
-  </dialog>
-
   <dialog id="confirmExportDialog" class="export-dialog">
     <div class="export-dialog-body">
       <img class="dialog-visual" src="assets/ui/Damos_Seguimiento.webp" alt="Le damos seguimiento: estamos trabajando para ti" />
-      <p class="eyebrow">Antes de exportar</p>
+      <p class="eyebrow">4 · Confirma</p>
       <h2>Confirma tu selección</h2>
       <p id="confirmExportSummary"></p>
       <div class="dialog-actions"><button id="cancelExportButton" class="button button-quiet" type="button">Volver</button><button id="confirmExportButton" class="button button-primary" type="button">Exportar PDF</button></div>

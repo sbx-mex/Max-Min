@@ -235,8 +235,9 @@ function bindEvents() {
   $("clearFiltersButton").addEventListener("click", resetFilters);
   document.querySelectorAll("[data-week-preset]").forEach((button) => button.addEventListener("click", () => setWeekPreset(button.dataset.weekPreset)));
   $("resetButton").addEventListener("click", resetCurrent);
-  $("exportButton").addEventListener("click", openExportChoice);
+  $("exportLabelsButton").addEventListener("click", () => openExportConfirmation("labels"));
   $("exportListButton").addEventListener("click", () => openExportConfirmation("list"));
+  $("exportSelectedLabelsButton").addEventListener("click", () => openExportConfirmation("labels"));
   $("previousPreview").addEventListener("click", () => { state.previewPage = Math.max(0, state.previewPage - 1); renderPreview(); });
   $("nextPreview").addEventListener("click", () => { state.previewPage += 1; renderPreview(); });
   $("catalogList").addEventListener("change", onCatalogChange);
@@ -251,9 +252,6 @@ function bindEvents() {
   $("photoStage").addEventListener("dragleave", () => $("photoStage").classList.remove("drop-ready"));
   $("photoStage").addEventListener("drop", onPhotoStageDrop);
   $("photoStage").addEventListener("click", onPhotoStageClick);
-  $("cancelExportChoiceButton").addEventListener("click", () => $("exportChoiceDialog").close());
-  $("chooseListExportButton").addEventListener("click", () => { $("exportChoiceDialog").close(); openExportConfirmation("list"); });
-  $("chooseLabelsExportButton").addEventListener("click", () => { $("exportChoiceDialog").close(); openExportConfirmation("labels"); });
   $("cancelExportButton").addEventListener("click", () => $("confirmExportDialog").close());
   $("confirmExportButton").addEventListener("click", () => { $("confirmExportDialog").close(); pendingExportKind === "list" ? exportListPdf() : exportPdf(); });
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
@@ -274,14 +272,33 @@ function setTab(tab) {
 
 function updateGuide(tab) {
   const guides = {
-    etiquetas: ["Guía rápida · Etiquetas", ["Elige una tienda y semanas.", "Marca los productos necesarios.", "Confirma la selección y exporta."]],
-    consulta: ["Guía rápida · Consulta", ["Filtra por tienda, semanas o ingrediente.", "Revisa sólo usos mayores a cero.", "Exporta la lista o elige etiquetas."]],
-    acomodo: ["Guía rápida · Acomodo", ["Toma o adjunta la estación completa.", "Arrastra un insumo a la foto.", "Ajusta su número y compara con la guía."]],
+    etiquetas: ["Ruta rápida · Etiquetas", ["Filtra tienda y semanas", "Elige ingredientes", "Revisa las fichas", "Confirma y exporta"]],
+    consulta: ["Ruta rápida · Consulta", ["Filtra el alcance", "Revisa la tabla", "Elige una salida", "Confirma el PDF"]],
+    acomodo: ["Ruta rápida · Acomodo", ["Filtra y elige", "Toma o adjunta foto", "Ubica los insumos", "Compara con la guía"]],
   };
   const [title, steps] = guides[tab] || guides.etiquetas;
   $("guideTitle").textContent = title;
-  $("guideSteps").innerHTML = steps.map((step, index) => `<span><b>${index + 1}</b>${esc(step)}</span>`).join("");
-  $("opsGuide").open = false;
+  $("guideSteps").innerHTML = steps.map((step, index) => `<span class="workflow-step" data-step="${index + 1}"><b>${index + 1}</b><em>${esc(step)}</em></span>`).join("");
+  updateWorkflowProgress();
+}
+
+function updateWorkflowProgress() {
+  const steps = [...document.querySelectorAll("#guideSteps .workflow-step")];
+  if (!steps.length) return;
+  const selected = selectedItemsCurrent().length;
+  const visible = positiveReportItems().length;
+  const hasPhoto = $("photoStage").classList.contains("has-photo");
+  const placed = Object.keys(state.markerPositions[state.store?.code] || {}).length;
+  let current = 1;
+  if (state.storeData && state.weeks.size) current = 2;
+  if (state.tab === "etiquetas" && selected) current = 4;
+  if (state.tab === "consulta" && visible) current = 3;
+  if (state.tab === "acomodo") current = !hasPhoto ? 2 : placed ? 4 : 3;
+  steps.forEach((step, index) => {
+    const number = index + 1;
+    step.classList.toggle("done", number < current);
+    step.classList.toggle("current", number === current);
+  });
 }
 
 async function selectStore(store, notify) {
@@ -403,6 +420,7 @@ function renderAll() {
   renderPreview();
   renderConsulta();
   renderMarkers();
+  updateWorkflowProgress();
 }
 
 function updateContext() {
@@ -435,7 +453,10 @@ function renderPreview() {
   $("previewPage").textContent = `Página ${state.previewPage + 1} de ${pages}`;
   $("previousPreview").disabled = state.previewPage === 0;
   $("nextPreview").disabled = state.previewPage >= pages - 1;
-  $("exportButton").disabled = positiveReportItems().length === 0;
+  $("exportLabelsButton").disabled = selected.length === 0;
+  $("labelsExportHint").textContent = selected.length
+    ? `${selected.length} etiqueta(s) · ${Math.ceil(selected.length / PAGE_SIZE)} hoja(s) Carta.`
+    : "Elige ingredientes para habilitar el PDF.";
 }
 
 function labelCardHtml(item) {
@@ -446,7 +467,14 @@ function labelCardHtml(item) {
 }
 
 function renderConsulta() {
-  const items = positiveReportItems().slice(0, 500);
+  const items = positiveReportItems();
+  const visibleIds = new Set(items.map((item) => item.id));
+  const selectedVisible = selectedItemsCurrent().filter((item) => visibleIds.has(item.id));
+  $("consultaVisibleCount").textContent = String(items.length);
+  $("consultaSelectedCount").textContent = String(selectedVisible.length);
+  $("exportListButton").disabled = items.length === 0;
+  $("exportSelectedLabelsButton").disabled = selectedVisible.length === 0;
+  $("addVisibleButton").disabled = items.length === 0;
   $("consultaBody").innerHTML = items.map((item) => {
     const calc = calculate(item);
     const review = item.sapStatus !== "ok" || item.formatStatus !== "ok";
@@ -480,10 +508,10 @@ function onConsultaChange(event) {
 
 function selectFiltered() {
   const items = positiveReportItems();
-  items.forEach((item) => state.selected.add(item.id));
+  state.selected = new Set(items.map((item) => item.id));
   state.previewPage = Math.max(0, Math.ceil(state.selected.size / PAGE_SIZE) - 1);
   renderAll();
-  toast(`${items.length} ingrediente(s) con uso positivo agregados.`);
+  toast(`${items.length} ingrediente(s) visibles seleccionados.`);
 }
 
 function clearSelection() { state.selected.clear(); state.previewPage = 0; renderAll(); }
@@ -550,6 +578,7 @@ function clearPhoto() {
   $("enhancePhotoButton").textContent = "Nitidez";
   if (rackPhotoUrl) URL.revokeObjectURL(rackPhotoUrl);
   rackPhotoUrl = undefined;
+  updateWorkflowProgress();
 }
 
 function togglePhotoEnhancement() {
@@ -580,6 +609,7 @@ function renderMarkers() {
     bindMarkerDrag(marker, item.id, positions);
     layer.appendChild(marker);
   });
+  updateWorkflowProgress();
 }
 
 function activateMarker(ingredientId) {
@@ -674,14 +704,8 @@ async function exportPdf() {
   } finally { hideLoading(); }
 }
 
-function openExportChoice() {
-  if (!positiveReportItems().length) { toast("No hay insumos con uso mayor a cero para exportar."); return; }
-  $("exportChoiceDialog").showModal();
-}
-
 function listItemsCurrent() {
-  const selected = selectedItemsCurrent();
-  return selected.length ? selected : positiveReportItems();
+  return positiveReportItems();
 }
 
 function openExportConfirmation(kind = "labels") {

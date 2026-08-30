@@ -1,6 +1,6 @@
-# Actualización UX - 5 mejoras
+# Actualización UX — ruta intuitiva
 
-Base validada: `057a17e` de `main`.
+Base validada: `63173eb` de `main`.
 
 ## Subida
 
@@ -9,20 +9,22 @@ Base validada: `057a17e` de `main`.
 3. Confirma la sustitución de los archivos existentes.
 4. Espera a que termine **Validar Max Min Remaster**.
 
-No se incluyen CSV, directorios ni archivos de tiendas: este paquete sólo corrige la experiencia y las auditorías.
+No se incluyen CSV ni archivos de tiendas: este paquete sólo corrige navegación, diseño y auditoría.
 
 ## Resultado esperado
 
-- Consulta con nueve columnas: Sel., Ingrediente / SAP, Categoría, #DIA, #SAP, Uso prom., Mín., Máx. y Estado.
-- Catálogo, Consulta y PDFs sin valores visibles iguales a cero.
-- Selector entre Lista operativa PDF y Etiquetas de rack PDF.
-- Acomodo 60/40 con arrastre, toque y ajuste de marcadores sobre la foto.
-- Auditoría Python de las cinco mejoras y render de ambas exportaciones.
+- El botón global de PDF se elimina del encabezado.
+- Cada pestaña muestra una ruta de cuatro pasos y resalta el avance actual.
+- En Consulta, **Lista PDF** exporta siempre las filas filtradas y no requiere selección.
+- Para etiquetas, **Elegir visibles** sustituye cualquier selección anterior; después se habilita **Exportar etiquetas**.
+- Etiquetas, Consulta y Acomodo conservan instrucciones breves dentro de su contexto.
+- `tools/audit_experience.py` impide que la ubicación y el orden de estas acciones se pierdan en futuras cargas.
 
 ## Validación local opcional
 
 ```bash
-python tools/verify_upload_patch.py
+node --check js/app.js
+node --check sw.js
+python tools/audit_project.py
 python tools/audit_experience.py
 ```
-
