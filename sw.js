@@ -1,4 +1,4 @@
-const CACHE = "maxmin-remaster-v10-ruta-intuitiva-20260830";
+const CACHE = "maxmin-remaster-v11-acomodo25-lista-limpia-20260830";
 const APP_SHELL = [
   "./", "./index.html", "./css/styles.css", "./js/app.js", "./data/manifest.js",
   "./data/normalized/manifest.js",
