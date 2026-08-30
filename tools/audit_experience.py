@@ -43,7 +43,7 @@ def inspect_pdf(pdf_path: Path, expected_rows: int = 30) -> dict[str, object]:
         require(width > height, f"hoja {page_number} no está en orientación horizontal")
         require(abs(width - LETTER_LANDSCAPE_POINTS[0]) <= 2 and abs(height - LETTER_LANDSCAPE_POINTS[1]) <= 2, f"hoja {page_number} no es Carta")
         text = " ".join((page.extract_text() or "").split()).upper()
-        for token in ("TIENDA:", "38107", "SEMANAS:", "#DIA", "#SAP", "USO PROM.", "ESTADO"):
+        for token in ("TIENDA:", "38107", "SEMANAS:", "#DIA", "#SAP", "USO PROM. SEM", "# PEDIDOS", "HOJA 1 DE"):
             require(token in text, f"hoja {page_number} sin {token}")
         require(not re.search(r"(?<!\d)0\.0(?!\d)", text), f"hoja {page_number} contiene un valor visible igual a 0.0")
         require(text.count("TIENDA:") == 1, f"cabecera repetida incorrectamente en hoja {page_number}")
@@ -95,9 +95,10 @@ def main() -> None:
     app = (ROOT / "js" / "app.js").read_text(encoding="utf-8")
     styles = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
 
-    expected_headers = "<th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>#DIA</th><th>#SAP</th><th>Uso prom.</th><th>Mín.</th><th>Máx.</th><th>Estado</th>"
+    expected_headers = "<th>Sel.</th><th>Ingrediente / SAP</th><th>Categoría</th><th>#DIA</th><th>#SAP</th><th>Uso prom. Sem</th><th>Mín.</th><th>Máx.</th>"
     require(expected_headers in index, "orden de columnas de Consulta incorrecto")
     require("<th>Formato</th>" not in index and "table-format" not in app, "Formato debe controlarse sólo desde el filtro global")
+    require("<th>Estado</th>" not in index and '["ESTADO"' not in app, "Estado debe ocultarse de Consulta y Lista PDF")
     require("function positiveReportItems()" in app and "Number(item.usage) > 0" in app and "Number(calc.min) > 0" in app and "Number(calc.max) > 0" in app, "falta el filtro estricto de valores positivos")
 
     header = index.split("</header>", 1)[0]
@@ -124,10 +125,13 @@ def main() -> None:
     acomodo = index[index.index('id="tab-acomodo"'):index.index("</main>")]
     for marker in ("addAcomodoItemsButton", "clearAcomodoItemsButton", "exportAcomodoButton", "marker-table-head"):
         require(marker in acomodo, f"falta control intuitivo de Acomodo: {marker}")
-    for marker in ("draggable=\"true\"", "onPhotoStageDrop", "onPhotoStageClick", "placeMarkerAt", "activeMarkerId", "function buildAcomodoPdf", "rackPhotoDataUrl", "ACOMODO_MAX_ITEMS = 6"):
+    for marker in ("draggable=\"true\"", "onPhotoStageDrop", "onPhotoStageClick", "placeMarkerAt", "activeMarkerId", "function buildAcomodoPdf", "rackPhotoDataUrl", "ACOMODO_MAX_ITEMS = 25", "ACOMODO_PAGE_SIZE = 8"):
         require(marker in app, f"falta interacción de acomodo: {marker}")
     require('["PEDIDOS", String(state.orders)]' in app, "todas las exportaciones deben mostrar el número de pedidos")
-    require('["#", "INGREDIENTE / SAP", "USO PROM.", "MÍN.", "MÁX."]' in app, "PDF de Acomodo no conserva el orden operativo")
+    require('["#", "INGREDIENTE / SAP", "USO PROM. SEM", "MÍN.", "MÁX."]' in app, "PDF de Acomodo no conserva el orden operativo")
+    require("pdf-viewer-dialog" in styles and "internal-pdf-link" in index and "openSupportPdf" in app, "las guías PDF no tienen visor interno con cierre")
+    require('pdf.text(`Hoja ${pageIndex+1} de ${pages}`' in app, "la paginación debe vivir en el pie")
+    require("LISTA OPERATIVA - SOLO VALORES" not in app, "la lista conserva texto redundante en la cabecera")
 
     require('$("healthBadge").textContent' in app and '$("healthBadge").querySelector' not in app, "el indicador de salud puede romper la inicialización")
     require("Revisa la tabla" in app and "Toma la foto" in app and "Ubica 5 o 6 artículos" in app and "Revisa y exporta" in app, "las rutas rápidas no están alineadas con cada pestaña")
@@ -140,7 +144,7 @@ def main() -> None:
         {"id": 2, "name": "Ruta numerada", "status": "ok", "evidence": "cada pestaña comunica cuatro pasos y resalta el avance actual"},
         {"id": 3, "name": "Consulta sin ambigüedad", "status": "ok", "evidence": "Lista PDF usa visibles; Etiquetas exige Elegir visibles y confirma la selección"},
         {"id": 4, "name": "Exportación segura", "status": "ok", "evidence": "lista y etiquetas conservan Carta horizontal y paginación multipágina"},
-        {"id": 5, "name": "Acomodo guiado", "status": "ok", "evidence": "foto dominante arriba, hasta 6 insumos debajo y PDF 60/40 con número de pedidos"},
+        {"id": 5, "name": "Acomodo guiado", "status": "ok", "evidence": "foto dominante, selección libre hasta 25, visor interno y PDF multipágina con pedidos"},
     ]
     payload = {"status": "ok", "improvements": improvements, "listPdf": pdf_report}
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
