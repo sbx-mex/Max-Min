@@ -134,7 +134,7 @@ def main() -> None:
     require("LISTA OPERATIVA - SOLO VALORES" not in app, "la lista conserva texto redundante en la cabecera")
 
     require('$("healthBadge").textContent' in app and '$("healthBadge").querySelector' not in app, "el indicador de salud puede romper la inicialización")
-    require("Revisa la tabla" in app and "Toma la foto" in app and "Ubica 5 o 6 artículos" in app and "Revisa y exporta" in app, "las rutas rápidas no están alineadas con cada pestaña")
+    require("Revisa la tabla" in app and "Toma la foto" in app and "Elige y ubica artículos" in app and "Revisa y exporta" in app, "las rutas rápidas no están alineadas con cada pestaña")
 
     subprocess.run(["node", "tools/generate_list_pdf_sample.cjs", str(pdf_path)], cwd=ROOT, check=True)
     pdf_report = inspect_pdf(pdf_path)
