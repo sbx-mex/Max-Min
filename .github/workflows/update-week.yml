@@ -1,0 +1,81 @@
+name: Actualizar semana Max Min
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Número de semana a incorporar"
+        required: true
+        default: "35"
+        type: string
+      source_path:
+        description: "Ruta del CSV o ZIP cargado"
+        required: true
+        default: "updates/incoming/Max & Min_35.csv"
+        type: string
+      replace:
+        description: "Sustituir la semana si ya existe"
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: max-min-weekly-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      WEEK: ${{ inputs.week }}
+      SOURCE_PATH: ${{ inputs.source_path }}
+      REPLACE: ${{ inputs.replace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install openpyxl
+      - name: Validar ruta de entrada
+        run: |
+          if [[ "$SOURCE_PATH" != updates/incoming/* ]]; then
+            echo "La fuente debe estar dentro de updates/incoming/"
+            exit 1
+          fi
+          test -f "$SOURCE_PATH"
+      - name: Incorporar semana
+        run: |
+          OPTIONS=()
+          if [[ "$REPLACE" == "true" ]]; then OPTIONS+=(--replace); fi
+          python tools/update_week.py --input "$SOURCE_PATH" --week "$WEEK" "${OPTIONS[@]}"
+      - run: node --check js/app.js
+      - run: node --check sw.js
+      - run: python tools/cleanup_obsolete.py
+      - run: python tools/audit_project.py
+      - name: Retirar fuente procesada y publicar datos
+        run: |
+          git rm --ignore-unmatch -- "$SOURCE_PATH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data audit
+          if git diff --cached --quiet; then
+            echo "No hay cambios para publicar"
+            exit 1
+          fi
+          git commit -m "data: incorporar semana $WEEK"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Resumen
+        run: |
+          echo "## Semana $WEEK incorporada" >> "$GITHUB_STEP_SUMMARY"
+          echo "Fuente procesada: \`$SOURCE_PATH\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Reporte: \`audit/week_${WEEK}_update_report.json\`" >> "$GITHUB_STEP_SUMMARY"

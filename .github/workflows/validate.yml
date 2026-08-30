@@ -5,12 +5,17 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,6 +28,6 @@ jobs:
       - run: pip install openpyxl pypdf Pillow
       - run: node --check js/app.js
       - run: node --check sw.js
-      - run: python tools/cleanup_obsolete.py
+      - run: python tools/cleanup_obsolete.py --report /tmp/cleanup_report.json
       - run: python tools/audit_project.py
       - run: python tools/prepare_pdf_release.py --output /tmp/Etiquetas_MIN_MAX_Muestra.pdf --report /tmp/pdf_release_report.json
