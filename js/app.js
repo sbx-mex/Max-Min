@@ -766,7 +766,7 @@ function runConfirmedExport() {
   else exportPdf();
 }
 
-async async function exportAcomodoPdf() {
+async function exportAcomodoPdf() {
   const items = selectedItemsCurrent().slice(0, ACOMODO_MAX_ITEMS);
   if (!items.length || !$("photoStage").classList.contains("has-photo")) { toast("Acomodo necesita foto y al menos un artículo."); return; }
   showLoading("Renderizando acomodo", `${items.length} artículo(s) · ${state.orders} pedidos`);
