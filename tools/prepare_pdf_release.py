@@ -40,12 +40,17 @@ def inspect_render(path: Path, page: int) -> dict[str, object]:
         coverage = ink_pixels / (rgb.width * rgb.height)
         if coverage < 0.008 or coverage > 0.35:
             raise RuntimeError(f"cobertura visual anómala en página {page}: {coverage:.4f}")
+        top_band = ink.crop((0, 0, rgb.width, round(rgb.height * 0.09)))
+        top_band_coverage = top_band.histogram()[255] / (top_band.width * top_band.height)
+        if top_band_coverage < 0.012:
+            raise RuntimeError(f"la cabecera visual no aparece en página {page}")
         return {
             "page": page,
             "pixels": [rgb.width, rgb.height],
             "contentBox": [left, top, right, bottom],
             "safeMarginsPixels": margins,
             "inkCoverage": round(coverage, 4),
+            "headerInkCoverage": round(top_band_coverage, 4),
         }
 
 
@@ -62,15 +67,17 @@ def main() -> None:
 
     if not shutil.which("node"):
         raise SystemExit("ERROR: Node.js no está disponible")
-    if not shutil.which("pdftoppm"):
-        raise SystemExit("ERROR: Poppler/pdftoppm no está disponible")
+    if not shutil.which("pdftocairo"):
+        raise SystemExit("ERROR: Poppler/pdftocairo no está disponible")
 
     run(["node", "tools/generate_pdf_sample.cjs", str(output)])
     pdf_report = audit_pdf(output, args.labels)
 
     with tempfile.TemporaryDirectory(prefix="maxmin_pdf_") as temp_dir:
         prefix = Path(temp_dir) / "page"
-        run(["pdftoppm", "-png", "-r", "180", str(output), str(prefix)])
+        # pdftocairo conserva de forma consistente los trazos de jsPDF en
+        # páginas posteriores; pdftoppm puede rasterizarlos incorrectamente.
+        run(["pdftocairo", "-png", "-r", "180", str(output), str(prefix)])
         renders = sorted(Path(temp_dir).glob("page-*.png"))
         if len(renders) != pdf_report["pages"]:
             raise SystemExit("ERROR: el render no produjo una imagen por hoja")
@@ -81,6 +88,7 @@ def main() -> None:
         "sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
         "bytes": output.stat().st_size,
         "renderDpi": 180,
+        "renderer": "pdftocairo",
         "visualSafety": visual,
     }
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

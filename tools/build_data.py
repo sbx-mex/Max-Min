@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Construye el motor compacto Max&Min desde los 34 CSV y los cruces Excel."""
+"""Construye el motor compacto Max&Min desde CSV semanales y cruces Excel."""
 
 from __future__ import annotations
 
@@ -164,8 +164,12 @@ def build(args: argparse.Namespace) -> dict[str, object]:
         with zipfile.ZipFile(args.zip) as archive:
             names = sorted((name for name in archive.namelist() if name.lower().endswith(".csv")), key=parse_week)
             actual_weeks = [parse_week(name) for name in names]
-            if actual_weeks != list(range(1, 35)):
-                raise ValueError(f"Se esperaban semanas 1-34; se recibieron {actual_weeks}")
+            if not actual_weeks:
+                raise ValueError("El ZIP no contiene CSV semanales")
+            expected_end = args.expected_end or max(actual_weeks)
+            expected_weeks = list(range(args.expected_start, expected_end + 1))
+            if actual_weeks != expected_weeks:
+                raise ValueError(f"Se esperaban semanas {args.expected_start}-{expected_end}; se recibieron {actual_weeks}")
             for name in names:
                 week = parse_week(name)
                 weeks.append(week)
@@ -250,7 +254,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
     sap_ok = sum(item["sapStatus"] == "ok" for item in ingredients)
     format_ok = sum(item["formatStatus"] == "ok" for item in ingredients)
     manifest = {
-        "version": "4.0-remaster",
+        "version": "4.1-weekly",
         "generated": date.today().isoformat(),
         "weeks": weeks,
         "categories": categories,
@@ -312,6 +316,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prices", type=Path, required=True)
     parser.add_argument("--presentations", type=Path, default=Path(__file__).with_name("presentation_reference.json"))
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--expected-start", type=int, default=1)
+    parser.add_argument("--expected-end", type=int)
     return parser.parse_args()
 
 

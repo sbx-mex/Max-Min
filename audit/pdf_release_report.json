@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "file": "/workspace/scratch/d1494abea7fb/Max-Min_Remaster/docs/Etiquetas_MIN_MAX_Muestra_38107_Sem18-25.pdf",
+  "file": "/workspace/scratch/d1494abea7fb/Max-Min_Remaster/output/pdf/Etiquetas_MIN_MAX_38107_Pedregal_Sem_18-25.pdf",
   "pages": 2,
   "labels": 15,
   "labelsPerPage": [
@@ -43,9 +43,10 @@
       "textCharacters": 416
     }
   ],
-  "sha256": "42b1af8eba67715d5f7614eae07c220ee8ae827aa463fa3154fe84558e54a52a",
+  "sha256": "59721ce4f0a6fa1484b2e689b5c0effc36f085f433e2a66089bf860cb787dd3e",
   "bytes": 8332,
   "renderDpi": 180,
+  "renderer": "pdftocairo",
   "visualSafety": [
     {
       "page": 1,
@@ -65,7 +66,8 @@
         40,
         30
       ],
-      "inkCoverage": 0.0902
+      "inkCoverage": 0.1103,
+      "headerInkCoverage": 0.089
     },
     {
       "page": 2,
@@ -85,7 +87,8 @@
         40,
         1090
       ],
-      "inkCoverage": 0.0258
+      "inkCoverage": 0.0307,
+      "headerInkCoverage": 0.089
     }
   ]
 }

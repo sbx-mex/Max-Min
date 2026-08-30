@@ -35,6 +35,7 @@ function init() {
     return;
   }
   restoreState();
+  $("versionRange").textContent = `Remaster · Semanas ${manifest.weeks.at(0)}-${manifest.weeks.at(-1)}`;
   buildStoreOptions();
   buildFilters();
   bindEvents();
@@ -52,8 +53,7 @@ function init() {
 function restoreState() {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) {}
-  const defaultWeeks = manifest.weeks.filter((week) => week >= 18 && week <= 25);
-  const weeks = Array.isArray(saved.weeks) && saved.weeks.length ? saved.weeks : defaultWeeks;
+  const weeks = Array.isArray(saved.weeks) && saved.weeks.length ? saved.weeks : latestWeeks(8);
   state.weeks = new Set(weeks.map(Number).filter((week) => manifest.weeks.includes(week)));
   if (!state.weeks.size) state.weeks.add(manifest.weeks.at(-1));
   state.orders = [2, 3, 4, 5].includes(Number(saved.orders)) ? Number(saved.orders) : 2;
@@ -178,6 +178,7 @@ function bindEvents() {
   $("addVisibleButton").addEventListener("click", selectFiltered);
   $("clearSelectionButton").addEventListener("click", clearSelection);
   $("clearFiltersButton").addEventListener("click", resetFilters);
+  document.querySelectorAll("[data-week-preset]").forEach((button) => button.addEventListener("click", () => setWeekPreset(button.dataset.weekPreset)));
   $("resetButton").addEventListener("click", resetCurrent);
   $("exportButton").addEventListener("click", exportPdf);
   $("previousPreview").addEventListener("click", () => { state.previewPage = Math.max(0, state.previewPage - 1); renderPreview(); });
@@ -187,6 +188,10 @@ function bindEvents() {
   $("photoInput").addEventListener("change", onPhotoChange);
   $("clearPhotoButton").addEventListener("click", clearPhoto);
   $("closeExportDialog").addEventListener("click", () => $("exportDialog").close());
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") document.querySelectorAll(".filter-menu").forEach((menu) => menu.classList.add("hidden"));
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); $("catalogSearch").focus(); }
+  });
 }
 
 function setTab(tab) {
@@ -210,9 +215,7 @@ async function selectStore(store, notify) {
   if (state.store?.code === store.code && state.storeData) return;
   showLoading("Cargando tienda", `${store.code} · ${store.name}`);
   try {
-    const response = await fetch(store.file, { cache: "force-cache" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    state.storeData = await response.json();
+    state.storeData = await fetchStoreData(store.file);
     state.store = store;
     state.categories.clear();
     state.ingredients.clear();
@@ -224,7 +227,7 @@ async function selectStore(store, notify) {
     if (notify) toast(`Tienda cargada: ${store.label}`);
   } catch (error) {
     console.error(error);
-    toast("No se pudo cargar la tienda. Usa un servidor local o GitHub Pages.");
+    toast("No se pudo cargar la tienda. Revisa la conexión e inténtalo nuevamente.");
   } finally { hideLoading(); }
 }
 
@@ -308,6 +311,8 @@ function updateContext() {
   $("previewStore").textContent = state.store.label;
   $("previewWeeks").textContent = weeks;
   $("previewDate").textContent = formatDate(manifest.generated);
+  const filters = [`Sem ${weeks}`, state.categories.size ? `${state.categories.size} categoría(s)` : "Todas las categorías", state.ingredients.size ? `${state.ingredients.size} ingrediente(s)` : "Todos los ingredientes"];
+  $("activeFilterSummary").textContent = filters.join(" · ");
 }
 
 function renderMetrics() {
@@ -394,7 +399,7 @@ function clearSelection() { state.selected.clear(); state.previewPage = 0; rende
 function resetFilters() {
   state.categories.clear();
   state.ingredients.clear();
-  state.weeks = new Set(manifest.weeks.filter((week) => week >= 18 && week <= 25));
+  state.weeks = new Set(latestWeeks(8));
   weeksFilter = rebuildWeeksFilter();
   categoriesFilter.render();
   ingredientsFilter.render();
@@ -402,6 +407,15 @@ function resetFilters() {
   $("catalogSearch").value = "";
   aggregateData();
   persistState();
+}
+
+function setWeekPreset(preset) {
+  const amount = preset === "latest" ? 1 : Number(preset);
+  state.weeks = new Set(latestWeeks(amount));
+  weeksFilter = rebuildWeeksFilter();
+  aggregateData();
+  persistState();
+  toast(`Semanas seleccionadas: ${compactWeeks([...state.weeks])}`);
 }
 
 function rebuildWeeksFilter() {
@@ -618,7 +632,29 @@ function updateHealth() {
   const counts = manifest.counts;
   const total = Number(counts.ingredients || 0);
   const matched = Number(counts.sapMatched || 0);
-  $("healthBadge").querySelector("span").textContent = `${matched}/${total} ingredientes con descripción SAP · ${counts.storesWithData} tiendas`;
+  $("healthBadge").querySelector("span").textContent = `Datos hasta Sem ${manifest.weeks.at(-1)} · ${matched}/${total} SAP · ${counts.storesWithData} tiendas`;
+}
+
+async function fetchStoreData(path) {
+  let lastError;
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+      const separator = path.includes("?") ? "&" : "?";
+      const response = await fetch(`${path}${separator}v=${encodeURIComponent(manifest.generated)}`, { cache: "no-store", signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 350));
+    } finally { clearTimeout(timeout); }
+  }
+  throw lastError;
+}
+
+function latestWeeks(amount) {
+  return manifest.weeks.slice(-Math.max(1, Number(amount) || 1));
 }
 
 function compactWeeks(values) {

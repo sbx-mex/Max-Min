@@ -1,4 +1,4 @@
-const CACHE = "maxmin-remaster-v4-20260830";
+const CACHE = "maxmin-remaster-v5-20260830";
 const APP_SHELL = [
   "./", "./index.html", "./css/styles.css", "./js/app.js", "./data/manifest.js",
   "./vendor/jspdf.umd.min.js", "./manifest.webmanifest", "./icons/icon-192.png",
@@ -17,6 +17,14 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+  const isData = url.pathname.includes("/data/");
+  if (isData) {
+    event.respondWith(fetch(event.request).then((response) => {
+      if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()));
+      return response;
+    }).catch(() => caches.match(event.request)));
+    return;
+  }
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
     if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()));
     return response;

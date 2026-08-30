@@ -19,7 +19,7 @@
     <div class="header-inner">
       <a class="brand" href="#" aria-label="Inicio Max & Min">
         <img src="icons/icon-192.png" alt="" />
-        <span><b>Max & Min</b><small>Remaster · Semanas 1-34</small></span>
+        <span><b>Max & Min</b><small id="versionRange">Remaster · Cargando semanas</small></span>
       </a>
       <nav class="tabs" aria-label="Módulos principales">
         <button class="tab active" data-tab="etiquetas" type="button">Etiquetas</button>
@@ -63,9 +63,22 @@
         </label>
       </div>
       <div class="filter-footer">
-        <div class="formula-note"><b>Promedio dinámico:</b> uso de las semanas elegidas ÷ semanas ÷ 7.</div>
-        <button id="clearFiltersButton" class="link-button" type="button">Restablecer filtros</button>
+        <div>
+          <div class="formula-note"><b>Promedio dinámico:</b> uso de las semanas elegidas ÷ semanas ÷ 7.</div>
+          <div id="activeFilterSummary" class="active-filter-summary" aria-live="polite">Preparando filtros...</div>
+        </div>
+        <div class="filter-shortcuts" role="group" aria-label="Selección rápida de semanas">
+          <span>Semanas rápidas</span>
+          <button class="shortcut-button" data-week-preset="latest" type="button">Última</button>
+          <button class="shortcut-button" data-week-preset="4" type="button">Últimas 4</button>
+          <button class="shortcut-button" data-week-preset="8" type="button">Últimas 8</button>
+          <button id="clearFiltersButton" class="link-button" type="button">Restablecer</button>
+        </div>
       </div>
+      <details class="ops-guide">
+        <summary>Guía rápida de uso</summary>
+        <div class="ops-guide-grid"><span><b>1</b> Elige tienda y semanas.</span><span><b>2</b> Filtra y marca ingredientes.</span><span><b>3</b> Valida la vista y exporta.</span></div>
+      </details>
     </section>
 
     <section id="tab-etiquetas" class="tab-panel active">
@@ -76,9 +89,9 @@
             <div><p class="eyebrow">1 · Selección</p><h2>Ingredientes disponibles</h2></div>
             <span id="filteredCount" class="count-pill">0</span>
           </div>
-          <label class="search-box"><span aria-hidden="true">⌕</span><input id="catalogSearch" type="search" placeholder="Buscar ingrediente, SAP o Código DIA" /></label>
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="catalogSearch" type="search" placeholder="Buscar ingrediente, descripción, #DIA o #SAP" /></label>
           <div class="selection-actions">
-            <button id="selectFilteredButton" class="button button-primary" type="button">Elegir filtrados</button>
+            <button id="selectFilteredButton" class="button button-primary" type="button">Elegir resultados</button>
             <button id="clearSelectionButton" class="button button-quiet" type="button">Vaciar selección</button>
           </div>
           <div id="catalogList" class="catalog-list" aria-live="polite"></div>

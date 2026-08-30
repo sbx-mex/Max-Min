@@ -5,7 +5,7 @@ Aplicación estática/PWA para validar uso ideal, formato de surtido y etiquetas
 ## Resultado operativo
 
 - Directorio: cruce `CeCo → Tienda` desde `sources/Directorio.xlsx`.
-- Datos: semanas 1-34, 954 tiendas con información, 701 ingredientes y 4,764,428 registros positivos.
+- Datos: histórico continuo desde semana 1, carga bajo demanda y actualización semanal incremental.
 - SAP: `Ingrediente → Catálogo Micros → Código DIA → Descripción SAP` desde `sources/Lista_Precios_Base.xlsx`.
 - Indicadores: la fuente mantiene la columna vacía; no se inventa información.
 - Uso ideal: promedio aritmético entre todas las semanas seleccionadas. El mínimo es `promedio / 7`.
@@ -33,16 +33,25 @@ Después abre `http://localhost:8000`.
 
 ## Regenerar datos
 
-El ZIP de origen no se duplica dentro del proyecto porque contiene casi 600 MB sin comprimir. Para reconstruir el motor con otro corte:
+El ZIP histórico no se duplica dentro del proyecto porque contiene casi 600 MB sin comprimir. Para reconstruir el motor completo con otro corte:
 
 ```bash
 python tools/build_data.py \
-  --zip "/ruta/Max & Min_1_34.zip" \
+  --zip "/ruta/Max & Min_1_35.zip" \
   --directory sources/Directorio.xlsx \
-  --prices sources/Lista_Precios_Base.xlsx
+  --prices sources/Lista_Precios_Base.xlsx \
+  --expected-end 35
 ```
 
 El constructor acepta tanto los CSV UTF-16 estándar como el formato de comillas duplicadas detectado en la semana 34. Los datos se dividen en carpetas de máximo 80 archivos y menos de 25 MB.
+
+## Incorporar Semana 35 y siguientes
+
+1. Carga `Max & Min_35.csv` en `updates/incoming/Max & Min_35.csv`. Si supera 24 MB, carga un ZIP con el CSV dentro.
+2. Ejecuta **Actions → Actualizar semana Max Min**.
+3. Indica `week = 35`, la ruta cargada y `replace = false`.
+
+El workflow valida y actualiza únicamente `data/manifest.js`, los JSON afectados y los reportes. Después retira la fuente procesada para que la carpeta no acumule archivos. Consulta [docs/GUIA_ACTUALIZACION_SEMANAL.md](docs/GUIA_ACTUALIZACION_SEMANAL.md).
 
 ## Validar antes de publicar
 
@@ -60,7 +69,7 @@ Si el ZIP original está disponible, agrega una reconciliación exacta de Pedreg
 python tools/reconcile_source.py --zip "/ruta/Max & Min_1_34.zip" --ceco 38107 --weeks 18-25
 ```
 
-El workflow `Validar Max Min Remaster` ejecuta estas verificaciones en cada push/PR. `Limpiar motores obsoletos` es manual y elimina sólo patrones conocidos del motor anterior.
+El workflow `Validar Max Min Remaster` ejecuta estas verificaciones en cada push/PR y cancela validaciones anteriores del mismo branch para evitar ruido por cargas consecutivas. `Limpiar motores obsoletos` es manual y elimina sólo patrones conocidos del motor anterior.
 
 ## Exportación segura
 
