@@ -134,27 +134,46 @@
     </section>
 
     <section id="tab-acomodo" class="tab-panel">
-      <div class="workspace-grid acomodo-grid">
+      <div class="acomodo-workflow">
         <section class="card acomodo-photo-card">
-          <div class="card-heading"><div><p class="eyebrow">2 · Captura</p><h2>Foto de la estación</h2></div><div class="photo-actions"><label class="button button-primary" for="photoCameraInput">Tomar foto</label><label class="button button-quiet" for="photoInput">Adjuntar</label><button id="enhancePhotoButton" class="button button-quiet" type="button" disabled>Nitidez</button><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar</button></div></div>
+          <div class="card-heading">
+            <div><p class="eyebrow">2 · Fotografía</p><h2>Rack o estación completa</h2><p class="card-description">Toma una foto clara y completa. La imagen ocupará la parte principal del reporte.</p></div>
+            <div class="photo-actions"><label class="button button-primary" for="photoCameraInput">Tomar foto</label><label class="button button-quiet" for="photoInput">Adjuntar foto</label><button id="enhancePhotoButton" class="button button-quiet" type="button" disabled>Mejorar nitidez</button><button id="clearPhotoButton" class="button button-quiet" type="button">Quitar</button></div>
+          </div>
           <input id="photoCameraInput" class="file-input" type="file" accept="image/*" capture="environment" />
           <input id="photoInput" class="file-input" type="file" accept="image/*" />
-          <div class="station-steps"><span><b>2</b> Foto completa</span><span><b>3</b> Ubica números</span><span><b>4</b> Compara y valida</span></div>
+          <div class="station-steps"><span><b>1</b> Encuadra todo el rack</span><span><b>2</b> Evita reflejos y movimiento</span><span><b>3</b> Confirma que los productos se vean</span></div>
           <div id="photoStage" class="photo-stage">
-            <div id="photoPrompt" class="photo-prompt"><b>Toma o adjunta la estación</b><span>Después arrastra cada número hasta el producto.</span></div>
+            <div id="photoPrompt" class="photo-prompt"><b>Toma o adjunta la foto del rack</b><span>Después ubica los números sobre los productos.</span></div>
             <img id="rackPhoto" alt="Foto de la estación para validar el acomodo" />
             <div id="markerLayer" class="marker-layer"></div>
           </div>
         </section>
+
         <section class="card acomodo-items-card">
-          <div class="card-heading"><div><p class="eyebrow">3 · Ubica</p><h2>Insumos por ubicar</h2></div><span id="markerCount" class="count-pill">0</span></div>
-          <p class="card-description">Arrastra un insumo a la foto. Después ajusta su número sobre la ubicación real.</p>
+          <div class="card-heading">
+            <div><p class="eyebrow">3 · Artículos</p><h2>Lista del rack</h2><p class="card-description">Filtra los artículos del rack y agrega hasta 6. Toca un artículo y después toca su ubicación en la foto.</p></div>
+            <span id="markerCount" class="count-pill">0 / 6</span>
+          </div>
+          <div class="acomodo-toolbar">
+            <button id="addAcomodoItemsButton" class="button button-primary" type="button">Agregar hasta 6 filtrados</button>
+            <button id="clearAcomodoItemsButton" class="button button-quiet" type="button">Vaciar lista</button>
+            <span id="acomodoSelectionHint">Recomendado: 5 o 6 artículos por rack.</span>
+          </div>
+          <div class="marker-table-head" aria-hidden="true"><span>#</span><span>Ingrediente / SAP</span><span>Uso prom.</span><span>Mín.</span><span>Máx.</span></div>
           <div id="markerList" class="marker-list"></div>
-          <details class="support-guide">
-            <summary>Apoyo para validar la estación</summary>
-            <a class="support-visual" href="assets/reference/BOH_5S_Referencia.webp" target="_blank" rel="noopener"><img src="assets/reference/BOH_5S_Referencia.webp" alt="Referencia visual de un BOH organizado con metodología 5S" /><span>Ver referencia BOH</span></a>
-            <div class="support-links"><a href="docs/guias/Guia_5S_BOH.pdf" target="_blank" rel="noopener">Guía 5S y hoja de rack</a><a href="docs/guias/Alineacion_acomodo_items.pdf" target="_blank" rel="noopener">Acomodo por categoría</a></div>
-          </details>
+          <div class="acomodo-footer">
+            <details class="support-guide">
+              <summary>Referencia discreta para validar la estación</summary>
+              <a class="support-visual" href="assets/reference/BOH_5S_Referencia.webp" target="_blank" rel="noopener"><img src="assets/reference/BOH_5S_Referencia.webp" alt="Referencia visual de un BOH organizado con metodología 5S" /><span>Ver referencia BOH</span></a>
+              <div class="support-links"><a href="docs/guias/Guia_5S_BOH.pdf" target="_blank" rel="noopener">Guía 5S y hoja de rack</a><a href="docs/guias/Alineacion_acomodo_items.pdf" target="_blank" rel="noopener">Acomodo por categoría</a></div>
+            </details>
+            <div class="panel-export-action acomodo-export-action">
+              <span class="step-chip">4</span>
+              <div><b>Revisa y exporta</b><small>Foto arriba 60% · lista abajo 40% · incluye # de pedidos.</small></div>
+              <button id="exportAcomodoButton" class="button button-primary" type="button">Exportar acomodo PDF</button>
+            </div>
+          </div>
         </section>
       </div>
     </section>

@@ -120,12 +120,17 @@ def main() -> None:
     for marker in ("function buildListPdf", "function buildPdf", "LIST_PAGE_SIZE = 20", "format: \"letter\"", "orientation: \"landscape\""):
         require(marker in app, f"falta motor PDF dual: {marker}")
 
-    require(".acomodo-grid{grid-template-columns:minmax(0,3fr) minmax(340px,2fr)}" in styles, "Acomodo no conserva proporción visual 60/40")
-    for marker in ("draggable=\"true\"", "onPhotoStageDrop", "onPhotoStageClick", "placeMarkerAt", "activeMarkerId"):
+    require(".acomodo-workflow{display:grid" in styles and "min-height:clamp(430px,58vw,760px)" in styles, "Acomodo no prioriza la fotografía superior")
+    acomodo = index[index.index('id="tab-acomodo"'):index.index("</main>")]
+    for marker in ("addAcomodoItemsButton", "clearAcomodoItemsButton", "exportAcomodoButton", "marker-table-head"):
+        require(marker in acomodo, f"falta control intuitivo de Acomodo: {marker}")
+    for marker in ("draggable=\"true\"", "onPhotoStageDrop", "onPhotoStageClick", "placeMarkerAt", "activeMarkerId", "function buildAcomodoPdf", "rackPhotoDataUrl", "ACOMODO_MAX_ITEMS = 6"):
         require(marker in app, f"falta interacción de acomodo: {marker}")
+    require('["PEDIDOS", String(state.orders)]' in app, "todas las exportaciones deben mostrar el número de pedidos")
+    require('["#", "INGREDIENTE / SAP", "USO PROM.", "MÍN.", "MÁX."]' in app, "PDF de Acomodo no conserva el orden operativo")
 
     require('$("healthBadge").textContent' in app and '$("healthBadge").querySelector' not in app, "el indicador de salud puede romper la inicialización")
-    require("Revisa la tabla" in app and "Toma o adjunta foto" in app and "Compara con la guía" in app, "las rutas rápidas no están alineadas con cada pestaña")
+    require("Revisa la tabla" in app and "Toma la foto" in app and "Ubica 5 o 6 artículos" in app and "Revisa y exporta" in app, "las rutas rápidas no están alineadas con cada pestaña")
 
     subprocess.run(["node", "tools/generate_list_pdf_sample.cjs", str(pdf_path)], cwd=ROOT, check=True)
     pdf_report = inspect_pdf(pdf_path)
@@ -135,7 +140,7 @@ def main() -> None:
         {"id": 2, "name": "Ruta numerada", "status": "ok", "evidence": "cada pestaña comunica cuatro pasos y resalta el avance actual"},
         {"id": 3, "name": "Consulta sin ambigüedad", "status": "ok", "evidence": "Lista PDF usa visibles; Etiquetas exige Elegir visibles y confirma la selección"},
         {"id": 4, "name": "Exportación segura", "status": "ok", "evidence": "lista y etiquetas conservan Carta horizontal y paginación multipágina"},
-        {"id": 5, "name": "Acomodo guiado", "status": "ok", "evidence": "foto 60%, insumos 40% y pasos 2 Captura, 3 Ubica, 4 Compara"},
+        {"id": 5, "name": "Acomodo guiado", "status": "ok", "evidence": "foto dominante arriba, hasta 6 insumos debajo y PDF 60/40 con número de pedidos"},
     ]
     payload = {"status": "ok", "improvements": improvements, "listPdf": pdf_report}
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
