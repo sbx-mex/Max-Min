@@ -1,94 +1,89 @@
 {
   "status": "ok",
   "week": 35,
-  "replace": false,
+  "mode": "replace",
+  "replace": true,
   "source": "Max & Min_35.csv",
-  "sourceSha256": "c86b938689384230f4331c3b75e61ec2e6d98275bb3899bf1d18821ab47e5b46",
-  "rows": 127354,
-  "positiveRows": 126918,
+  "sourceSha256": "b217df492a888b55e3d376a89a6f15e3ceee276cc85a271925b29a7e7f743c30",
+  "rows": 132893,
+  "positiveRows": 132380,
   "storesUpdated": 892,
-  "filesModified": 900,
+  "filesModified": 952,
   "newStores": [],
   "removedStores": [],
-  "removedByDirectory": [
-    "38202",
-    "38269",
-    "38632",
-    "43182",
-    "43205"
-  ],
+  "removedByDirectory": [],
   "excludedUnknownStores": [
     {
       "ceco": "43103",
-      "positiveRows": 122
+      "positiveRows": 128
     },
     {
       "ceco": "43182",
-      "positiveRows": 138
+      "positiveRows": 140
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 74
     },
     {
       "ceco": "43205",
-      "positiveRows": 145
+      "positiveRows": 148
     }
   ],
-  "excludedUnknownRows": 405,
+  "excludedUnknownRows": 490,
   "newCategories": [],
   "newIngredients": [
-    "SII26Doodle16",
-    "SII26SSBTL12Aniv",
-    "SII26SS12Aniv",
-    "SII26Mug14Aniv",
-    "SII26CC24Rain"
+    "BIS NAL SUPER CROISSANT CJ40PZAS"
   ],
   "weeksAvailable": "1-35",
   "folders": {
     "stores_01": {
       "files": 80,
-      "bytes": 4220935
+      "bytes": 4225577
     },
     "stores_02": {
       "files": 78,
-      "bytes": 4183793
+      "bytes": 4190286
     },
     "stores_03": {
       "files": 80,
-      "bytes": 4413917
+      "bytes": 4420111
     },
     "stores_04": {
       "files": 80,
-      "bytes": 4295548
+      "bytes": 4301243
     },
     "stores_05": {
       "files": 80,
-      "bytes": 4305018
+      "bytes": 4310887
     },
     "stores_06": {
       "files": 80,
-      "bytes": 4285055
+      "bytes": 4290859
     },
     "stores_07": {
       "files": 79,
-      "bytes": 4151563
+      "bytes": 4157911
     },
     "stores_08": {
       "files": 80,
-      "bytes": 4130478
+      "bytes": 4136452
     },
     "stores_09": {
       "files": 80,
-      "bytes": 4347355
+      "bytes": 4354075
     },
     "stores_10": {
       "files": 80,
-      "bytes": 4195402
+      "bytes": 4202198
     },
     "stores_11": {
       "files": 80,
-      "bytes": 4218517
+      "bytes": 4225369
     },
     "stores_12": {
       "files": 72,
-      "bytes": 3360795
+      "bytes": 3366779
     }
   }
 }

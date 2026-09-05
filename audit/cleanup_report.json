@@ -1,25 +1,7 @@
 {
-  "status": "cleaned",
+  "status": "clean",
   "apply": true,
-  "targets": [
-    "data/stores_12/38128.json",
-    "data/stores_12/38168.json",
-    "data/stores_12/38272.json",
-    "data/stores_12/38362.json",
-    "data/stores_12/38443.json",
-    "data/stores_12/38465.json",
-    "data/stores_12/38652.json",
-    "data/stores_12/38726.json"
-  ],
+  "targets": [],
   "legacyTargets": [],
-  "orphanStoreFiles": [
-    "data/stores_12/38128.json",
-    "data/stores_12/38168.json",
-    "data/stores_12/38272.json",
-    "data/stores_12/38362.json",
-    "data/stores_12/38443.json",
-    "data/stores_12/38465.json",
-    "data/stores_12/38652.json",
-    "data/stores_12/38726.json"
-  ]
+  "orphanStoreFiles": []
 }

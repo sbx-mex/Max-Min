@@ -2,29 +2,34 @@
   "status": "warning",
   "week": 35,
   "source": "Max & Min_35.csv",
-  "sourceSha256": "c86b938689384230f4331c3b75e61ec2e6d98275bb3899bf1d18821ab47e5b46",
-  "bytes": 16068984,
-  "rows": 127354,
-  "positiveRows": 127323,
-  "stores": 895,
+  "sourceSha256": "b217df492a888b55e3d376a89a6f15e3ceee276cc85a271925b29a7e7f743c30",
+  "bytes": 16699728,
+  "rows": 132893,
+  "positiveRows": 132870,
+  "stores": 896,
   "categories": 19,
-  "ingredients": 433,
+  "ingredients": 458,
   "indicatorNonBlank": 0,
+  "duplicateRecords": 0,
   "unknownStores": [
     {
       "ceco": "43103",
-      "positiveRows": 122
+      "positiveRows": 128
     },
     {
       "ceco": "43182",
-      "positiveRows": 138
+      "positiveRows": 140
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 74
     },
     {
       "ceco": "43205",
-      "positiveRows": 145
+      "positiveRows": 148
     }
   ],
-  "excludedUnknownRows": 405,
+  "excludedUnknownRows": 490,
   "unknownStorePolicy": "skip",
   "safeRoute": "updates/incoming/Max & Min_35.csv",
   "result": "fuente validada; los CeCo fuera del directorio se excluirán"
