@@ -88,7 +88,8 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     if not 1 <= week <= 53:
         fail("la semana debe estar entre 1 y 53")
     existing_weeks = [int(value) for value in manifest["weeks"]]
-    if week in existing_weeks and not args.replace:
+    replacing_existing_week = week in existing_weeks
+    if replacing_existing_week and not args.replace:
         fail(f"la semana {week} ya existe; usa --replace sólo si deseas sustituirla")
     if week not in existing_weeks and existing_weeks and week != max(existing_weeks) + 1:
         fail(f"la siguiente semana esperada es {max(existing_weeks) + 1}, no {week}")
@@ -105,7 +106,10 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     ingredients = manifest["ingredients"]
     category_ids = {name: index for index, name in enumerate(categories)}
     ingredient_ids = {norm(item["name"]): index for index, item in enumerate(ingredients)}
-    by_store: dict[str, list[int]] = defaultdict(list)
+    # Una clave CeCo/categoría/ingrediente sólo puede publicarse una vez. Guardar
+    # primero en un mapa evita que un CSV defectuoso cree duplicados compactos.
+    by_store: dict[str, dict[tuple[int, int], int]] = defaultdict(dict)
+    source_keys: dict[tuple[str, str, str], int] = {}
     raw_rows = 0
     positive_rows = 0
     new_categories: list[str] = []
@@ -147,8 +151,15 @@ def update(args: argparse.Namespace) -> dict[str, object]:
             ingredient_ids[ingredient_key] = ingredient_id
             ingredients.append(new_ingredient(source_ingredient, micros, presentations))
             new_ingredients.append(source_ingredient)
+        source_key = (ceco, category, ingredient_key)
+        if source_key in source_keys:
+            fail(
+                f"fila {row_number}: registro duplicado; ya apareció en fila "
+                f"{source_keys[source_key]} ({ceco}, {category}, {source_ingredient})"
+            )
+        source_keys[source_key] = row_number
         cents = max(0, min(4_294_967_295, int(round(usage * 100))))
-        by_store[ceco].extend((category_ids[category], ingredient_id, cents))
+        by_store[ceco][(category_ids[category], ingredient_id)] = cents
         positive_rows += 1
 
     if raw_rows == 0:
@@ -192,10 +203,13 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         ceco = str(store["code"])
         path = root / str(store["file"])
         payload = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
-        if args.replace:
+        if replacing_existing_week:
             payload.pop(str(week), None)
         if ceco in by_store:
-            payload[str(week)] = by_store[ceco]
+            flat: list[int] = []
+            for (category_id, ingredient_id), cents in sorted(by_store[ceco].items()):
+                flat.extend((category_id, ingredient_id, cents))
+            payload[str(week)] = flat
         if not payload:
             if path.is_file():
                 path.unlink()
@@ -205,7 +219,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         ordered = {key: payload[key] for key in sorted(payload, key=int)}
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(minified_json(ordered), encoding="utf-8")
-        if ceco in by_store or args.replace:
+        if ceco in by_store or replacing_existing_week:
             modified_files.append(path.relative_to(root).as_posix())
 
     store_entries.sort(key=lambda store: (
@@ -271,7 +285,8 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     report = {
         "status": "ok",
         "week": week,
-        "replace": args.replace,
+        "mode": "replace" if replacing_existing_week else "insert",
+        "replace": replacing_existing_week,
         "source": source_name,
         "sourceSha256": source_sha,
         "rows": raw_rows,

@@ -11,7 +11,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from build_data import load_crosses, normalized_csv_lines, text
+from build_data import load_crosses, norm, normalized_csv_lines, text
 from update_week import REQUIRED_HEADERS, source_bytes
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +38,7 @@ def audit(args: argparse.Namespace) -> dict[str, object]:
     ingredients: set[str] = set()
     unknown_stores: set[str] = set()
     unknown_store_rows: Counter[str] = Counter()
+    source_keys: dict[tuple[str, str, str], int] = {}
     for row_number, row in enumerate(reader, start=2):
         rows += 1
         try:
@@ -61,6 +62,10 @@ def audit(args: argparse.Namespace) -> dict[str, object]:
         ingredient = text(row.get("Ingrediente"))
         if not ceco or not category or not ingredient:
             fail(f"fila {row_number}: faltan CeCo, Categoría o Ingrediente")
+        source_key = (ceco, category, norm(ingredient))
+        if source_key in source_keys:
+            fail(f"fila {row_number}: registro duplicado con fila {source_keys[source_key]}")
+        source_keys[source_key] = row_number
         if ceco not in directory:
             unknown_stores.add(ceco)
             unknown_store_rows[ceco] += 1
@@ -105,6 +110,7 @@ def audit(args: argparse.Namespace) -> dict[str, object]:
         "categories": len(categories),
         "ingredients": len(ingredients),
         "indicatorNonBlank": 0,
+        "duplicateRecords": 0,
         "unknownStores": [
             {"ceco": ceco, "positiveRows": unknown_store_rows[ceco]}
             for ceco in sorted(unknown_stores)

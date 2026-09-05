@@ -30,6 +30,7 @@ required = [
     "assets/ui/Damos_Seguimiento.webp", "assets/ui/Un_placer_haber_Ayudado.webp",
     "assets/reference/BOH_5S_Referencia.webp", "docs/guias/Guia_5S_BOH.pdf",
     "docs/guias/Alineacion_acomodo_items.pdf", "tools/audit_week_source.py",
+    "tools/verify_week_publish.py",
 ]
 for relative in required:
     if not (ROOT / relative).is_file():

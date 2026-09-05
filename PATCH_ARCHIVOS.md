@@ -1,12 +1,12 @@
 # Parche controlado - Semana 35 y estabilidad
 
-## Publicación en tres pasos
+## Publicación
 
 1. Extrae el ZIP y sube su contenido a la raíz de `sbx-mex/Max-Min`, conservando las carpetas.
 2. Abre **Actions -> Actualizar semana Max Min -> Run workflow**.
-3. Mantén `week = 35`, `source_path = updates/incoming/Max & Min_35.csv` y `replace = false`.
+3. Deja vacíos semana y ruta; el workflow detectará `updates/incoming/Max & Min_35.csv`, reemplazará la semana y retirará el CSV al terminar.
 
-Ese único workflow elimina los 17 restos del motor anterior, audita el CSV, sincroniza el directorio vigente, incorpora la Semana 35, verifica JavaScript/Python y publica los datos.
+El caso de control `38996 · Valle de Aragón / Bagel Tradicional / Semana 35` debe quedar en `25.00` y será validado contra el CSV antes de publicar.
 
 ## Directorio vigente
 
@@ -25,4 +25,4 @@ Ese único workflow elimina los 17 restos del motor anterior, audita el CSV, sin
 
 ## Semanas siguientes
 
-Desde la Semana 36 sólo carga `updates/incoming/Max & Min_36.csv` y ejecuta el mismo workflow cambiando `week` y `source_path`. No edites `data/manifest.js` ni los JSON manualmente.
+Desde la Semana 36 sólo carga un archivo como `updates/incoming/Max & Min_36.csv`. El workflow detecta la semana, reemplaza automáticamente una semana ya existente, recalcula, verifica contra el CSV y publica. No edites `data/manifest.js` ni los JSON manualmente.
