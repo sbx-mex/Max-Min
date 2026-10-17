@@ -17,9 +17,9 @@ from pathlib import Path
 
 from build_data import FILES_PER_FOLDER, load_crosses, load_directory_records, minified_json, norm, norm_variants, normalized_csv_lines, text
 from data_integrity import write_integrity
+from weekly_source import REQUIRED_HEADERS, parse_usage, parse_week, read_source
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_HEADERS = {"Semana", "Tiendas", "Categoría Inventario", "Ingrediente", "Indicadores", "Uso Ideal* (#)"}
 
 
 def fail(message: str) -> None:
@@ -35,17 +35,10 @@ def read_manifest(root: Path) -> dict[str, object]:
 
 
 def source_bytes(path: Path, week: int) -> tuple[bytes, str]:
-    if not path.is_file():
-        fail(f"no existe el archivo semanal: {path}")
-    if path.suffix.lower() == ".csv":
-        return path.read_bytes(), path.name
-    if path.suffix.lower() != ".zip":
-        fail("el archivo semanal debe ser CSV o ZIP")
-    with zipfile.ZipFile(path) as archive:
-        candidates = [name for name in archive.namelist() if name.lower().endswith(".csv") and re.search(rf"_{week}\.csv$", name, re.IGNORECASE)]
-        if len(candidates) != 1:
-            fail(f"el ZIP debe contener exactamente un CSV terminado en _{week}.csv")
-        return archive.read(candidates[0]), candidates[0]
+    try:
+        return read_source(path)
+    except ValueError as error:
+        fail(str(error))
 
 
 def new_ingredient(source_name: str, micros: dict[str, tuple[str, str, str]], presentations: dict[str, dict[str, object]]) -> dict[str, object]:
@@ -91,7 +84,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     replacing_existing_week = week in existing_weeks
     if replacing_existing_week and not args.replace:
         fail(f"la semana {week} ya existe; usa --replace sólo si deseas sustituirla")
-    if week not in existing_weeks and existing_weeks and week != max(existing_weeks) + 1:
+    if not getattr(args, "allow_gaps", False) and week not in existing_weeks and existing_weeks and week != max(existing_weeks) + 1:
         fail(f"la siguiente semana esperada es {max(existing_weeks) + 1}, no {week}")
 
     directory_records = load_directory_records(args.directory)
@@ -119,7 +112,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     for row_number, row in enumerate(reader, start=2):
         raw_rows += 1
         try:
-            row_week = int(float(text(row.get("Semana"))))
+            row_week = parse_week(row.get("Semana"))
         except ValueError:
             fail(f"Semana inválida en fila {row_number}")
         if row_week != week:
@@ -130,9 +123,9 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         category = text(row.get("Categoría Inventario"))
         source_ingredient = text(row.get("Ingrediente"))
         try:
-            usage = float(text(row.get("Uso Ideal* (#)")).replace(",", "") or 0)
+            usage = parse_usage(row.get("Uso Ideal* (#)"))
         except ValueError:
-            fail(f"fila {row_number}: Uso Ideal no es numérico")
+            fail(f"fila {row_number}: Uso Ideal inválido, negativo o fuera de rango")
         if usage <= 0 or not ceco or not category or not source_ingredient:
             continue
         if ceco not in directory:
@@ -158,7 +151,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
                 f"{source_keys[source_key]} ({ceco}, {category}, {source_ingredient})"
             )
         source_keys[source_key] = row_number
-        cents = max(0, min(4_294_967_295, int(round(usage * 100))))
+        cents = int(round(usage * 100))
         by_store[ceco][(category_ids[category], ingredient_id)] = cents
         positive_rows += 1
 
@@ -236,7 +229,10 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     manifest["weeks"] = sorted(set(existing_weeks + [week]))
     manifest["version"] = "4.2-directory-status"
     manifest["generated"] = date.today().isoformat()
+    manifest["revision"] = source_sha
     manifest["lastUpdate"] = {"week": week, "source": source_name, "sha256": source_sha}
+    manifest.setdefault("weekSources", {})[str(week)] = dict(manifest["lastUpdate"])
+    manifest["pendingWeeks"] = sorted(set(range(35, max(manifest["weeks"]) + 1)) - set(manifest["weeks"]))
     counts = manifest["counts"]
     old_rows = int(counts.get("rowsByWeek", {}).get(str(week), 0))
     old_positive = int(counts.get("positiveByWeek", {}).get(str(week), 0))
@@ -264,6 +260,7 @@ def update(args: argparse.Namespace) -> dict[str, object]:
     (root / "data" / "manifest.js").write_text("window.MAXMIN_MANIFEST=" + minified_json(manifest) + ";\n", encoding="utf-8")
     write_integrity(root, manifest)
 
+    (root / "audit").mkdir(exist_ok=True)
     review_path = root / "audit" / "ingredients_review.csv"
     with review_path.open("w", encoding="utf-8-sig", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=["Ingrediente", "Descripción SAP", "Código DIA", "ID WOE", "Cruce SAP", "Cruce Formato"])
@@ -303,7 +300,8 @@ def update(args: argparse.Namespace) -> dict[str, object]:
         "excludedUnknownRows": sum(unknown_store_rows.values()),
         "newCategories": new_categories,
         "newIngredients": new_ingredients,
-        "weeksAvailable": f"{min(manifest['weeks'])}-{max(manifest['weeks'])}",
+        "weeksAvailable": list(manifest["weeks"]),
+        "pendingWeeks": manifest["pendingWeeks"],
         "folders": folder_report,
     }
     report_path = root / "audit" / f"week_{week}_update_report.json"
@@ -317,6 +315,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--week", type=int, required=True)
     parser.add_argument("--replace", action="store_true")
+    parser.add_argument("--allow-gaps", action="store_true", help="Publicar sólo semanas recibidas; registrar pendientes sin rellenarlas")
     parser.add_argument("--sync-directory", action="store_true")
     parser.add_argument("--unknown-store-policy", choices=("fail", "skip"), default="skip")
     parser.add_argument("--root", type=Path, default=ROOT)

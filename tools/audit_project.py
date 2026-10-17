@@ -9,6 +9,7 @@ from collections import Counter
 from pathlib import Path
 
 from build_data import load_directory_records
+from weekly_source import incoming_files
 
 ROOT = Path(__file__).resolve().parents[1]
 LIMIT_BYTES = 25 * 1024 * 1024
@@ -40,12 +41,13 @@ legacy = list((ROOT / "js").glob("data_part_*.js")) + list((ROOT / "js").glob("d
 if legacy or (ROOT / "js" / "data_index.js").exists():
     fail("persisten motores de datos obsoletos")
 
+incoming_files(ROOT)  # Cada carga conserva el límite por archivo; la cola puede sumar más de 25 MiB.
 for folder in [path for path in ROOT.rglob("*") if path.is_dir() and ".git" not in path.parts]:
     immediate_files = [path for path in folder.iterdir() if path.is_file()]
     if len(immediate_files) > LIMIT_FILES:
         fail(f"{folder.relative_to(ROOT)} contiene {len(immediate_files)} archivos")
     size = sum(path.stat().st_size for path in immediate_files)
-    if size > LIMIT_BYTES:
+    if size > LIMIT_BYTES and folder != ROOT / "updates" / "incoming":
         fail(f"{folder.relative_to(ROOT)} pesa {size} bytes en archivos directos")
 for path in ROOT.rglob("*"):
     if path.is_file() and ".git" not in path.parts and path.stat().st_size > LIMIT_BYTES:
@@ -59,8 +61,13 @@ manifest = json.loads(manifest_source[len(prefix):].strip()[:-1])
 counts = manifest["counts"]
 weeks = [int(value) for value in manifest["weeks"]]
 directory = load_directory_records(ROOT / "sources" / "Directorio.xlsx")
-if not weeks or weeks[0] != 1 or weeks != list(range(1, weeks[-1] + 1)):
-    fail(f"las semanas no son continuas desde 1: {weeks}")
+if not weeks or weeks[0] != 1 or weeks != sorted(set(weeks)) or any(not 1 <= week <= 53 for week in weeks):
+    fail(f"las semanas publicadas no son válidas: {weeks}")
+pending_weeks = sorted(set(range(35, weeks[-1] + 1)) - set(weeks))
+if manifest.get("pendingWeeks", []) != pending_weeks:
+    fail("las semanas pendientes no coinciden con las semanas realmente publicadas")
+if any(week < 35 for week in set(range(1, weeks[-1] + 1)) - set(weeks)):
+    fail("faltan semanas del histórico anterior a 35")
 if counts["directoryStores"] != len(directory) or counts["storesWithData"] != len(manifest["stores"]):
     fail("conteo inconsistente de tiendas")
 if counts.get("openStores") != sum(item["status"] == "Abierta" for item in directory.values()):
@@ -226,7 +233,8 @@ for obsolete_copy in ["Sem 25 o anteriores", "histórico de uso de vasos y tapas
 
 report = {
     "status": "ok",
-    "weeks": f"1-{weeks[-1]}",
+    "weeks": weeks,
+    "pendingWeeks": pending_weeks,
     "stores": counts["storesWithData"],
     "ingredients": counts["ingredients"],
     "positiveRows": counts["positiveRows"],

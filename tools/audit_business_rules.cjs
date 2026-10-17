@@ -55,3 +55,14 @@ console.log(JSON.stringify({
   normalizedStopped: { divisor, notice },
   normalizedCurrent: currentNotice,
 }));
+
+const gap = evaluate(`(() => {
+  const saved = manifest.weeks;
+  try {
+    manifest.weeks = [35, 36, 38];
+    return {selected: latestWeeks(2), label: compactWeeks(manifest.weeks), divisor: averageDivisor({source: "maxmin"}, latestWeeks(2))};
+  } finally { manifest.weeks = saved; }
+})()`);
+if (gap.selected.join(',') !== '36,38' || gap.label !== '35-36, 38' || gap.divisor !== 2) {
+  throw new Error(`Una semana ausente no debe rellenarse ni entrar en el promedio: ${JSON.stringify(gap)}`);
+}

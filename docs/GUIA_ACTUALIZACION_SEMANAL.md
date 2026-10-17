@@ -1,22 +1,21 @@
-# Guía operativa · actualización semanal
+# Carga semanal segura · Max-Min
 
-## Semana 35
+1. Sube uno o varios CSV/ZIP a `updates/incoming/`.
+2. Guarda los cambios en `main`. No necesitas indicar una semana manualmente.
+3. Abre **Actions → Actualizar semana Max Min** para ver las semanas verificadas y las pendientes.
 
-1. Carga `Max & Min_35.csv` en `updates/incoming/` sin cambiar sus encabezados.
-2. Abre **Actions → Actualizar semana Max Min → Run workflow**.
-3. Usa `week = 35`, la ruta mostrada y `replace = false`.
-4. Cuando termine en verde, abre la aplicación: debe mostrar datos hasta la Semana 35.
+La semana se obtiene del contenido del CSV. Se permiten cargas desde la 35 en adelante, incluso cuando llegan fuera de orden. Una semana ausente no participa en los filtros ni en el promedio; al recibirla se incorpora con sus datos reales.
 
-Python valida primero y publica después. Los CeCo que no estén en el directorio vigente se excluyen y quedan registrados en `audit/week_35_update_report.json`; no detienen la actualización de las tiendas autorizadas.
+Si dos archivos son idénticos, se importan una sola vez. Si contienen versiones diferentes de la misma semana, conserva en incoming únicamente la que deseas publicar y vuelve a ejecutar.
 
-## Semana 36 en adelante
+La validación y los cambios se hacen primero en una copia. Si una fuente falla, el motor original y las cargas permanecen disponibles. Una semana ya existente se sustituye completa. Se cotejan todos sus registros, no una muestra.
 
-Repite el mismo flujo cambiando únicamente el número del archivo, la ruta y el campo `week`. No subas CSV directamente a `data/` y no edites `manifest.js` manualmente.
+Los CeCo fuera del Directorio.xlsx vigente se excluyen y se detallan en el reporte, sin asignarles nombres ni almacenes inventados. Indicadores debe permanecer vacío. Uso Ideal debe ser numérico, finito y no negativo.
 
-## Corrección de una semana
+Los límites se aplican por archivo, con protección adicional al descomprimir ZIP. Los límites de las carpetas de datos publicados siguen activos.
 
-Para sustituir una semana ya cargada, utiliza el mismo nombre y activa `replace = true`. El motor elimina exclusivamente esa semana de cada tienda y la vuelve a incorporar.
+Si llega una carga mientras se valida otra, el publicador vuelve a descargar main y recalcula. No fuerza el push ni combina JSON generados sobre versiones distintas.
 
-## Recuperación
+Reportes: `audit/week_queue_report.json`, `audit/week_NUM_source_report.json`, `audit/week_NUM_update_report.json` y `audit/week_NUM_publish_report.json`.
 
-Si el workflow falla, no publica datos parciales. Corrige el archivo fuente y vuelve a ejecutarlo. Los errores indican la fila y el motivo: Semana incorrecta, Indicadores con contenido o Uso Ideal no numérico.
+La misma ejecución despliega en Pages el sitio verificado, sin incluir las fuentes CSV/Excel ni los reportes internos. No depende de que un commit del bot dispare otro despliegue.
