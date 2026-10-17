@@ -1,0 +1,113 @@
+{
+  "status": "ok",
+  "week": 36,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_36.csv",
+  "sourceSha256": "35820d66bfa93c98357f24207aef6193c32b586d27d0fbce3ab7084ae41e5521",
+  "rows": 140068,
+  "positiveRows": 139452,
+  "storesUpdated": 881,
+  "filesModified": 884,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43103",
+      "positiveRows": 149
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 161
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 138
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 155
+    }
+  ],
+  "excludedUnknownRows": 603,
+  "newCategories": [],
+  "newIngredients": [
+    "Leche Coco 8/1.89 Lt",
+    "ZZZ10976 Salsa Caramel Brulee 1.",
+    "Cafe 250g 6/cs Malawi Sable Farm",
+    "Topping de calabaza",
+    "PanMuertoQueso",
+    "PanMuertoAvella",
+    "Galleta Pumpkin",
+    "23476 C4B Cafe Xmas Blonde Ro",
+    "Focaccia Roast Beef",
+    "Dona Dark Caramel CJ/36 Pzas",
+    "Tarta de chocolate y almendra CJ",
+    "Cake Pop Erizo CJ/36 Pzas",
+    "Focaccia Italiana",
+    "Fl26CC24psl",
+    "Fl26PPBTL24",
+    "Fl26SS12psl",
+    "Fl26SS16pslCharm",
+    "Fl26SS24psl",
+    "Fl26SSCCpsl",
+    "EvianGasif",
+    "PanMuertoTrad",
+    "Cafe 1971 250g",
+    "Jarabe de Nuez Pekana",
+    "Topping Pecan Crunch",
+    "Cafe1971 5 LB"
+  ],
+  "weeksAvailable": "1-36",
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4325780
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4310361
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 4548446
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4418493
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 4430170
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4408002
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4275272
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4247386
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 4482124
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4330627
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4349912
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 3478690
+    }
+  }
+}

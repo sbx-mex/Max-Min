@@ -1,11 +1,11 @@
 {
   "status": "ok",
-  "weeks": "1-35",
+  "weeks": "1-36",
   "stores": 949,
-  "ingredients": 707,
-  "positiveRows": 4890280,
-  "sapMatched": 630,
-  "formatMatched": 595,
+  "ingredients": 732,
+  "positiveRows": 5029732,
+  "sapMatched": 635,
+  "formatMatched": 597,
   "normalized": {
     "weeks": "1-35",
     "stores": 949,
