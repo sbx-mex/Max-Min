@@ -2,22 +2,27 @@ name: Actualizar semana Max Min
 
 on:
   push:
+    branches: [main]
     paths:
-      - "updates/incoming/*.csv"
-      - "updates/incoming/*.zip"
+      - "updates/incoming/**"
+      - "tools/**.py"
+      - "tools/tests/**"
+      - "sources/Directorio.xlsx"
+      - "sources/Lista_Precios_Base.xlsx"
+      - ".github/workflows/update-week.yml"
   workflow_dispatch:
     inputs:
       week:
-        description: "Número de semana (vacío = detectar del nombre)"
+        description: "Semana opcional: debe coincidir con el contenido del source_path"
         required: false
         type: string
       source_path:
-        description: "Ruta del CSV o ZIP (vacío = detectar en incoming)"
+        description: "Vacío = procesar TODOS los CSV/ZIP pendientes por su semana real"
         required: false
         type: string
 
 concurrency:
-  group: max-min-weekly-update
+  group: max-min-data-main
   cancel-in-progress: false
 
 permissions:
@@ -28,9 +33,12 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -39,103 +47,21 @@ jobs:
         with:
           node-version: "22"
       - run: pip install openpyxl
-      - name: Detectar fuente y semana
-        id: source
+      - name: Probar cola, duplicados, semanas faltantes y recuperación
+        run: python -B -m unittest discover -s tools/tests -v
+      - name: Validar y publicar todas las cargas, sin sobrescribir cargas nuevas
         env:
           INPUT_WEEK: ${{ inputs.week }}
           INPUT_SOURCE: ${{ inputs.source_path }}
-        run: |
-          SOURCE_PATH="$INPUT_SOURCE"
-          if [[ -z "$SOURCE_PATH" ]]; then
-            if [[ "${{ github.event_name }}" == "push" ]]; then
-              mapfile -t SOURCES < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^updates/incoming/.*\.(csv|CSV|zip|ZIP)$' | sort)
-            else
-              mapfile -t SOURCES < <(find updates/incoming -maxdepth 1 -type f \( -iname '*.csv' -o -iname '*.zip' \) -print | sort)
-            fi
-            if [[ "${#SOURCES[@]}" -ne 1 ]]; then
-              echo "Debe detectarse exactamente un CSV o ZIP para procesar; encontrados: ${#SOURCES[@]}"
-              exit 1
-            fi
-            SOURCE_PATH="${SOURCES[0]}"
-          fi
-          if [[ "$SOURCE_PATH" != updates/incoming/* ]] || [[ ! -f "$SOURCE_PATH" ]]; then
-            echo "Fuente inválida o inexistente: $SOURCE_PATH"
-            exit 1
-          fi
-          WEEK="$INPUT_WEEK"
-          if [[ -z "$WEEK" ]]; then
-            NAME="$(basename "$SOURCE_PATH")"
-            if [[ "$NAME" =~ _([0-9]{1,2})\.(csv|CSV|zip|ZIP)$ ]]; then
-              WEEK="${BASH_REMATCH[1]}"
-            else
-              echo "No se pudo detectar la semana desde: $NAME"
-              exit 1
-            fi
-          fi
-          echo "source_path=$SOURCE_PATH" >> "$GITHUB_OUTPUT"
-          echo "week=$WEEK" >> "$GITHUB_OUTPUT"
-      - name: Validar ruta de entrada
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-        run: |
-          if [[ "$SOURCE_PATH" != updates/incoming/* ]]; then
-            echo "La fuente debe estar dentro de updates/incoming/"
-            exit 1
-          fi
-          test -f "$SOURCE_PATH"
-      - name: Retirar motores obsoletos conocidos
-        run: python tools/cleanup_obsolete.py --apply --report audit/cleanup_report.json
-      - name: Auditar fuente sin modificar datos
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-          WEEK: ${{ steps.source.outputs.week }}
         run: >-
-          python tools/audit_week_source.py
-          --input "$SOURCE_PATH"
-          --week "$WEEK"
-          --unknown-store-policy skip
-          --report "audit/week_${WEEK}_source_report.json"
-      - name: Incorporar semana
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-          WEEK: ${{ steps.source.outputs.week }}
-        run: python tools/update_week.py --input "$SOURCE_PATH" --week "$WEEK" --replace --sync-directory --unknown-store-policy skip
-      - name: Verificar publicación contra CSV
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-          WEEK: ${{ steps.source.outputs.week }}
-        run: >-
-          python tools/verify_week_publish.py
-          --input "$SOURCE_PATH"
-          --week "$WEEK"
-          --report "audit/week_${WEEK}_publish_report.json"
-      - run: node --check js/app.js
-      - run: node --check sw.js
-      - run: python tools/cleanup_obsolete.py --report /tmp/cleanup_report.json
-      - run: python tools/audit_data_integrity.py --report /tmp/data_integrity_report.json
-      - run: python tools/audit_project.py
-      - name: Retirar fuente procesada y publicar datos
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-          WEEK: ${{ steps.source.outputs.week }}
-        run: |
-          git rm --ignore-unmatch -- "$SOURCE_PATH"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No hay cambios para publicar"
-            exit 1
-          fi
-          git commit -m "data: recalcular semana $WEEK [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Resumen
-        env:
-          SOURCE_PATH: ${{ steps.source.outputs.source_path }}
-          WEEK: ${{ steps.source.outputs.week }}
-        run: |
-          echo "## Semana $WEEK incorporada" >> "$GITHUB_STEP_SUMMARY"
-          echo "Fuente procesada: \`$SOURCE_PATH\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "Reporte: \`audit/week_${WEEK}_update_report.json\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "Verificación: \`audit/week_${WEEK}_publish_report.json\`" >> "$GITHUB_STEP_SUMMARY"
+          python -B tools/process_week_queue.py --push
+          --input "$INPUT_SOURCE" --week "$INPUT_WEEK"
+          --summary "$GITHUB_STEP_SUMMARY"
+      - name: Conservar diagnóstico si falla
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maxmin-carga-${{ github.run_id }}
+          path: audit/week_queue_failure.json
+          if-no-files-found: ignore
+          retention-days: 7

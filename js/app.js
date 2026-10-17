@@ -46,7 +46,7 @@ function init() {
     return;
   }
   restoreState();
-  $("versionRange").textContent = `Remaster · Semanas ${manifest.weeks.at(0)}-${manifest.weeks.at(-1)}`;
+  $("versionRange").textContent = `Remaster · Semanas ${compactWeeks(manifest.weeks)}`;
   buildStoreFilter();
   buildFilters();
   bindEvents();
@@ -57,7 +57,7 @@ function init() {
   selectStore(preferred, false);
   updateHealth();
   if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {}));
   }
 }
 
@@ -315,7 +315,7 @@ async function selectStore(store, notify) {
   try {
     const normalizedStore = normalizedManifest.stores.find((item) => item.code === store.code);
     [state.storeData, state.normalizedStoreData] = await Promise.all([
-      fetchStoreData(store.file, manifest.generated),
+      fetchStoreData(store.file, manifest.revision || manifest.lastUpdate?.sha256 || manifest.generated),
       normalizedStore ? fetchStoreData(normalizedStore.file, normalizedManifest.generated) : Promise.resolve({}),
     ]);
     state.store = store;
@@ -1017,7 +1017,7 @@ function updateHealth() {
   $("healthBadge").textContent = `Datos hasta Sem ${manifest.weeks.at(-1)} · ${matched}/${total} SAP · ${counts.storesWithData} tiendas`;
 }
 
-async function fetchStoreData(path, version = manifest.generated) {
+async function fetchStoreData(path, version = manifest.revision || manifest.generated) {
   let lastError;
   for (let attempt = 1; attempt <= 2; attempt += 1) {
     const controller = new AbortController();

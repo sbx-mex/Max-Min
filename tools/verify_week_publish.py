@@ -12,6 +12,7 @@ from pathlib import Path
 
 from build_data import load_directory_records, norm, normalized_csv_lines, text
 from update_week import REQUIRED_HEADERS, read_manifest, source_bytes
+from weekly_source import parse_usage, parse_week
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -27,7 +28,7 @@ def verify(args: argparse.Namespace) -> dict[str, object]:
     source_sha = hashlib.sha256(raw).hexdigest()
     if int(args.week) not in {int(value) for value in manifest["weeks"]}:
         fail(f"la semana {args.week} no está publicada")
-    last_update = manifest.get("lastUpdate", {})
+    last_update = manifest.get("weekSources", {}).get(str(args.week), manifest.get("lastUpdate", {}))
     if int(last_update.get("week", -1)) != args.week or last_update.get("sha256") != source_sha:
         fail("el sello de la última actualización no coincide con la fuente")
 
@@ -43,7 +44,9 @@ def verify(args: argparse.Namespace) -> dict[str, object]:
     excluded_unknown = 0
     for row_number, row in enumerate(reader, start=2):
         try:
-            usage = float(text(row.get("Uso Ideal* (#)")).replace(",", "") or 0)
+            usage = parse_usage(row.get("Uso Ideal* (#)"))
+            if parse_week(row.get("Semana")) != args.week or text(row.get("Indicadores")):
+                fail(f"fila {row_number}: Semana o Indicadores no coincide")
         except ValueError:
             fail(f"fila {row_number}: Uso Ideal no es numérico")
         if usage <= 0:

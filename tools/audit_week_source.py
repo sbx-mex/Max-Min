@@ -13,6 +13,7 @@ from pathlib import Path
 
 from build_data import load_crosses, norm, normalized_csv_lines, text
 from update_week import REQUIRED_HEADERS, source_bytes
+from weekly_source import parse_usage, parse_week
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,8 +24,6 @@ def fail(message: str) -> None:
 
 def audit(args: argparse.Namespace) -> dict[str, object]:
     raw, source_name = source_bytes(args.input.resolve(), args.week)
-    if len(raw) > 25 * 1024 * 1024:
-        fail("el archivo semanal supera 25 MB; comprímelo como ZIP")
     directory, _, _ = load_crosses(args.directory, args.prices, args.presentations)
     reader = csv.DictReader(normalized_csv_lines(io.BytesIO(raw)))
     headers = set(reader.fieldnames or [])
@@ -42,7 +41,7 @@ def audit(args: argparse.Namespace) -> dict[str, object]:
     for row_number, row in enumerate(reader, start=2):
         rows += 1
         try:
-            row_week = int(float(text(row.get("Semana"))))
+            row_week = parse_week(row.get("Semana"))
         except ValueError:
             fail(f"fila {row_number}: Semana inválida")
         if row_week != args.week:
@@ -50,9 +49,9 @@ def audit(args: argparse.Namespace) -> dict[str, object]:
         if text(row.get("Indicadores")):
             fail(f"fila {row_number}: Indicadores debe permanecer vacío")
         try:
-            usage = float(text(row.get("Uso Ideal* (#)")).replace(",", "") or 0)
+            usage = parse_usage(row.get("Uso Ideal* (#)"))
         except ValueError:
-            fail(f"fila {row_number}: Uso Ideal no es numérico")
+            fail(f"fila {row_number}: Uso Ideal inválido, negativo o fuera de rango")
         if usage < 0:
             fail(f"fila {row_number}: Uso Ideal no puede ser negativo")
         if usage == 0:

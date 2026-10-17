@@ -1,16 +1,16 @@
-# Entrada semanal automática (semana 35 en adelante)
+# Entrada semanal automática · semana 35 en adelante
 
-Carga aquí un único CSV o ZIP. GitHub ejecutará **Actualizar semana Max Min** automáticamente.
-También puedes iniciarlo manualmente: si dejas vacíos los campos, detectará el archivo y la semana por el nombre.
+Carga aquí uno o varios **CSV o ZIP**. Al guardar en `main`, Actions ejecuta **Actualizar semana Max Min** y procesa todas las fuentes pendientes en orden.
 
-Semana 35:
+- Nombre recomendado: `Max & Min_35.csv`, `Max & Min_36.csv`, etc.
+- Python determina la semana usando **todas las filas de la columna Semana**. Si el nombre difiere, avisa y respeta el contenido.
+- Cada CSV debe contener una sola semana y conservar los encabezados originales.
+- Límite: 25 MiB por archivo. Si un CSV es más grande, usa un ZIP con un solo CSV, de hasta 128 MiB descomprimido.
+- Puedes cargar varias semanas juntas. Su tamaño combinado no bloquea la cola; los límites del sitio y de cada archivo se mantienen.
+- Los duplicados idénticos se importan una sola vez. Dos contenidos distintos para la misma semana detienen el lote para evitar elegir una versión por accidente.
+- Si falta una semana, se registra como pendiente. No se rellena con ceros ni se copia otra semana. Puedes cargarla después.
+- Una semana ya publicada se reemplaza completa; nunca se acumulan sus filas dos veces.
 
-- Ruta preferida: `updates/incoming/Max & Min_35.csv`
-- Si el CSV supera 24 MB: comprímelo como `updates/incoming/Max & Min_35.zip`.
-- El ZIP debe contener exactamente `Max & Min_35.csv`.
+Antes de publicar, se audita cada fuente, se verifica cada registro contra los JSON y se revisan los dos motores. Sólo entonces se retiran los CSV/ZIP procesados. Quedan reportes en `audit/week_*` y un resumen en Actions.
 
-Para semanas futuras conserva el mismo formato: `Max & Min_36.csv`, `Max & Min_37.csv`, etc.
-
-Si la semana ya existe, se reemplaza completa y se recalcula; no se anexan filas sobre datos anteriores. El proceso rechaza claves CeCo/categoría/ingrediente duplicadas y, antes de publicar, compara el 100 % del CSV con los JSON generados.
-
-Después del procesamiento exitoso, el workflow retira el archivo fuente para evitar acumulación. Los resultados quedan en `data/` y los controles en `audit/week_N_update_report.json` y `audit/week_N_publish_report.json`. El directorio vigente es autoritativo: las tiendas abiertas se muestran primero, los cierres temporales permanecen disponibles y los CeCo ajenos se reportan sin bloquear la carga.
+Para ejecutar manualmente, deja ambos campos vacíos y se procesará toda la cola. Usa `source_path` para elegir un archivo; `week` es opcional y debe coincidir con su contenido.

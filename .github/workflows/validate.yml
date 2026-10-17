@@ -16,6 +16,8 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,6 +28,10 @@ jobs:
           node-version: "22"
       - run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - run: pip install openpyxl pypdf Pillow
+      - name: Probar importación semanal segura
+        run: python -B -m unittest discover -s tools/tests -v
+      - name: Validar todas las cargas pendientes en este checkout
+        run: python -B tools/process_week_queue.py --summary "$GITHUB_STEP_SUMMARY"
       - run: node --check js/app.js
       - run: node --check sw.js
       - run: node tools/audit_business_rules.cjs

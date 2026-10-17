@@ -7,8 +7,8 @@ on:
       - "sources/Normalizados.zip"
 
 concurrency:
-  group: max-min-normalizados
-  cancel-in-progress: true
+  group: max-min-data-main
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -17,6 +17,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
