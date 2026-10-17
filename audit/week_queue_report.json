@@ -1,0 +1,45 @@
+{
+  "status": "ok",
+  "processedWeeks": [
+    38
+  ],
+  "retiredSources": [
+    "updates/incoming/Max & Min_37.csv",
+    "updates/incoming/Max & Min_38.csv"
+  ],
+  "pendingWeeks": [
+    37
+  ],
+  "duplicates": [
+    {
+      "path": "updates/incoming/Max & Min_37.csv",
+      "duplicateOf": "updates/incoming/Max & Min_38.csv",
+      "week": 38
+    }
+  ],
+  "misnamed": [
+    {
+      "path": "updates/incoming/Max & Min_37.csv",
+      "week": 38,
+      "namedWeek": 37,
+      "member": "Max & Min_37.csv",
+      "rows": 136478,
+      "sha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f",
+      "uploadSha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f"
+    }
+  ],
+  "publications": [
+    {
+      "status": "ok",
+      "week": 38,
+      "source": "Max & Min_38.csv",
+      "sourceSha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f",
+      "verifiedRecords": 135460,
+      "verifiedStores": 877,
+      "excludedUnknownRows": 999,
+      "duplicateSourceRecords": 0,
+      "duplicatePublishedRecords": 0,
+      "mismatches": 0
+    }
+  ]
+}

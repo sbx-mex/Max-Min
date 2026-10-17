@@ -1,0 +1,154 @@
+{
+  "status": "ok",
+  "week": 38,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_38.csv",
+  "sourceSha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f",
+  "rows": 136478,
+  "positiveRows": 135460,
+  "storesUpdated": 877,
+  "filesModified": 880,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43102",
+      "positiveRows": 104
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 156
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 142
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 5
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 140
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 149
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 148
+    }
+  ],
+  "excludedUnknownRows": 999,
+  "newCategories": [],
+  "newIngredients": [
+    "Fl26SSCCBrown",
+    "Fl26ThrST16Brown",
+    "Fl26CC16Sloth",
+    "Fl26CC20Koala",
+    "Fl26ReusAnivMx",
+    "Fl26SS20Koala",
+    "Fl26Glass18Aniv",
+    "Fl26SS16AnvCharm",
+    "Fl26SS20Hand"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    38
+  ],
+  "pendingWeeks": [
+    37
+  ],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4418553
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4430340
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 4669705
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4532152
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 4545064
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4522991
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4390991
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4357585
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 4606187
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4454779
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4472544
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 3586009
+    }
+  }
+}
