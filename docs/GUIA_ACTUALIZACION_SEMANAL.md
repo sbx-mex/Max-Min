@@ -17,3 +17,5 @@ Los límites se aplican por archivo, con protección adicional al descomprimir Z
 Si llega una carga mientras se valida otra, el publicador vuelve a descargar main y recalcula. No fuerza el push ni combina JSON generados sobre versiones distintas.
 
 Reportes: `audit/week_queue_report.json`, `audit/week_NUM_source_report.json`, `audit/week_NUM_update_report.json` y `audit/week_NUM_publish_report.json`.
+
+La misma ejecución despliega en Pages el sitio verificado, sin incluir las fuentes CSV/Excel ni los reportes internos. No depende de que un commit del bot dispare otro despliegue.
