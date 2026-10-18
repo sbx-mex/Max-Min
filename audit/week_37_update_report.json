@@ -1,0 +1,133 @@
+{
+  "status": "ok",
+  "week": 37,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_37.csv",
+  "sourceSha256": "f4dd5ae1b5ad8539f082ba0f125c5f37d00d65d97c351124c933639c7aedb1bf",
+  "rows": 136420,
+  "positiveRows": 135919,
+  "storesUpdated": 879,
+  "filesModified": 882,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43103",
+      "positiveRows": 15
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 162
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 145
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 152
+    }
+  ],
+  "excludedUnknownRows": 474,
+  "newCategories": [],
+  "newIngredients": [
+    "Sp26BlindBox",
+    "SII26ReusPSL"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "pendingWeeks": [],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4807591
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4911130
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 5154766
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4984877
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 5002032
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4986197
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4859309
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4799883
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 5111742
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4957314
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4969050
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 4023145
+    }
+  }
+}

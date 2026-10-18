@@ -1,53 +1,23 @@
 {
   "status": "ok",
   "processedWeeks": [
-    39,
-    40,
-    41
-  ],
-  "retiredSources": [
-    "updates/incoming/Max & Min_39.csv",
-    "updates/incoming/Max & Min_40.csv",
-    "updates/incoming/Max & Min_41.csv"
-  ],
-  "pendingWeeks": [
     37
   ],
+  "retiredSources": [
+    "updates/incoming/Max & Min_37.csv"
+  ],
+  "pendingWeeks": [],
   "duplicates": [],
   "misnamed": [],
   "publications": [
     {
       "status": "ok",
-      "week": 39,
-      "source": "Max & Min_39.csv",
-      "sourceSha256": "906a8c4db7951a0bb1ff0c8011c908d6535d8655ea07a98fd8af810de7d7a646",
-      "verifiedRecords": 137181,
+      "week": 37,
+      "source": "Max & Min_37.csv",
+      "sourceSha256": "f4dd5ae1b5ad8539f082ba0f125c5f37d00d65d97c351124c933639c7aedb1bf",
+      "verifiedRecords": 135919,
       "verifiedStores": 879,
-      "excludedUnknownRows": 1798,
-      "duplicateSourceRecords": 0,
-      "duplicatePublishedRecords": 0,
-      "mismatches": 0
-    },
-    {
-      "status": "ok",
-      "week": 40,
-      "source": "Max & Min_40.csv",
-      "sourceSha256": "a8a3d14f2a08eb4812f849c3a683c6188bc05d8d5bfd7833f1b35f87211cb0c6",
-      "verifiedRecords": 138734,
-      "verifiedStores": 879,
-      "excludedUnknownRows": 1834,
-      "duplicateSourceRecords": 0,
-      "duplicatePublishedRecords": 0,
-      "mismatches": 0
-    },
-    {
-      "status": "ok",
-      "week": 41,
-      "source": "Max & Min_41.csv",
-      "sourceSha256": "16704d0c23ca456c0a48fa75c95012afa4999f601f73de67b8663d488cfbe60b",
-      "verifiedRecords": 134075,
-      "verifiedStores": 875,
-      "excludedUnknownRows": 1799,
+      "excludedUnknownRows": 474,
       "duplicateSourceRecords": 0,
       "duplicatePublishedRecords": 0,
       "mismatches": 0
