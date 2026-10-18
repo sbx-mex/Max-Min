@@ -1,14 +1,14 @@
 {
   "status": "ok",
   "files": 1898,
-  "positiveRows": 5165192,
-  "weeks": 37,
+  "positiveRows": 5575182,
+  "weeks": 40,
   "engines": {
     "maxMin": {
       "status": "ok",
       "files": 949,
-      "positiveRows": 5165192,
-      "weeks": 37,
+      "positiveRows": 5575182,
+      "weeks": 40,
       "issues": []
     },
     "normalizados": {

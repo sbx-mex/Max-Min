@@ -1,0 +1,12 @@
+{
+  "status": "ok",
+  "week": 40,
+  "source": "Max & Min_40.csv",
+  "sourceSha256": "a8a3d14f2a08eb4812f849c3a683c6188bc05d8d5bfd7833f1b35f87211cb0c6",
+  "verifiedRecords": 138734,
+  "verifiedStores": 879,
+  "excludedUnknownRows": 1834,
+  "duplicateSourceRecords": 0,
+  "duplicatePublishedRecords": 0,
+  "mismatches": 0
+}

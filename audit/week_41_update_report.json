@@ -1,0 +1,172 @@
+{
+  "status": "ok",
+  "week": 41,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_41.csv",
+  "sourceSha256": "16704d0c23ca456c0a48fa75c95012afa4999f601f73de67b8663d488cfbe60b",
+  "rows": 135883,
+  "positiveRows": 134075,
+  "storesUpdated": 875,
+  "filesModified": 878,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 153
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 152
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 156
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 142
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 154
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 148
+    }
+  ],
+  "excludedUnknownRows": 1799,
+  "newCategories": [],
+  "newIngredients": [
+    "Fl26Notebook",
+    "Fl26CC24DDM",
+    "Fl26CCHC24DDM",
+    "Fl26DW12DDM",
+    "Fl26Mug14DDM",
+    "Fl26SS24DDM",
+    "Fl26Tu10DDM",
+    "Fl26Tu20DDM"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    38,
+    39,
+    40,
+    41
+  ],
+  "pendingWeeks": [
+    37
+  ],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4711626
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4792880
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 5030807
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4870752
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 4887663
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4870394
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4746996
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4689740
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 4986132
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4832203
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4846205
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 3915860
+    }
+  }
+}

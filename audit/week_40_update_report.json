@@ -1,0 +1,170 @@
+{
+  "status": "ok",
+  "week": 40,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_40.csv",
+  "sourceSha256": "a8a3d14f2a08eb4812f849c3a683c6188bc05d8d5bfd7833f1b35f87211cb0c6",
+  "rows": 140587,
+  "positiveRows": 138734,
+  "storesUpdated": 879,
+  "filesModified": 882,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 164
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 157
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 149
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 154
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 149
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 143
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 157
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 159
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 140
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 152
+    }
+  ],
+  "excludedUnknownRows": 1834,
+  "newCategories": [],
+  "newIngredients": [
+    "Been There Villahermosa 14 oz",
+    "Fl26Mug14Pea",
+    "Fl26PlushiePea",
+    "Fl26ReusICD",
+    "Fl26SS16CharmPea",
+    "Fl26GlassPeanuts",
+    "Fl26LlaveroVXMC"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    38,
+    39,
+    40
+  ],
+  "pendingWeeks": [
+    37
+  ],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4613963
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 4673921
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 4912973
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 4761329
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 4776128
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 4758363
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4631516
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4581695
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 4861237
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 4708475
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 4724522
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 3808443
+    }
+  }
+}

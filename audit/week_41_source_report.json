@@ -1,0 +1,68 @@
+{
+  "status": "warning",
+  "week": 41,
+  "source": "Max & Min_41.csv",
+  "sourceSha256": "16704d0c23ca456c0a48fa75c95012afa4999f601f73de67b8663d488cfbe60b",
+  "bytes": 16838042,
+  "rows": 135883,
+  "positiveRows": 135874,
+  "stores": 887,
+  "categories": 19,
+  "ingredients": 492,
+  "indicatorNonBlank": 0,
+  "duplicateRecords": 0,
+  "unknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 153
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 152
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 156
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 142
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 154
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 148
+    }
+  ],
+  "excludedUnknownRows": 1799,
+  "unknownStorePolicy": "skip",
+  "safeRoute": "updates/incoming/Max & Min_41.csv",
+  "result": "fuente validada; los CeCo fuera del directorio se excluirán"
+}

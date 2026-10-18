@@ -1,42 +1,53 @@
 {
   "status": "ok",
   "processedWeeks": [
-    38
+    39,
+    40,
+    41
   ],
   "retiredSources": [
-    "updates/incoming/Max & Min_37.csv",
-    "updates/incoming/Max & Min_38.csv"
+    "updates/incoming/Max & Min_39.csv",
+    "updates/incoming/Max & Min_40.csv",
+    "updates/incoming/Max & Min_41.csv"
   ],
   "pendingWeeks": [
     37
   ],
-  "duplicates": [
-    {
-      "path": "updates/incoming/Max & Min_37.csv",
-      "duplicateOf": "updates/incoming/Max & Min_38.csv",
-      "week": 38
-    }
-  ],
-  "misnamed": [
-    {
-      "path": "updates/incoming/Max & Min_37.csv",
-      "week": 38,
-      "namedWeek": 37,
-      "member": "Max & Min_37.csv",
-      "rows": 136478,
-      "sha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f",
-      "uploadSha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f"
-    }
-  ],
+  "duplicates": [],
+  "misnamed": [],
   "publications": [
     {
       "status": "ok",
-      "week": 38,
-      "source": "Max & Min_38.csv",
-      "sourceSha256": "3c4c0befd6e0b68604530c0e9a619e0fca4312724a54c63413a8aa3298e39c0f",
-      "verifiedRecords": 135460,
-      "verifiedStores": 877,
-      "excludedUnknownRows": 999,
+      "week": 39,
+      "source": "Max & Min_39.csv",
+      "sourceSha256": "906a8c4db7951a0bb1ff0c8011c908d6535d8655ea07a98fd8af810de7d7a646",
+      "verifiedRecords": 137181,
+      "verifiedStores": 879,
+      "excludedUnknownRows": 1798,
+      "duplicateSourceRecords": 0,
+      "duplicatePublishedRecords": 0,
+      "mismatches": 0
+    },
+    {
+      "status": "ok",
+      "week": 40,
+      "source": "Max & Min_40.csv",
+      "sourceSha256": "a8a3d14f2a08eb4812f849c3a683c6188bc05d8d5bfd7833f1b35f87211cb0c6",
+      "verifiedRecords": 138734,
+      "verifiedStores": 879,
+      "excludedUnknownRows": 1834,
+      "duplicateSourceRecords": 0,
+      "duplicatePublishedRecords": 0,
+      "mismatches": 0
+    },
+    {
+      "status": "ok",
+      "week": 41,
+      "source": "Max & Min_41.csv",
+      "sourceSha256": "16704d0c23ca456c0a48fa75c95012afa4999f601f73de67b8663d488cfbe60b",
+      "verifiedRecords": 134075,
+      "verifiedStores": 875,
+      "excludedUnknownRows": 1799,
       "duplicateSourceRecords": 0,
       "duplicatePublishedRecords": 0,
       "mismatches": 0
