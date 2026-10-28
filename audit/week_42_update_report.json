@@ -1,0 +1,242 @@
+{
+  "status": "ok",
+  "week": 42,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_42.csv",
+  "sourceSha256": "d5aaf210dae240684783f56589cde6de76a2790116f0c968134bd0ae9d750144",
+  "rows": 141934,
+  "positiveRows": 139945,
+  "storesUpdated": 876,
+  "filesModified": 879,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 164
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 162
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 152
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 158
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 159
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 122
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 152
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 149
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 147
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 154
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 155
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 143
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 148
+    }
+  ],
+  "excludedUnknownRows": 1965,
+  "newCategories": [
+    "Baja",
+    "Normalizado de Servicio",
+    "Baja Merch",
+    "Normalizado Control"
+  ],
+  "newIngredients": [
+    "ZZZJarabe Classic 1Lt",
+    "Agitador de Madera",
+    "ZZZSalsa de Limon 46 oz",
+    "ZZZCroissant Jamon y Queso",
+    "Te Teavana Black Iced CJ/40",
+    "Salsa Caramel Brulee 1.86lt",
+    "Te Teavana Passion Iced CJ/56",
+    "SVETIA CJ/2000 PZAS SBX",
+    "Azucar Mascabado Starbucks",
+    "ZZZPan de Muerto C/12 Pzas",
+    "ZZZCheeseccake Roulet",
+    "ZZZJarabe Orange Piloncillo",
+    "Popote Verde Estuchado Compostab",
+    "ZZZMelrose Bitters Bot 125ml2",
+    "ZZZGalleta de Temporada",
+    "ZZZMalta Reserve Bar Bolsa 1Kg2",
+    "ZZZJarabe Caña Azucar 1lt",
+    "ZZBS Croissant Multigrano",
+    "ZZZBeen There Acapulco 14",
+    "ZZZBeen There Mexico City 14",
+    "ZZZBeen There Mexico 14",
+    "ZZZBeen There  Merida 14",
+    "ZZZBeen There Ensenada 14",
+    "ZZBeen There Puerto Vallarta 14",
+    "ZZZBeen There Guanajuato 14",
+    "ZZZBeen There Leon 14",
+    "ZZZBeen There Queretaro 14",
+    "ZZZBeen There San Miguel 14",
+    "ZZZBeen There Puebla 14",
+    "ZZZBeen There Morelia 14",
+    "ZZZBeen There Guadalajara 14",
+    "Tapa Domo 12/20 oz",
+    "ZZZBeen There Monterrey 14",
+    "ZZZBeen There Chihuahua 14",
+    "Vaso de Papel 8 oz",
+    "Fajilla de Carton",
+    "Bolsa con Asa Chica",
+    "ZZZRB Cronuts Choco",
+    "Bolsa Individual Pastry",
+    "Charola Porta Vasos",
+    "ZZZ306516 Leche Entera Suprema 1",
+    "ZZZRB Licor de Café",
+    "ZZZRB Piña Deshidratada",
+    "Bolsa Pastry Panini",
+    "Repuesto para cafetera 8 tazas",
+    "Canela molida cj/1kg",
+    "Vaso Compostable Caliente 8 oz",
+    "Tapa Compostable Caliente 8 oz",
+    "ZZZLeche de Avena sin Azucar 946",
+    "PORTAVASOS 2 CAVIDADES CJ/600 PZ",
+    "ZZZDona Vainilla Old Fashion Cja",
+    "Azucar Refinada Starbucks",
+    "ZZZ28439 1P Jarabe Apple Brown S",
+    "ZZZServilleta con Logo",
+    "ZZZGalleta Lavanda",
+    "ZZZEnvuelto Hawaiano Cj/12 Pzas/",
+    "Servilleta Logo 2025",
+    "ZZPastel Tres Leches Celebracion",
+    "ZZZPanMuertoZarza",
+    "ZZZJarabe White Mocha 1 Lt",
+    "ZZZWrap Vegetales",
+    "Fl26Glass16Sust",
+    "Fl26SS16Sleeve",
+    "Fl26SSBTL20Sust",
+    "Fl26Tu12Sust",
+    "Fl26Tu16Sust",
+    "Fl26OwalaPink",
+    "Azucar Dieta Splenda",
+    "ZZZSalsa de Fresa 46 oz"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "pendingWeeks": [],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 4910069
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 5035845
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 5277392
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 5099870
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 5119158
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 5104467
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 4980949
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 4914470
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 5242940
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 5085720
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 5095712
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 4135863
+    }
+  }
+}
