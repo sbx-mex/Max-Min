@@ -1,0 +1,72 @@
+{
+  "status": "warning",
+  "week": 44,
+  "source": "Max & Min_44.csv",
+  "sourceSha256": "6befe0c082ab53099cee5a6cdbdb13c602a859a345f4fa082f217f665ac26d28",
+  "bytes": 17042412,
+  "rows": 136735,
+  "positiveRows": 136704,
+  "stores": 880,
+  "categories": 23,
+  "ingredients": 552,
+  "indicatorNonBlank": 0,
+  "duplicateRecords": 0,
+  "unknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 163
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 159
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 156
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 141
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 162
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 142
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 144
+    }
+  ],
+  "excludedUnknownRows": 1995,
+  "unknownStorePolicy": "skip",
+  "safeRoute": "updates/incoming/Max & Min_44.csv",
+  "result": "fuente validada; los CeCo fuera del directorio se excluirán"
+}

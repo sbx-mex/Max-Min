@@ -44,14 +44,13 @@
     41,
     42,
     43,
+    44,
     45
   ],
-  "pendingWeeks": [
-    44
-  ],
+  "pendingWeeks": [],
   "stores": 949,
-  "ingredients": 880,
-  "positiveRows": 6128891,
+  "ingredients": 884,
+  "positiveRows": 6263600,
   "sapMatched": 661,
   "formatMatched": 626,
   "normalized": {

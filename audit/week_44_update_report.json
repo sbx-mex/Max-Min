@@ -1,0 +1,175 @@
+{
+  "status": "ok",
+  "week": 44,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_44.csv",
+  "sourceSha256": "6befe0c082ab53099cee5a6cdbdb13c602a859a345f4fa082f217f665ac26d28",
+  "rows": 136735,
+  "positiveRows": 134709,
+  "storesUpdated": 867,
+  "filesModified": 870,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 163
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 159
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 156
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 141
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 150
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 148
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 162
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 142
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 144
+    }
+  ],
+  "excludedUnknownRows": 1995,
+  "newCategories": [],
+  "newIngredients": [
+    "ZZZBeen There Zacatecas 14",
+    "ZZZInfusion Natural Limon Menta",
+    "ZZZTopping Caramelo Dulce",
+    "ZZZCafe 250g 12/cs House"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "pendingWeeks": [],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 5208215
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 5408949
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 5634499
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 5440022
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 5463170
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 5449703
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 5342312
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 5251556
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 5628680
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 5454726
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 5470594
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 4465416
+    }
+  }
+}
