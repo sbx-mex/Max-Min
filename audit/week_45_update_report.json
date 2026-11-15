@@ -1,0 +1,207 @@
+{
+  "status": "ok",
+  "week": 45,
+  "mode": "insert",
+  "replace": false,
+  "source": "Max & Min_45.csv",
+  "sourceSha256": "e6a76ac6957d66eee33ce4706b66d788cb31ba0f6420be0ee91d5aa3b75ebf0f",
+  "rows": 145177,
+  "positiveRows": 142907,
+  "storesUpdated": 853,
+  "filesModified": 856,
+  "newStores": [],
+  "removedStores": [],
+  "removedByDirectory": [],
+  "excludedUnknownStores": [
+    {
+      "ceco": "43052",
+      "positiveRows": 179
+    },
+    {
+      "ceco": "43102",
+      "positiveRows": 168
+    },
+    {
+      "ceco": "43103",
+      "positiveRows": 165
+    },
+    {
+      "ceco": "43178",
+      "positiveRows": 168
+    },
+    {
+      "ceco": "43182",
+      "positiveRows": 157
+    },
+    {
+      "ceco": "43191",
+      "positiveRows": 168
+    },
+    {
+      "ceco": "43192",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43196",
+      "positiveRows": 159
+    },
+    {
+      "ceco": "43198",
+      "positiveRows": 164
+    },
+    {
+      "ceco": "43199",
+      "positiveRows": 174
+    },
+    {
+      "ceco": "43205",
+      "positiveRows": 180
+    },
+    {
+      "ceco": "43215",
+      "positiveRows": 166
+    },
+    {
+      "ceco": "43256",
+      "positiveRows": 162
+    }
+  ],
+  "excludedUnknownRows": 2176,
+  "newCategories": [],
+  "newIngredients": [
+    "Pastel Red Velvet",
+    "ZZZPanque de Naranja",
+    "Hogaza Navideña",
+    "ZZZSnack Prosciutto Mozarella",
+    "Topping Cranberry Azucar1bt 141g",
+    "Topping Salsa Cranberry1bte 12",
+    "Toffee Nut Sprinkles Topping 11o",
+    "30179 Bt Topping Caramel Suga",
+    "Xm26BTL24Card",
+    "Xm26PPHC24Card",
+    "Xm26Mug14Card",
+    "Xm26SSCC24Card",
+    "Xm26Tu20Card",
+    "Xm26Tu16Card",
+    "Xm26TuHand16",
+    "Xm26PPTuCharm16",
+    "Xm26Mug3SGlobe",
+    "Xm26SSBTL20",
+    "Xm26SSBTwist20",
+    "Xm26Tu16Snow",
+    "Xm26Give16Hot",
+    "Duo de Nueces",
+    "Jugo NaranjaMix",
+    "Croissant Pinos Crema CJ/30 Pzas",
+    "Berlina XMAS CJ/60 Pzas",
+    "BIS GALLETA RED VELVET CJ",
+    "Cake Pop Bearista CJ/36 Pzas",
+    "Fl26Tarjetero",
+    "Salsa Panettone 1.86lt",
+    "Topping Panettone 90gr",
+    "Crossant Pinos Choco CJ/30Pzas",
+    "BearMandil",
+    "BearSanta",
+    "BearSueter",
+    "ZZZPain au Chocolat"
+  ],
+  "weeksAvailable": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45
+  ],
+  "pendingWeeks": [
+    44
+  ],
+  "folders": {
+    "stores_01": {
+      "files": 80,
+      "bytes": 5110102
+    },
+    "stores_02": {
+      "files": 78,
+      "bytes": 5286886
+    },
+    "stores_03": {
+      "files": 80,
+      "bytes": 5519230
+    },
+    "stores_04": {
+      "files": 80,
+      "bytes": 5329395
+    },
+    "stores_05": {
+      "files": 80,
+      "bytes": 5351660
+    },
+    "stores_06": {
+      "files": 80,
+      "bytes": 5336884
+    },
+    "stores_07": {
+      "files": 79,
+      "bytes": 5224681
+    },
+    "stores_08": {
+      "files": 80,
+      "bytes": 5141379
+    },
+    "stores_09": {
+      "files": 80,
+      "bytes": 5503194
+    },
+    "stores_10": {
+      "files": 80,
+      "bytes": 5334295
+    },
+    "stores_11": {
+      "files": 80,
+      "bytes": 5348187
+    },
+    "stores_12": {
+      "files": 72,
+      "bytes": 4358109
+    }
+  }
+}

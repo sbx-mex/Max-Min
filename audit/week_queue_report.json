@@ -1,23 +1,25 @@
 {
   "status": "ok",
   "processedWeeks": [
-    43
+    45
   ],
   "retiredSources": [
-    "updates/incoming/Max & Min_43.csv"
+    "updates/incoming/Max & Min_45.csv"
   ],
-  "pendingWeeks": [],
+  "pendingWeeks": [
+    44
+  ],
   "duplicates": [],
   "misnamed": [],
   "publications": [
     {
       "status": "ok",
-      "week": 43,
-      "source": "Max & Min_43.csv",
-      "sourceSha256": "9e872f93811d217e4113234d08d58e44b4b91d3a36f169ee4cb5a7cb3f893ae9",
-      "verifiedRecords": 134938,
-      "verifiedStores": 876,
-      "excludedUnknownRows": 1944,
+      "week": 45,
+      "source": "Max & Min_45.csv",
+      "sourceSha256": "e6a76ac6957d66eee33ce4706b66d788cb31ba0f6420be0ee91d5aa3b75ebf0f",
+      "verifiedRecords": 142907,
+      "verifiedStores": 853,
+      "excludedUnknownRows": 2176,
       "duplicateSourceRecords": 0,
       "duplicatePublishedRecords": 0,
       "mismatches": 0
